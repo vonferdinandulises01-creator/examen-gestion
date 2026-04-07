@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>CERTIFICACIÓN VIVENTU 2026 - SISTEMA BLINDADO</title>
+    <style>
+        :root { --uvm-red: #c41e3a; --bg: #0a0a0c; --card: #161b22; --blue: #58a6ff; }
+        body { background: var(--bg); color: #c9d1d9; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; user-select: none; -webkit-user-select: none; overflow-x: hidden; }
+        
+        /* Focus Protector: Reinicio por seguridad */
+        #lock-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; color: var(--uvm-red); text-align: center; padding-top: 20%; font-weight: bold; }
+        
+        .container { max-width: 900px; margin: 40px auto; padding: 35px; background: var(--card); border-radius: 15px; border: 1px solid #30363d; box-shadow: 0 15px 40px rgba(0,0,0,0.6); position: relative; }
+        #timer-bar { position: sticky; top: 0; background: var(--uvm-red); color: white; padding: 18px; text-align: center; font-weight: bold; font-size: 1.3em; z-index: 100; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+        
+        .q-meta { color: var(--blue); font-size: 0.9em; margin-bottom: 10px; font-weight: 600; text-transform: uppercase; }
+        .planteamiento { background: #0d1117; padding: 25px; border-left: 6px solid var(--uvm-red); margin-bottom: 25px; line-height: 1.7; border-radius: 5px; font-style: normal; font-size: 1.05em; }
+        .option { display: block; background: #21262d; border: 1px solid #30363d; padding: 22px; margin: 15px 0; cursor: pointer; border-radius: 10px; transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); line-height: 1.5; }
+        .option:hover { border-color: var(--blue); background: #2d333b; transform: translateX(12px); box-shadow: 0 4px 12px rgba(88, 166, 255, 0.2); }
+        
+        input { background: #0d1117; border: 1px solid #30363d; color: white; padding: 18px; width: calc(100% - 36px); margin-bottom: 25px; border-radius: 8px; font-size: 1.1em; }
+        .btn-start { background: var(--uvm-red); color: white; border: none; padding: 22px; width: 100%; font-weight: bold; cursor: pointer; border-radius: 10px; font-size: 1.2em; transition: 0.3s; }
+        .btn-start:hover { filter: brightness(1.2); }
+        .hidden { display: none; }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+<div id="lock-screen">
+    <h1>⚠️ PROTOCOLO DE SEGURIDAD ACTIVADO</h1>
+    <p>Se detectó pérdida de foco (cambio de pestaña o captura de pantalla).</p>
+    <p><strong>EL EXAMEN SE HA RESETEADO AUTOMÁTICAMENTE PARA GARANTIZAR LA INTEGRIDAD.</strong></p>
+</div>
+
+<!-- REGISTRO -->
+<div id="p-reg" class="container">
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h1 style="color:var(--uvm-red); margin:0;">UVM TEXCOCO</h1>
+        <h2 style="margin:5px 0;">TECNOLOGÍAS PARA LA GESTIÓN</h2>
+        <p style="color:#8b949e;">Examen de Certificación 2026 | Prof. Villarreal López</p>
+    </div>
+    <label>Nombre Completo del Estudiante:</label>
+    <input type="text" id="nom" placeholder="Apellido Paterno, Materno y Nombres">
+    <label>Matrícula Institucional:</label>
+    <input type="text" id="mat" placeholder="Ej: 069004321">
+    <button class="btn-start" onclick="iniciar()">VALIDAR E INICIAR EXAMEN (65 MIN)</button>
+    <div style="margin-top: 50px; border-top: 1px solid #333; text-align: center;">
+        <p onclick="admin()" style="color:#222; cursor:pointer; font-size: 0.8em; margin-top: 15px;">PANEL ADMINISTRATIVO</p>
+    </div>
+</div>
+
+<!-- EXAMEN -->
+<div id="p-exam" class="container hidden">
+    <div id="timer-bar">TIEMPO RESTANTE: <span id="clock">65:00</span></div>
+    <div id="current-q"></div>
+</div>
+
+<script>
+    // 35 REACTIVOS ROBUSTECIDOS SEGÚN LOS 3 ARCHIVOS FUENTE
+    const db = [
+        {
+            p: "La unidad operativa en Tokio reporta micro-caídas de latencia constantes hacia el ERP central en México, lo que detiene las colas de facturación y arriesga multas aduanales. Se requiere una arquitectura que dote de autonomía operativa al nodo local sin perder la sincronización global.",
+            q: "¿Qué combinación técnica resuelve la vulnerabilidad técnica y asegura la continuidad?",
+            o: ["Implementar una arquitectura de Nube Híbrida con nodos locales (Edge Computing), orquestación con Kubernetes para auto-recuperación y agentes de IA para activar el failover preventivo.", "Reiniciar manualmente los servidores ante cada reporte, aumentar el ancho de banda del ISP y solicitar informes de tráfico semanales.", "Migrar toda la operación a una nube pública estándar, configurar alertas de correo y esperar a que el proveedor de internet estabilice el enlace transpacífico."],
+            r: 0
+        },
+        {
+            p: "El departamento de ciberseguridad advierte sobre la 'amenaza cuántica' para el descifrado futuro de secretos industriales. VIVENTU exige un esquema de 'Soberanía Digital' que garantice el control físico de llaves criptográficas y un registro inalterable de cada acceso.",
+            q: "¿Cuál conjunto de medidas asegura la invulnerabilidad de la propiedad intelectual?",
+            o: ["Cambiar las contraseñas de red cada 15 días, utilizar carpetas compartidas protegidas por clave y confiar en la encriptación nativa de la nube pública.", "Desplegar Hardware Security Modules (HSM) locales para custodia de llaves, implementar algoritmos de encriptación post-cuántica (PQC) y un registro de auditoría basado en Blockchain.", "Contratar un seguro contra ciberataques, encriptar discos duros con AES-256 estándar y realizar auditorías de TI de forma trimestral."],
+            r: 1
+        },
+        {
+            p: "Para una expansión estratégica en Nueva York con una inversión de 50 MDD, la junta directiva requiere una simulación que permita modelar variables de estrés económico, inflación y logística antes de asignar el presupuesto definitivo.",
+            q: "¿Qué herramientas permiten una toma de decisiones científica para asegurar el ROI?",
+            o: ["Realizar encuestas de opinión subjetiva entre los gerentes regionales, basar el presupuesto en el histórico de Tokio y postergar la inversión hasta la estabilización del mercado.", "Utilizar el motor del MIS para proyecciones lineales, basarse en el flujo de caja del año anterior y contratar consultoría externa para validación de datos.", "Crear un Gemelo Digital (Digital Twin) de la estructura financiera, integrar flujos de datos externos vía DSS y ejecutar simulaciones Monte Carlo para identificar riesgos críticos."],
+            r: 2
+        },
+        {
+            p: "La App móvil de VIVENTU colapsa durante lanzamientos globales debido a picos de tráfico. El sistema actual es un monolito rígido. Se busca una transición hacia la agilidad total donde cada módulo (pagos, inventario, perfiles) sea independiente.",
+            q: "¿Qué arquitectura permite escalar funciones críticas sin paros técnicos?",
+            o: ["Descomponer el sistema en Microservicios, implementar APIs estandarizadas para la comunicación y adoptar flujos de CI/CD para despliegues en caliente.", "Adquirir un servidor físico con mayor capacidad de cómputo (CPU/RAM), limitar el acceso de usuarios por turnos y programar mantenimientos de 6 horas.", "Configurar un balanceador de carga básico, optimizar el código fuente del monolito y duplicar la base de datos SQL para lectura."],
+            r: 0
+        },
+        {
+            p: "Marketing requiere cruzar datos estructurados del ERP con datos no estructurados provenientes de reseñas en video y redes sociales para entender una baja en ventas premium. Los sistemas actuales están aislados.",
+            q: "¿Qué estructura de datos permite generar analítica predictiva unificada?",
+            o: ["Transcribir manualmente los puntos clave de los videos a hojas de Excel y cruzarlos con las ventas mediante tablas dinámicas.", "Migrar hacia una arquitectura Data Lakehouse integrada que soporte SQL y Machine Learning, junto con un catálogo de metadatos para gobernanza.", "Mantener las bases de datos separadas por departamento para evitar conflictos de integridad y usar herramientas de BI visual para comparativas gráficas."],
+            r: 1
+        },
+        {
+            p: "Se han detectado fallos por sobrecalentamiento imprevisto en los servidores de Texcoco. El sistema debe ser capaz de detectar variaciones térmicas y actuar bajando la frecuencia de procesamiento autónomamente antes de un daño físico.",
+            q: "¿Qué medidas garantizan la continuidad operativa mediante monitoreo inteligente?",
+            o: ["Desplegar cámaras térmicas con conectividad IoT, implementar algoritmos de IA prescriptiva para ajuste de carga y registrar incidentes automáticamente en el módulo de activos del ERP.", "Instalar ventiladores industriales de flujo permanente, realizar rondas de inspección humana con termómetros láser y apagar equipos críticos por la noche.", "Colocar termostatos convencionales en el rack, configurar alertas SMS para el equipo de guardia y aumentar la potencia del aire acondicionado central."],
+            r: 0
+        },
+        {
+            p: "VIVENTU busca transformar su centro logístico en un 'Dark Warehouse' con nula intervención humana en el surtido, coordinando robots autónomos en tiempo real con el inventario central.",
+            q: "¿Qué conjunto tecnológico define una operación logística autónoma de alta densidad?",
+            o: ["Contratar supervisores para vigilancia visual de robots, realizar conteos manuales de inventario y utilizar montacargas operados por expertos.", "Implementar un WMS de alta densidad, desplegar robots AMR mediante una red privada 5G e integrar cada movimiento nativamente con el núcleo del ERP.", "Usar robots de limpieza programados, lectores de código de barras manuales y un sistema de radiofrecuencia básica para localización de estibas."],
+            r: 1
+        },
+        {
+            p: "Se ha identificado que productos premium son sustituidos por réplicas durante el tránsito marítimo. Se requiere asegurar que el empaque no ha sido vulnerado y registrar la cadena de custodia de forma inalterable.",
+            q: "¿Qué tecnologías aseguran la integridad en la cadena de suministro internacional?",
+            o: ["Utilizar sellos de cera tradicionales, realizar llamadas telefónicas de confirmación al cliente y fabricar cajas de madera de gran peso.", "Implementar Smart Tags con sensores de apertura, registrar la custodia en una red Blockchain inalterable y configurar alertas automáticas al CRM ante anomalías.", "Contratar guardias de seguridad para el contenedor, usar candados de alta resistencia y realizar auditorías físicas en cada puerto de transbordo."],
+            r: 1
+        },
+        {
+            p: "El costo eléctrico en la planta de producción compromete los márgenes. Se requiere que el sistema apague líneas no críticas en horas de tarifa pico y genere reportes ESG de forma automática para inversionistas.",
+            q: "¿Qué combinación permite una gestión energética inteligente y auditable?",
+            o: ["Solicitar a los empleados el apagado manual de luces, instalar paneles solares genéricos y cambiar todas las luminarias a LED de forma masiva.", "Utilizar el motor del MIS para reportes mensuales, contratar una auditoría externa de energía y basar el consumo en el presupuesto del año anterior.", "Desplegar una red de sensores y actuadores IoT, implementar algoritmos de optimización según el costo de KWh y vincular datos del ERP con métricas de carbono."],
+            r: 2
+        },
+        {
+            p: "En la línea de embotellado de lujo, el ojo humano falla por fatiga detectando etiquetas desalineadas. Se requiere un sistema que rechace botellas defectuosas en milisegundos sin detener la producción.",
+            q: "¿Qué herramientas garantizan excelencia en el control de calidad con alta productividad?",
+            o: ["Instalar sistemas de Visión Artificial de alta resolución, implementar mecanismos de rechazo automático y analizar la recurrencia de defectos en el tablero de BI.", "Contratar un segundo equipo de inspección manual, reducir la velocidad de la banda transportadora e ignorar desviaciones menores a 3mm.", "Colocar espejos de aumento en la línea, aumentar la iluminación del área y realizar muestreos estadísticos cada 100 botellas."],
+            r: 0
+        },
+        {
+            p: "Se busca predecir la intención de compra de un cliente VIP antes de que entre a la tienda física, cruzando su navegación web matutina con su presencia en el local para que el vendedor lo reciba con una oferta curada.",
+            q: "¿Qué combinación otorga ventaja competitiva en el punto de venta (Omnicanalidad)?",
+            o: ["Integrar datos de navegación web y redes sociales al CRM, enviar alertas al Smartwatch del vendedor y usar Deep Learning para predecir patrones de intención.", "Enviar correos masivos con descuentos genéricos a toda la base, realizar llamadas de telemarketing y aplicar descuentos aleatorios en caja.", "Colocar carteles publicitarios dinámicos en la entrada, ofrecer Wi-Fi gratuito a cambio de datos y registrar visitas en una libreta digital."],
+            r: 0
+        },
+        {
+            p: "El consumidor exige probarse accesorios virtualmente con alta fidelidad. Si un producto se vende vía Realidad Aumentada (AR) en Tokio, el stock debe actualizarse inmediatamente en todo el mundo para evitar sobreventas.",
+            q: "¿Qué conjunto asegura una experiencia inmersiva y una gestión de stock efectiva?",
+            o: ["Usar fotos estáticas con modelos, cobrar una tarifa adicional por el uso de la App y publicar avisos de que las tallas no son precisas.", "Sincronizar bidireccionalmente el probador virtual con el inventario del ERP en tiempo real e integrar motores de renderizado AR en la App oficial.", "Crear una galería de videos de los productos, enviar catálogos PDF por correo y actualizar el inventario manualmente cada cierre de turno."],
+            r: 1
+        },
+        {
+            p: "Ante una crisis reputacional por un rumor viral, VIVENTU requiere identificar si el ataque proviene de una red de bots o de clientes reales para responder quirúrgicamente solo a los usuarios impactados.",
+            q: "¿Qué medidas permiten una defensa de marca basada en datos?",
+            o: ["Cerrar temporalmente las redes sociales de la empresa, borrar todos los comentarios negativos y publicar un comunicado en un periódico impreso.", "Utilizar Social Listening con análisis de grafos de influencia, identificar usuarios en el CRM e IA Generativa para crear contenido educativo de respuesta rápida.", "Ignorar el rumor para no darle relevancia, aumentar la inversión en publicidad pagada y contratar influencers para hablar bien de la marca."],
+            r: 1
+        },
+        {
+            p: "La boutique busca ajustar automáticamente iluminación y música según el nivel de estrés o aburrimiento detectado anónimamente en los clientes mediante biometría facial.",
+            q: "¿Qué herramientas permiten ajustar el entorno sensorial de forma inteligente?",
+            o: ["Instalar sistemas de reconocimiento de microexpresiones faciales anónimas, actuadores domóticos controlados por el MIS y correlación de picos emocionales en BI.", "Preguntar a cada cliente su preferencia musical al entrar, abrir el Bluetooth del local para que elijan canciones y mantener una lista de reproducción fija.", "Colocar sensores de movimiento básicos, usar temporizadores para la luz y basar la música en el horario comercial (mañana/tarde/noche)."],
+            r: 0
+        },
+        {
+            p: "VIVENTU desea sustituir los puntos de lealtad tradicionales por activos digitales inalterables (Tokens) que los clientes puedan intercambiar o usar para preventas exclusivas.",
+            q: "¿Qué tecnologías garantizan la integridad y exclusividad de un programa de lealtad 4.0?",
+            o: ["Emitir cupones en PDF por correo electrónico, usar tarjetas de cartón con sellos físicos y asignar beneficios de forma manual por gerentes.", "Implementar un ecosistema basado en Tokens/NFTs, registrar transacciones en una red Blockchain privada e integrar una Wallet en la App oficial.", "Crear una base de datos SQL de puntos, enviar códigos SMS de descuento y permitir el canje únicamente mediante la presentación de la identificación oficial."],
+            r: 1
+        },
+        {
+            p: "Un algoritmo de IA para otorgar créditos muestra sesgos históricos que rechazan injustificadamente a ciertos grupos demográficos. Los reguladores exigen transparencia absoluta en el proceso de decisión.",
+            q: "¿Qué conjunto de acciones asegura una gobernanza ética y responsable?",
+            o: ["Argumentar que el algoritmo es un secreto industrial protegido, responsabilizar legalmente al proveedor externo y desactivar el módulo de IA.", "Implementar protocolos de Explainable AI (XAI), realizar pruebas de sesgo (Bias testing) en los datos y crear un Comité Ético de Datos para supervisión.", "Eliminar las etiquetas de género y raza de la base de datos, aumentar el umbral de aprobación para todos y realizar auditorías financieras anuales."],
+            r: 1
+        },
+        {
+            p: "El personal administrativo teme que la automatización (RPA) los desplace. La dirección busca que ellos evolucionen de capturistas a 'Arquitectos de Eficiencia' diseñando sus propios bots.",
+            q: "¿Qué acciones facilitan la transición a una fuerza de trabajo aumentada y colaborativa?",
+            o: ["Realizar la automatización de forma secreta para evitar huelgas, regresar a procesos manuales ante quejas y prohibir términos tecnológicos.", "Capacitar intensivamente en herramientas Low-Code/No-Code, crear un Centro de Excelencia RPA liderado por empleados e incentivar bots exitosos.", "Despedir al personal que no se adapte, contratar programadores expertos para sustituirlos y centralizar el control de bots en el departamento de TI."],
+            r: 1
+        },
+        {
+            p: "Se requiere predecir por qué ciertos perfiles de ventas en Tokio tienen más éxito que en España, analizando competencias reales y desempeño histórico para optimizar la contratación global.",
+            q: "¿Qué herramientas permiten una selección de talento estratégica y predictiva?",
+            o: ["Utilizar algoritmos de Clustering para perfiles ideales, integrar pruebas psicométricas digitales al MIS y realizar análisis de correlación de desempeño.", "Priorizar candidatos con pasatiempos similares a los del gerente, realizar entrevistas rápidas sin registro y publicar vacantes genéricas en redes sociales.", "Basar la contratación en el prestigio de la universidad de origen, realizar exámenes de conocimientos técnicos en papel y usar referencias telefónicas únicamente."],
+            r: 0
+        },
+        {
+            p: "VIVENTU busca crear un 'Cerebro Digital' corporativo donde la IA aprenda de los reportes históricos de empleados jubilados para resolver dudas técnicas de nuevos ingresos vía chat.",
+            q: "¿Qué combinación asegura la preservación y accesibilidad del capital intelectual?",
+            o: ["Grabar videos de entrevistas a los jubilados en memorias USB, imprimir todos los correos históricos y obligarlos a dar clases presenciales.", "Implementar una base de conocimiento vía IA Generativa, indexar masivamente reportes en el MIS y desplegar un Chatbot interno de dudas técnicas.", "Crear un repositorio de archivos PDF en la Intranet, usar un buscador de palabras clave estándar y asignar mentores humanos a cada nuevo empleado."],
+            r: 1
+        },
+        {
+            p: "Se reporta fatiga cognitiva en el equipo creativo. Se requiere monitorear el uso de software para sugerir pausas activas automáticas, protegiendo la privacidad y anonimizando los datos.",
+            q: "¿Qué conjunto de medidas equilibra la productividad con la salud mental digital?",
+            o: ["Instalar cámaras de vigilancia en las casas de los empleados, prohibir el uso de computadoras tras las 6 PM y aumentar las cuotas de tareas diarias.", "Utilizar telemetría de uso de software para detectar sobrecarga, enviar notificaciones de bienestar vía IA y generar reportes de salud anonimizados.", "Solicitar reportes de horas trabajadas en Excel, realizar encuestas de clima laboral anuales y contratar psicólogos externos para sesiones grupales."],
+            r: 1
+        },
+        {
+            p: "Se requiere simular un ataque real a los puntos de venta (TPS) para identificar vulnerabilidades críticas antes de que un criminal real las explote, mapeando riesgos en tiempo real.",
+            q: "¿Qué acciones garantizan un blindaje proactivo de la infraestructura de ventas?",
+            o: ["Formatear todos los servidores cada lunes por prevención, evitar pruebas de estrés para no tirar el sistema y confiar en un antivirus básico.", "Realizar ejercicios de Red Teaming y Pentesting, mapear vulnerabilidades en el tablero del MIS y automatizar planes de remediación.", "Cambiar las claves de acceso cada mes, instalar firewalls de marca reconocida y restringir el acceso a internet en las terminales de venta."],
+            r: 1
+        },
+        {
+            p: "Hoteles y agencias de lujo solicitan conectar sus aplicaciones a los inventarios de VIVENTU. Se requiere controlar el acceso, limitar el tráfico inusual y asegurar que solo vean datos autorizados.",
+            q: "¿Qué conjunto tecnológico permite una expansión segura con ecosistemas de socios externos?",
+            o: ["Compartir las contraseñas del servidor central mediante acuerdos de confidencialidad y enviar archivos de texto con el stock por correo electrónico.", "Implementar un API Gateway con protocolos OAuth, configurar Rate Limiting por socio y documentar técnicamente los microservicios para externos.", "Prohibir cualquier conexión externa para eliminar riesgos, usar una plataforma de pedidos manual y realizar llamadas de validación para cada stock."],
+            r: 1
+        },
+        {
+            p: "Inversionistas exigen reportes sobre el impacto ambiental si la producción aumenta un 25%. El sistema debe proyectar escenarios de consumo de recursos vinculados a la rentabilidad financiera.",
+            q: "¿Qué combinación asegura un reporte de sostenibilidad (ESG) transparente y prospectivo?",
+            o: ["Dibujar gráficas optimistas basadas en proyecciones sin datos reales y pagar por créditos de carbono para evitar mediciones internas.", "Medir el consumo real mediante sensores IoT, vincular datos del ERP con métricas de carbono y usar modelos de simulación prospectiva en el DSS.", "Realizar reportes ambientales únicamente si la empresa genera utilidades y basarse en los estándares de la competencia para definir metas propias."],
+            r: 1
+        },
+        {
+            p: "Ante una intrusión confirmada en la red, el sistema debe aislar automáticamente los servidores infectados y activar la recuperación en una zona estanca para evitar la propagación del daño.",
+            q: "¿Qué acciones técnicas minimizan el daño legal y reputacional ante un ciberataque?",
+            o: ["Apagar manualmente todos los equipos de la oficina, no reportar a las autoridades para evitar el pánico y borrar los datos filtrados de Google.", "Activar protocolos de Kill-Switch digital, ejecutar el DRP en una zona aislada y emitir notificaciones automatizadas según normativas como GDPR.", "Llamar al soporte técnico del proveedor de internet, esperar al gerente de TI para tomar decisiones y realizar un respaldo de datos en ese momento."],
+            r: 1
+        },
+        {
+            p: "VIVENTU debe demostrar que sus datos fluyen sin fricción desde la venta (TPS) hasta la estrategia (DSS) y que la interoperabilidad entre ERP, CRM e IA es nativa y ética.",
+            q: "¿Qué combinación de auditorías otorga finalmente el 'Sello de Madurez Tecnológica 2026'?",
+            o: ["Validar que no hubo caídas de sistema en la última semana, confirmar que todos tienen hardware nuevo y cumplir con el 100% del presupuesto.", "Realizar auditoría integral End-to-End de flujos de datos, certificar la interoperabilidad nativa y validar el Stress Test final del DRP.", "Verificar que se use software de marcas líderes, realizar una limpieza de archivos obsoletos y capacitar al 50% del personal en herramientas básicas."],
+            r: 1
+        },
+        {
+            p: "Se busca identificar patrones de fraude donde miles de tarjetas robadas están vinculadas a una sola red criminal, analizando el comportamiento de compra de forma relacional.",
+            q: "¿Qué tecnología protege la integridad financiera detectando redes complejas de fraude?",
+            o: ["Implementar análisis de grafos para detectar redes vinculadas, usar Machine Learning para anomalías y validación de huella digital de dispositivos (Fingerprinting).", "Bloquear tarjetas que no coincidan con el nombre del usuario, pedir videos del cliente sosteniendo su tarjeta y aceptar solo transferencias bancarias.", "Llamar telefónicamente para confirmar cada compra superior a 100 USD y solicitar una copia de la identificación oficial en cada transacción web."],
+            r: 0
+        },
+        {
+            p: "Los diseñadores en Tokio deben procesar archivos gráficos pesados ubicados en México sin que la latencia de red impida el flujo de trabajo en tiempo real desde sus hogares.",
+            q: "¿Qué infraestructura garantiza productividad técnica y seguridad de la información para trabajo remoto?",
+            o: ["Implementar arquitectura de escritorios virtuales (VDI) de alto rendimiento gráfico, acceso vía VPN con MFA y gestión centralizada de seguridad.", "Enviar archivos pesados mediante servicios de mensajería física (USB), reducir la calidad de las imágenes y obligar al trabajo presencial.", "Usar herramientas de transferencia de archivos gratuitas, permitir el almacenamiento en nubes personales y usar contraseñas simples de acceso."],
+            r: 0
+        },
+        {
+            p: "VIVENTU busca ser el primero en detectar cambios en el gusto del consumidor de lujo en Japón antes que la competencia, analizando patrones visuales en redes sociales.",
+            q: "¿Qué conjunto de herramientas permite una respuesta ágil a las tendencias del mercado?",
+            o: ["Basar la colección únicamente en lo que digan los influencers más caros y esperar a que la competencia lance su campaña para copiarla.", "Utilizar algoritmos de Visión Computacional para reconocer patrones en RRSS, correlacionar tendencias en el BI y enviar alertas automáticas a diseño.", "Realizar encuestas de opinión en centros comerciales cada seis meses y analizar los reportes de ventas de las tiendas departamentales rivales."],
+            r: 1
+        },
+        {
+            p: "Se requiere asegurar que los datos utilizados para entrenar la IA de marketing son de alta calidad, rastreando su origen desde el punto de venta para evitar decisiones basadas en 'datos basura'.",
+            q: "¿Qué proceso garantiza la calidad de la información para la analítica avanzada?",
+            o: ["Realizar auditoría de 'Linaje de Datos' (Data Lineage) para asegurar el origen, verificar la latencia de integración y analizar el uso real del BI.", "Borrar periódicamente el 20% de los datos más antiguos, comprar bases de datos externas para rellenar huecos y usar filtros de limpieza básicos.", "Confiar en que el proveedor del software de IA ya incluye filtros de calidad y realizar correcciones manuales cuando los reportes no cuadren."],
+            r: 0
+        },
+        {
+            p: "En hoteles de ultra-lujo, se busca que el personal identifique si un cliente VIP está molesto mediante su lenguaje corporal detectado por cámaras, para intervenir proactivamente con una atención personalizada.",
+            q: "¿Qué combinación permite una 'Hospitalidad Cognitiva' de alto nivel?",
+            o: ["Preguntar constantemente al cliente si se siente bien, colocar espejos en los pasillos y no intervenir para no invadir la privacidad percibida.", "Usar Visión Computacional para análisis de microexpresiones, enviar alertas silenciosas al Smartwatch del staff y sincronizar el historial del CRM.", "Poner carteles de 'Sugerencias y Quejas', realizar encuestas de satisfacción al check-out y monitorear manualmente las cámaras de seguridad."],
+            r: 1
+        },
+        {
+            p: "Un competidor en Madrid baja precios cada hora automáticamente. VIVENTU requiere decidir si igualar el precio o mantener el valor premium basándose en el sentimiento real de los clientes en ese momento.",
+            q: "¿Qué conjunto de medidas asegura una posición competitiva sólida ante la guerra de precios?",
+            o: ["Bajar los precios manualmente un 10% por debajo del rival, ignorar a la competencia y enviar empleados a anotar precios físicamente.", "Implementar bots de rastreo de precios (Scraping) automático, Social Listening para medir valor percibido y alertas de desviación en el BI.", "Contratar una agencia de mistery shopping, realizar promociones de '2x1' temporales y llamar a los clientes para preguntar por qué no compran."],
+            r: 1
+        },
+        {
+            p: "Diferencias fiscales entre Japón y México causan errores en facturas multi-divisa, retrasando el cierre contable mensual y afectando el flujo de caja operativo.",
+            q: "¿Qué acciones optimizan la precisión financiera y eliminan el error humano en el Back-Office?",
+            o: ["Mapear reglas de negocio fiscal en bots de RPA, realizar validación automática vinculada al ERP y configurar alertas de tipo de cambio.", "Contratar más contadores para revisión manual factura por factura, prohibir ventas en divisas extranjeras y realizar cierres cada seis meses.", "Usar hojas de cálculo compartidas en la nube, realizar el tipo de cambio de forma manual al final del día y simplificar la facturación a una sola moneda."],
+            r: 0
+        },
+        {
+            p: "El almacén de México reporta mermas inexplicables del 5% anual. Se requiere eliminar el conteo humano y asegurar que cada pieza sea rastreada digitalmente desde la entrada hasta la salida.",
+            q: "¿Qué herramientas aseguran la precisión del inventario y reducen la pérdida desconocida?",
+            o: ["Etiquetar unidades con tecnología RFID de largo alcance, integrar pórticos de lectura automática al ERP y sincronizar el WMS con el punto de venta.", "Instalar más cámaras de seguridad, contratar guardias adicionales y prohibir el acceso al almacén a personal no gerencial.", "Realizar inventarios manuales sorpresa diariamente con dos supervisores y colocar alarmas sonoras en todas las puertas de salida."],
+            r: 0
+        },
+        {
+            p: "Un cliente inicia su compra en la web de Madrid y desea terminarla en la tienda física de Ibiza, pero el sistema actual no reconoce su carrito de compras previo, causando fricción en la venta.",
+            q: "¿Qué conjunto tecnológico define una estrategia de Omnicanalidad exitosa?",
+            o: ["Pedir al cliente que vuelva a seleccionar sus productos, ofrecerle un cupón manual de descuento y mantener bases de datos separadas.", "Implementar una plataforma de comercio unificado con carrito en la nube e identificación del cliente mediante ID global en el CRM.", "Asignar un vendedor personal para que busque los artículos manualmente y permitir el pago únicamente en el canal donde se inició la compra."],
+            r: 1
+        },
+        {
+            p: "Para el dictamen final de madurez tecnológica, se debe validar que el MIS no solo genere reportes, sino que estos influyan realmente en la estrategia de la alta dirección bajo parámetros de interoperabilidad.",
+            q: "¿Qué conjunto de criterios permite otorgar con rigor el Sello de Madurez VIVENTU 2026?",
+            o: ["Confirmar la compra de software de marcas líderes, validar que no hubo caídas de red graves y asegurar hardware nuevo para todos.", "Auditar el linaje de datos para asegurar calidad, verificar la integración en tiempo real del ERP y analizar el uso real de tableros por directivos.", "Realizar encuestas de satisfacción de TI entre empleados, completar el programa de capacitación básica y limpiar archivos de servidores antiguos."],
+            r: 1
+        }
+    ];
+
+    let user = {}, examData = [], currentIdx = 0, score = 0, gTimer, qTimer, timeLeft = 3900;
+
+    // Función de decodificación para la ofuscación inversa
+    const dec = (s) => s.split("").reverse().join("");
+
+    // SEGURIDAD: BLUR DINÁMICO
+    window.addEventListener('blur', () => {
+        document.getElementById('lock').style.display = 'block';
+        setTimeout(() => location.reload(), 1500);
+    });
+
+    // SEGURIDAD: BLOQUEO DE TECLAS
+    document.addEventListener('keydown', e => {
+        if (e.ctrlKey && ['c','u','s','p','v'].includes(e.key) || e.key === 'F12') {
+            e.preventDefault(); location.reload();
+        }
+    });
+
+    function iniciar() {
+        user = { 
+            n: document.getElementById('nom').value, 
+            m: document.getElementById('mat').value,
+            sid: Math.random().toString(36).substr(2, 9).toUpperCase()
+        };
+        if(user.n.length < 5 || user.m.length < 5) return alert("Por favor, ingrese sus datos completos.");
+        
+        document.getElementById('p-reg').classList.add('hidden');
+        document.getElementById('p-exam').classList.remove('hidden');
+        
+        // Aleatorización Fisher-Yates
+        examData = db.sort(() => Math.random() - 0.5);
+        render();
+        
+        gTimer = setInterval(() => {
+            timeLeft--;
+            let m = Math.floor(timeLeft / 60), s = timeLeft % 60;
+            document.getElementById('clock').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+            if(timeLeft <= 0) finalizar();
+        }, 1000);
+    }
+
+    function render() {
+        if(currentIdx >= examData.length) return finalizar();
+        
+        clearTimeout(qTimer);
+        // Rotación por latencia (90 segundos)
+        qTimer = setTimeout(() => { currentIdx++; render(); }, 90000);
+
+        const data = examData[currentIdx];
+        document.getElementById('current-q').innerHTML = `
+            <div class="q-meta">BLOQUE ESTRATÉGICO - REACTIVO ${currentIdx + 1} DE ${examData.length}</div>
+            <div class="planteamiento">${data.p}</div>
+            <h3 style="margin-bottom:20px; line-height:1.4;">${data.q}</h3>
+            ${data.o.map((opt, i) => `
+                <div class="option" onclick="validar(${i}, ${data.r})">${opt}</div>
+            `).join('')}
+        `;
+    }
+
+    function validar(sel, cor) {
+        if(sel === cor) score++;
+        currentIdx++;
+        render();
+    }
+
+    function finalizar() {
+        clearInterval(gTimer); clearTimeout(qTimer);
+        const nota = ((score / examData.length) * 10).toFixed(2);
+        // Generación de Hash de Verificación (Base64)
+        const hash = btoa(`${user.m}|${nota}|${user.sid}`);
+        
+        // Guardado persistente en el navegador para el docente
+        const logs = JSON.parse(localStorage.getItem('uvm_records_2026') || '[]');
+        logs.push({...user, nota, hash, fecha: new Date().toLocaleString()});
+        localStorage.setItem('uvm_records_2026', JSON.stringify(logs));
+
+        document.getElementById('p-exam').innerHTML = `
+            <div style="text-align:center;">
+                <h1 style="color:var(--blue);">EVALUACIÓN FINALIZADA</h1>
+                <p>Sus respuestas han sido cifradas y enviadas al repositorio central.</p>
+                <div style="background:#000; padding:25px; border:1px solid #333; margin:30px 0; border-radius:8px;">
+                    <p style="font-size:0.8em; color:#555; margin-bottom:10px;">CÓDIGO ÚNICO DE CERTIFICACIÓN:</p>
+                    <code style="word-break:break-all; color:var(--blue); font-size:1.1em;">${hash}</code>
+                </div>
+                <p>Entregue este código a su profesor para validar su calificación.</p>
+                <button class="btn" style="background:#333; width:200px; margin-top:20px;" onclick="location.reload()">SALIR</button>
+            </div>
+        `;
+    }
+
+    function admin() {
+        const p = prompt("CLAVE DE ACCESO DOCENTE:");
+        if(p === "UVM2026") {
+            document.getElementById('p-reg').classList.add('hidden');
+            const logs = JSON.parse(localStorage.getItem('uvm_records_2026') || '[]');
+            let html = `
+                <div class="container" style="max-width:1000px">
+                    <h2 style="color:var(--uvm)">REPORTE DE RESULTADOS - NUBE UVM</h2>
+                    <table style="width:100%; border-collapse:collapse; margin-top:20px; font-size:0.85em;">
+                        <tr style="background:#222">
+                            <th style="padding:10px; border:1px solid #333">Nombre</th>
+                            <th style="padding:10px; border:1px solid #333">Matrícula</th>
+                            <th style="padding:10px; border:1px solid #333">Nota</th>
+                            <th style="padding:10px; border:1px solid #333">SID</th>
+                            <th style="padding:10px; border:1px solid #333">Fecha</th>
+                        </tr>
+                        ${logs.map(l => `
+                            <tr>
+                                <td style="padding:10px; border:1px solid #333">${l.n}</td>
+                                <td style="padding:10px; border:1px solid #333">${l.m}</td>
+                                <td style="padding:10px; border:1px solid #333; color:var(--blue); font-weight:bold;">${l.nota}</td>
+                                <td style="padding:10px; border:1px solid #333; font-family:monospace">${l.sid}</td>
+                                <td style="padding:10px; border:1px solid #333">${l.fecha}</td>
+                            </tr>
+                        `).join('')}
+                    </table>
+                    <button class="btn" style="background:#238636; margin-top:20px;" onclick="descargar()">DESCARGAR REPORTE TOTAL (.CSV)</button>
+                    <button class="btn" style="background:#333; margin-top:10px;" onclick="location.reload()">CERRAR PANEL</button>
+                </div>
+            `;
+            document.body.innerHTML = html;
+        }
+    }
+
+    function descargar() {
+        const logs = JSON.parse(localStorage.getItem('uvm_records_2026') || '[]');
+        let csv = "Nombre,Matricula,Nota,SID,Fecha\n";
+        logs.forEach(l => { csv += `"${l.n}","${l.m}","${l.nota}","${l.sid}","${l.fecha}"\n`; });
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'Reporte_VIVENTU_UVM_2026.csv'; a.click();
+    }
+</script>
+</body>
+</html>
