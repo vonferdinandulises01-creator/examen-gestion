@@ -1,0 +1,2 @@
+# examen-gestion
+EXAMEN PRIMER  PARCIAL TECNOLOGIAS
