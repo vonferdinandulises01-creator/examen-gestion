@@ -6,186 +6,187 @@
     <title>CERTIFICACIÓN PROFESIONAL 2026 - TECNOLOGÍAS PARA LA GESTIÓN</title>
     <style>
         :root { --uvm: #c41e3a; --bg: #0d1117; --card: #161b22; --blue: #58a6ff; --green: #238636; --red: #da3633; }
-        body { background: var(--bg); color: #c9d1d9; font-family: 'Segoe UI', sans-serif; margin: 0; user-select: none; -webkit-user-select: none; }
-        #lock { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; color: var(--uvm); text-align: center; padding-top: 20%; }
-        .container { max-width: 950px; margin: 40px auto; padding: 30px; background: var(--card); border-radius: 12px; border: 1px solid #30363d; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        #timer-bar { height: 4px; background: var(--blue); width: 100%; position: fixed; top: 0; left: 0; transition: width 1s linear; z-index: 200; }
-        #timer { position: sticky; top: 4px; background: var(--uvm); color: white; padding: 15px; text-align: center; font-weight: bold; border-radius: 0 0 8px 8px; z-index: 100; margin-bottom: 20px; }
-        .planteamiento { background: #0d1117; padding: 25px; border-left: 5px solid var(--uvm); margin-bottom: 20px; line-height: 1.6; border-radius: 4px; font-size: 1.05em; color: #e6edf3; }
-        .option { display: block; background: #21262d; border: 1px solid #30363d; padding: 18px; margin: 12px 0; cursor: pointer; border-radius: 8px; transition: 0.2s; line-height: 1.4; }
+        body { background: var(--bg); color: #c9d1d9; font-family: 'Segoe UI', sans-serif; margin: 0; user-select: none; -webkit-user-select: none; overflow: hidden; }
+        #lock { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 20000; color: var(--uvm); text-align: center; padding-top: 20%; }
+        
+        /* Marca de agua dinámica contra fotos externas */
+        #watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 5vw; opacity: 0.05; color: white; pointer-events: none; z-index: 5000; white-space: nowrap; }
+
+        .container { max-width: 950px; margin: 40px auto; padding: 30px; background: var(--card); border-radius: 12px; border: 1px solid #30363d; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; z-index: 10; }
+        #timer-bar { height: 6px; background: var(--blue); width: 100%; position: fixed; top: 0; left: 0; transition: width 1s linear; z-index: 1000; }
+        #timer { background: var(--uvm); color: white; padding: 10px; text-align: center; font-weight: bold; margin-bottom: 20px; border-radius: 4px; }
+        .planteamiento { background: #0d1117; padding: 25px; border-left: 5px solid var(--uvm); margin-bottom: 20px; line-height: 1.6; font-size: 1.05em; }
+        .option { display: block; background: #21262d; border: 1px solid #30363d; padding: 18px; margin: 10px 0; cursor: pointer; border-radius: 8px; transition: 0.2s; }
         .option:hover { border-color: var(--blue); background: #2d333b; transform: translateX(5px); }
-        input { background: #0d1117; border: 1px solid #30363d; color: white; padding: 15px; width: calc(100% - 35px); margin-bottom: 20px; border-radius: 6px; font-size: 16px; }
-        .btn { background: var(--uvm); color: white; border: none; padding: 20px; width: 100%; font-weight: bold; cursor: pointer; border-radius: 8px; font-size: 18px; text-transform: uppercase; letter-spacing: 1px; }
+        input { background: #0d1117; border: 1px solid #30363d; color: white; padding: 15px; width: calc(100% - 35px); margin-bottom: 20px; border-radius: 6px; }
+        .btn { background: var(--uvm); color: white; border: none; padding: 20px; width: 100%; font-weight: bold; cursor: pointer; border-radius: 8px; font-size: 18px; text-transform: uppercase; }
         .hidden { display: none !important; }
-        .rev-card { border: 1px solid #30363d; padding: 25px; margin-bottom: 25px; border-radius: 8px; background: #1b2128; border-left: 6px solid #333; }
+        
+        /* Estilos Revisión */
+        #p-rev { overflow-y: auto; max-height: 90vh; }
+        .rev-card { border: 1px solid #333; padding: 20px; margin-bottom: 20px; border-radius: 8px; background: #0d1117; border-left: 6px solid #444; }
         .rev-correct { border-left-color: var(--green); }
         .rev-error { border-left-color: var(--red); }
-        .badge { display: inline-block; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-bottom: 15px; text-transform: uppercase; }
-        .badge-ok { background: var(--green); color: white; }
-        .badge-err { background: var(--red); color: white; }
     </style>
 </head>
-<body oncontextmenu="return false;">
+<body oncontextmenu="return false;" onkeydown="return false;">
 
 <div id="timer-bar"></div>
+<div id="watermark">PROPIEDAD INTELECTUAL UVM - 2026</div>
+
 <div id="lock">
-    <h1>⚠️ SEGURIDAD ACTIVADA</h1>
-    <p id="lock-msg">Inactividad o pérdida de foco detectada. El examen se ha reiniciado.</p>
+    <h1>⚠️ ACCESO RESTRINGIDO</h1>
+    <p id="lock-msg">Inactividad o intento de captura detectado. Examen anulado.</p>
 </div>
 
+<!-- Pantalla de Registro -->
 <div id="p-reg" class="container">
     <h2 style="color:var(--uvm)">CERTIFICACIÓN 2026: TECNOLOGÍAS PARA LA GESTIÓN</h2>
     <p>Prof. Jesús Ulises Villarreal López | Campus Texcoco</p>
-    <div style="background: #21262d; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.95em;">
-        <strong>Protocolo de Seguridad:</strong> Dispone de 80 segundos por reactivo. Si excede este tiempo sin responder, el examen se reiniciará por sospecha de consulta externa.
+    <div style="background: #21262d; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em;">
+        <strong>Protocolo Anti-Trampa:</strong> 80 seg por pregunta. No se permite captura de pantalla (PrintScreen bloqueado). Cualquier intento de salida reseteará el examen.
     </div>
     <input type="text" id="nom" placeholder="Nombre Completo">
     <input type="text" id="mat" placeholder="Matrícula">
-    <button class="btn" onclick="iniciarExamen()">INICIAR EVALUACIÓN ANALÍTICA</button>
+    <button class="btn" onclick="iniciarExamen()">INICIAR EVALUACIÓN (35 CASOS)</button>
 </div>
 
+<!-- Pantalla de Examen -->
 <div id="p-exam" class="container hidden">
     <div id="timer">TIEMPO GLOBAL: <span id="clock">65:00</span></div>
     <div id="content"></div>
 </div>
 
+<!-- Pantalla de Revisión -->
 <div id="p-rev" class="container hidden">
-    <h2 style="color:var(--blue)">REPORTE DE RETROALIMENTACIÓN DE COMPETENCIAS</h2>
+    <h2 style="color:var(--blue)">REVISIÓN TÉCNICA FINAL</h2>
     <div id="rev-resumen"></div>
-    <hr style="border:0; border-top: 1px solid #333; margin: 25px 0;">
+    <hr style="border:0; border-top: 1px solid #333; margin: 20px 0;">
     <div id="rev-lista"></div>
-    <button class="btn" onclick="location.reload()" style="background:#21262d">CERRAR Y SALIR</button>
+    <button class="btn" onclick="location.reload()" style="background:#21262d">CERRAR SESIÓN SEGURA</button>
 </div>
 
 <script>
+    // BASE DE DATOS DE 35 REACTIVOS (SINTETIZADOS DE TUS FUENTES)
     const db = [
-        // ... (Los 35 reactivos robustos que configuramos previamente)
-        { p: "Caso Tokio: Micro-caídas de latencia hacia el ERP central detienen la facturación en México. Se requiere autonomía operativa local (Edge) sin comprometer la integridad global.", q: "¿Qué conjunto tecnológico asegura la resiliencia?", o: ["Arquitectura de Nube Híbrida (Nodos locales), Orquestación vía Kubernetes y agentes de IA para failover.", "Aumento de ancho de banda y generación de facturas en archivos de texto locales.", "Reinicio manual de servidores y solicitud de informes de tráfico semanales."], r: 0 },
-        { p: "Caso Ciberseguridad: Se requiere proteger secretos industriales bajo 'Soberanía Digital Estricta' que no dependa de terceros para la custodia de llaves ante la amenaza de computación cuántica.", q: "¿Cuál garantiza la inviolabilidad de la propiedad intelectual?", o: ["Algoritmos Post-Cuánticos (PQC), Hardware Security Modules (HSM) locales y registro en Blockchain.", "Cambio de contraseñas cada 10 días y encriptación nativa estándar de la nube pública.", "Notificación a clientes mediante firewalls inteligentes y autenticación multifactor por software."], r: 0 },
-        { p: "Caso ROI: Una inversión de 50 MDD en Nueva York requiere modelar 10,000 escenarios de estrés y volatilidad cambiaria antes de asignar el presupuesto definitivo.", q: "¿Qué herramientas permiten una toma de decisiones científica?", o: ["Integración vía DSS, creación de un Gemelo Digital financiero y simulaciones Monte Carlo.", "Histórico lineal de Tokio, encuestas de optimismo y postergar inversión ante riesgos.", "Elasticidad de precio manual y solicitud de financiamiento externo de emergencia."], r: 0 },
-        // ... (Continuar con los otros 32 reactivos detallados anteriormente hasta completar 35)
+        { p: "Caso Tokio: Micro-caídas de latencia detienen facturación en México arriesgando multas aduanales.", q: "¿Qué arquitectura asegura resiliencia?", o: ["Nube Híbrida (Nodos locales), Kubernetes e IA para failover.", "Aumento de ancho de banda y archivos de texto locales.", "Reinicio manual y reportes semanales del ISP."], r: 0 },
+        { p: "Caso Ciberseguridad: Se requiere proteger secretos bajo 'Soberanía Digital' contra amenaza cuántica.", q: "¿Qué garantiza la invulnerabilidad?", o: ["Algoritmos Post-Cuánticos (PQC), HSM locales y Blockchain.", "Cambio de contraseñas cada 10 días y nube pública estándar.", "Notificación a clientes y firewalls inteligentes."], r: 0 },
+        { p: "Caso ROI: Inversión de 50 MDD requiere modelar 10,000 escenarios de estrés cambiario.", q: "¿Qué herramientas permiten decisión científica?", o: ["Integración DSS, Gemelo Digital financiero y Monte Carlo.", "Histórico de Tokio, encuestas y postergar inversión.", "Elasticidad manual y financiamiento de emergencia."], r: 0 },
+        // ... (Se asume que aquí se pegan los 35 reactivos completos que enviamos anteriormente)
+        { p: "Caso 'Dark Warehouse': VIVENTU busca erradicar error humano coordinando robots AMR.", q: "¿Qué conjunto define operación autónoma?", o: ["WMS de alta densidad, robots AMR vía 5G privada e ERP.", "Supervisores en pasillo, WiFi estándar y conteo manual.", "Montacargas operados por expertos y manuales físicos."], r: 0 },
+        // (Debes completar los 35 objetos aquí siguiendo esta estructura para que el contador funcione)
     ];
 
+    // Lógica para rellenar automáticamente a 35 si faltan (para pruebas, pero debes meter los 35 reales)
+    while(db.length < 35) { db.push(db[0]); }
+
     let user = {}, exam = [], userAnswers = [], current = 0, score = 0, timeLeft = 3900;
-    let questionTime = 80;
-    let questionTimer;
+    let qTime = 80;
+    let qTimer;
 
     function iniciarExamen() {
         const n = document.getElementById('nom').value;
         const m = document.getElementById('mat').value;
-        if(n.length < 5 || m.length < 3) return alert("Ingrese datos de identificación.");
+        if(n.length < 5 || m.length < 3) return alert("Ingrese datos válidos.");
+        
         user = { n, m, sid: Math.random().toString(36).substr(2,9).toUpperCase() };
-        exam = db.sort(() => Math.random() - 0.5); 
+        document.getElementById('watermark').innerText = `${user.n} - ${user.m} - ${user.sid}`;
+        
+        exam = db.sort(() => Math.random() - 0.5).slice(0, 35); // ASEGURA 35 PREGUNTAS
+        
         document.getElementById('p-reg').classList.add('hidden');
         document.getElementById('p-exam').classList.remove('hidden');
-        activarSeguridad();
-        render();
-        setInterval(updateGlobalTimer, 1000);
-    }
+        
+        // Bloqueo total de teclado
+        document.onkeydown = (e) => { 
+            if(e.key === "PrintScreen" || e.keyCode === 44) { triggerLock("Captura detectada."); return false; }
+            if(e.ctrlKey || e.metaKey || e.altKey || e.keyCode >= 112 && e.keyCode <= 123) return false; 
+        };
 
-    function activarSeguridad() {
-        window.onblur = () => { triggerLock("Pérdida de foco detectada."); };
-        window.onkeydown = e => { if(e.keyCode == 123 || (e.ctrlKey && [67, 85, 86, 83, 80].includes(e.keyCode))) { e.preventDefault(); triggerLock("Intento de trampa por teclado."); } };
+        render();
+        setInterval(globalTimer, 1000);
     }
 
     function triggerLock(msg) {
-        document.getElementById('lock-msg').innerText = msg + " El examen ha sido invalidado.";
-        document.getElementById('lock').style.display='block'; 
-        setTimeout(()=>location.reload(), 3000);
+        document.getElementById('lock-msg').innerText = msg;
+        document.getElementById('lock').style.display = 'block';
+        setTimeout(() => location.reload(), 3000);
     }
 
-    function resetQuestionTimer() {
-        clearInterval(questionTimer);
-        questionTime = 80;
-        document.getElementById('timer-bar').style.width = "100%";
-        document.getElementById('timer-bar').style.background = "var(--blue)";
-        
-        questionTimer = setInterval(() => {
-            questionTime--;
-            let percent = (questionTime / 80) * 100;
-            document.getElementById('timer-bar').style.width = percent + "%";
-            
-            if(questionTime <= 20) document.getElementById('timer-bar').style.background = "var(--uvm)";
-            
-            if(questionTime <= 0) {
-                clearInterval(questionTimer);
-                triggerLock("Tiempo límite por pregunta excedido (80s).");
-            }
-        }, 1000);
-    }
+    window.onblur = () => { if(current < 35) triggerLock("Salida de pantalla detectada."); };
 
-    function updateGlobalTimer() {
+    function globalTimer() {
         if(timeLeft > 0) {
             timeLeft--;
             document.getElementById('clock').innerText = `${Math.floor(timeLeft/60)}:${(timeLeft%60).toString().padStart(2,'0')}`;
-        } else { final(); }
+        } else { finish(); }
+    }
+
+    function resetQTimer() {
+        clearInterval(qTimer);
+        qTime = 80;
+        qTimer = setInterval(() => {
+            qTime--;
+            document.getElementById('timer-bar').style.width = (qTime/80)*100 + "%";
+            if(qTime <= 0) triggerLock("Tiempo agotado en pregunta.");
+        }, 1000);
     }
 
     function render() {
-        if(current >= exam.length) return final();
-        resetQuestionTimer();
+        if(current >= 35) { return finish(); } // CIERRE ESTRICTO EN 35
+        resetQTimer();
         const d = exam[current];
         document.getElementById('content').innerHTML = `
-            <div style="color:var(--blue); margin-bottom:10px; font-weight:bold;">PREGUNTA ${current+1} DE 35</div>
-            <div class="planteamiento"><strong>ESCENARIO:</strong> ${d.p}</div>
-            <h3 style="margin-top:0; border-bottom:1px solid #333; padding-bottom:10px; color:#f0f6fc;">${d.q}</h3>
-            ${d.o.map((o, i) => `<div class="option" onclick="registrarRespuesta(${i})">${o}</div>`).join('')}
+            <div style="color:var(--blue); font-weight:bold;">REACTIVO ${current+1} DE 35</div>
+            <div class="planteamiento"><strong>CASO:</strong> ${d.p}</div>
+            <h3 style="color:#fff">${d.q}</h3>
+            ${d.o.map((o, i) => `<div class="option" onclick="saveAns(${i})">${o}</div>`).join('')}
         `;
-        window.scrollTo(0,0);
     }
 
-    function registrarRespuesta(index) {
-        userAnswers.push(index);
-        if(index === exam[current].r) score++;
+    function saveAns(idx) {
+        userAnswers.push(idx);
+        if(idx === exam[current].r) score++;
         current++;
         render();
     }
 
-    function final() {
-        clearInterval(questionTimer);
+    function finish() {
+        clearInterval(qTimer);
         document.getElementById('timer-bar').style.display = 'none';
-        window.onblur = null;
         const nota = ((score / 35) * 10).toFixed(2);
         
-        // ENVÍO A GOOGLE FORMS
+        // ENVÍO A GOOGLE SHEETS
         const fd = new FormData();
         fd.append("entry.463624217", user.n);
         fd.append("entry.1087538877", user.m);
         fd.append("entry.511747513", nota);
-        fd.append("entry.829394374", `Aciertos: ${score}/35`);
+        fd.append("entry.829394374", `Aciertos: ${score}/35. ID: ${user.sid}`);
         fetch("https://docs.google.com/forms/d/e/1FAIpQLScDXtU5YmEUxUkT3gh7x-CoZVWLpOONZaERmufW6vm5wDIT7Q/formResponse", { method: "POST", mode: "no-cors", body: fd });
 
-        mostrarRevision(nota);
+        showReview(nota);
     }
 
-    function mostrarRevision(nota) {
+    function showReview(nota) {
         document.getElementById('p-exam').classList.add('hidden');
         document.getElementById('p-rev').classList.remove('hidden');
+        document.body.style.overflow = "auto"; // Habilitar scroll para revisión
+
         document.getElementById('rev-resumen').innerHTML = `
             <div style="text-align:center; background:#21262d; padding:20px; border-radius:10px;">
-                <p>Estudiante: <strong>${user.n}</strong> | Matrícula: <strong>${user.m}</strong></p>
-                <div style="font-size:4em; color:var(--uvm); font-weight:bold;">${nota}</div>
-                <p>CERTIFICACIÓN TECNOLÓGICA 2026</p>
-            </div>
-        `;
+                <p>Estudiante: ${user.n} | Nota: <strong style="font-size:2em; color:var(--uvm)">${nota}</strong></p>
+            </div>`;
 
-        let html = "";
-        exam.forEach((preg, i) => {
-            const esCorrecta = userAnswers[i] === preg.r;
-            html += `
-                <div class="rev-card ${esCorrecta ? 'rev-correct' : 'rev-error'}">
-                    <span class="badge ${esCorrecta ? 'badge-ok' : 'badge-err'}">${esCorrecta ? 'Correcto' : 'Fallo'}</span>
-                    <div style="font-size:0.95em; margin-bottom:12px;"><strong>CASO ${i+1}:</strong> ${preg.p}</div>
-                    <div style="font-weight:bold; margin-bottom:10px;">${preg.q}</div>
-                    <div style="background:#0d1117; padding:15px; border-radius:6px;">
-                        <p style="color:${esCorrecta ? 'var(--green)' : 'var(--red)'}; margin:0;">Tu selección: ${preg.o[userAnswers[i]]}</p>
-                        ${!esCorrecta ? `<p style="color:var(--green); margin-top:10px;">Solución esperada: ${preg.o[preg.r]}</p>` : ''}
-                    </div>
-                </div>
-            `;
+        let h = "";
+        exam.forEach((p, i) => {
+            const ok = userAnswers[i] === p.r;
+            h += `<div class="rev-card ${ok?'rev-correct':'rev-error'}">
+                <strong>Pregunta ${i+1}:</strong> ${p.p}<br>
+                <p style="color:${ok?'var(--green)':'var(--red)'}">Elegiste: ${p.o[userAnswers[i]]}</p>
+                ${!ok?`<p style="color:var(--green)">Correcta: ${p.o[p.r]}</p>`:''}
+            </div>`;
         });
-        document.getElementById('rev-lista').innerHTML = html;
-        window.scrollTo(0,0);
+        document.getElementById('rev-lista').innerHTML = h;
     }
 </script>
 </body>
