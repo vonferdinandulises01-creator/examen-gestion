@@ -3,92 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CERTIFICACIÓN TECNOLOGÍAS PARA LA GESTIÓN 2026</title>
+    <title>CERTIFICACIÓN PROFESIONAL 2026 - TECNOLOGÍAS PARA LA GESTIÓN</title>
     <style>
         :root { --uvm: #c41e3a; --bg: #0d1117; --card: #161b22; --blue: #58a6ff; --green: #238636; --red: #da3633; }
         body { background: var(--bg); color: #c9d1d9; font-family: 'Segoe UI', sans-serif; margin: 0; user-select: none; -webkit-user-select: none; }
         #lock { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; color: var(--uvm); text-align: center; padding-top: 20%; }
-        .container { max-width: 900px; margin: 40px auto; padding: 30px; background: var(--card); border-radius: 12px; border: 1px solid #30363d; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        #timer { position: sticky; top: 0; background: var(--uvm); color: white; padding: 15px; text-align: center; font-weight: bold; border-radius: 8px; z-index: 100; margin-bottom: 20px; }
-        .planteamiento { background: #0d1117; padding: 20px; border-left: 5px solid var(--uvm); margin-bottom: 15px; line-height: 1.6; border-radius: 4px; }
-        .option { display: block; background: #21262d; border: 1px solid #30363d; padding: 15px; margin: 10px 0; cursor: pointer; border-radius: 8px; transition: 0.2s; }
-        .option:hover { border-color: var(--blue); background: #2d333b; }
-        input { background: #0d1117; border: 1px solid #30363d; color: white; padding: 15px; width: calc(100% - 35px); margin-bottom: 20px; border-radius: 6px; }
-        .btn { background: var(--uvm); color: white; border: none; padding: 20px; width: 100%; font-weight: bold; cursor: pointer; border-radius: 8px; font-size: 16px; text-transform: uppercase; }
+        .container { max-width: 950px; margin: 40px auto; padding: 30px; background: var(--card); border-radius: 12px; border: 1px solid #30363d; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        #timer-bar { height: 4px; background: var(--blue); width: 100%; position: fixed; top: 0; left: 0; transition: width 1s linear; z-index: 200; }
+        #timer { position: sticky; top: 4px; background: var(--uvm); color: white; padding: 15px; text-align: center; font-weight: bold; border-radius: 0 0 8px 8px; z-index: 100; margin-bottom: 20px; }
+        .planteamiento { background: #0d1117; padding: 25px; border-left: 5px solid var(--uvm); margin-bottom: 20px; line-height: 1.6; border-radius: 4px; font-size: 1.05em; color: #e6edf3; }
+        .option { display: block; background: #21262d; border: 1px solid #30363d; padding: 18px; margin: 12px 0; cursor: pointer; border-radius: 8px; transition: 0.2s; line-height: 1.4; }
+        .option:hover { border-color: var(--blue); background: #2d333b; transform: translateX(5px); }
+        input { background: #0d1117; border: 1px solid #30363d; color: white; padding: 15px; width: calc(100% - 35px); margin-bottom: 20px; border-radius: 6px; font-size: 16px; }
+        .btn { background: var(--uvm); color: white; border: none; padding: 20px; width: 100%; font-weight: bold; cursor: pointer; border-radius: 8px; font-size: 18px; text-transform: uppercase; letter-spacing: 1px; }
         .hidden { display: none !important; }
-        
-        /* Estilos de Revisión */
-        .rev-card { border: 1px solid #30363d; padding: 20px; margin-bottom: 20px; border-radius: 8px; background: #0d1117; }
-        .rev-correct { border-left: 5px solid var(--green); background: rgba(35, 134, 54, 0.1); }
-        .rev-error { border-left: 5px solid var(--red); background: rgba(218, 54, 51, 0.1); }
-        .badge { display: inline-block; padding: 5px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-bottom: 10px; }
+        .rev-card { border: 1px solid #30363d; padding: 25px; margin-bottom: 25px; border-radius: 8px; background: #1b2128; border-left: 6px solid #333; }
+        .rev-correct { border-left-color: var(--green); }
+        .rev-error { border-left-color: var(--red); }
+        .badge { display: inline-block; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-bottom: 15px; text-transform: uppercase; }
         .badge-ok { background: var(--green); color: white; }
         .badge-err { background: var(--red); color: white; }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
+<div id="timer-bar"></div>
 <div id="lock">
     <h1>⚠️ SEGURIDAD ACTIVADA</h1>
-    <p>Pérdida de foco detectada. El examen se ha invalidado para proteger la integridad académica.</p>
+    <p id="lock-msg">Inactividad o pérdida de foco detectada. El examen se ha reiniciado.</p>
 </div>
 
 <div id="p-reg" class="container">
-    <h2 style="color:var(--uvm)">CERTIFICACIÓN PROFESIONAL: TECNOLOGÍAS PARA LA GESTIÓN</h2>
-    <p>Prof. Jesús Ulises Villarreal López | Ciclo 2026</p>
+    <h2 style="color:var(--uvm)">CERTIFICACIÓN 2026: TECNOLOGÍAS PARA LA GESTIÓN</h2>
+    <p>Prof. Jesús Ulises Villarreal López | Campus Texcoco</p>
+    <div style="background: #21262d; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.95em;">
+        <strong>Protocolo de Seguridad:</strong> Dispone de 80 segundos por reactivo. Si excede este tiempo sin responder, el examen se reiniciará por sospecha de consulta externa.
+    </div>
     <input type="text" id="nom" placeholder="Nombre Completo">
     <input type="text" id="mat" placeholder="Matrícula">
-    <button class="btn" onclick="iniciarExamen()">INICIAR EVALUACIÓN (35 REACTIVOS)</button>
+    <button class="btn" onclick="iniciarExamen()">INICIAR EVALUACIÓN ANALÍTICA</button>
 </div>
 
 <div id="p-exam" class="container hidden">
-    <div id="timer">TIEMPO: <span id="clock">65:00</span></div>
+    <div id="timer">TIEMPO GLOBAL: <span id="clock">65:00</span></div>
     <div id="content"></div>
 </div>
 
 <div id="p-rev" class="container hidden">
-    <h2 style="color:var(--blue)">REVISIÓN DE RESULTADOS</h2>
+    <h2 style="color:var(--blue)">REPORTE DE RETROALIMENTACIÓN DE COMPETENCIAS</h2>
     <div id="rev-resumen"></div>
-    <hr style="border:0; border-top: 1px solid #333; margin: 20px 0;">
+    <hr style="border:0; border-top: 1px solid #333; margin: 25px 0;">
     <div id="rev-lista"></div>
-    <button class="btn" onclick="location.reload()" style="background:#21262d">FINALIZAR REVISIÓN Y SALIR</button>
+    <button class="btn" onclick="location.reload()" style="background:#21262d">CERRAR Y SALIR</button>
 </div>
 
 <script>
     const db = [
-        { p: "La unidad en Tokio reporta micro-caídas de latencia hacia el ERP central que colapsan la facturación. Se requiere autonomía local sin perder integridad global.", q: "¿Qué conjunto tecnológico asegura la continuidad?", o: ["Nube Híbrida (Nodos locales), Kubernetes y agentes de IA para failover.", "Aumentar el ancho de banda y solicitar informes semanales al ISP.", "Reiniciar servidores manualmente y generar facturas en texto local."], r: 0 },
-        { p: "Se requiere proteger fórmulas y bases de datos VIP contra amenaza cuántica sin depender de terceros para la custodia de llaves.", q: "¿Cuál conjunto garantiza la seguridad de la propiedad intelectual?", o: ["Encriptación nativa de la nube pública y claves cambiadas cada 15 días.", "Hardware Security Modules (HSM) locales, algoritmos Post-Cuánticos (PQC) y Blockchain.", "Confiar en AES-256 estándar y carpetas compartidas con contraseña."], r: 1 },
-        { p: "VIVENTU proyecta inversión de 50 MDD. Se requiere simulación de 10,000 escenarios de estrés antes de autorizar el gasto.", q: "¿Qué herramientas permiten una toma de decisiones científica?", o: ["Basar presupuesto en histórico de Tokio y encuestas de opinión.", "Gemelo Digital financiero, flujos vía DSS y simulaciones Monte Carlo.", "Postergar inversión y realizar proyecciones lineales en Excel."], r: 1 },
-        { p: "La App colapsa en lanzamientos por estructura monolítica. Se requiere que cada función opere independientemente.", q: "¿Qué combinación técnica asegura escalabilidad?", o: ["Servidor físico de mayor capacidad y límites de acceso.", "Microservicios, APIs estandarizadas y flujos CI/CD.", "Mantenimientos de 6 horas y bases de datos separadas."], r: 1 },
-        { p: "Marketing requiere cruzar ventas (estructurado) con reseñas en video (no estructurado).", q: "¿Qué estructura permite analítica predictiva unificada?", o: ["Data Lakehouse integrado, SQL + Machine Learning y metadatos.", "Transcribir videos a Excel y consolidar manualmente.", "Eliminar datos no estructurados y usar bases independientes."], r: 0 },
-        // ... (Agrega aquí el resto de los 35 reactivos de la base anterior)
-        { p: "El sistema de IA de créditos muestra sesgo demográfico. Se debe demostrar transparencia ante reguladores.", q: "¿Qué conjunto asegura gestión responsable?", o: ["Protocolos Explainable AI (XAI), Bias Testing y Comité de Ética.", "Declarar secreto industrial y volver a segmentación manual.", "Responsabilizar al proveedor externo y desactivar el módulo."], r: 0 }
+        // ... (Los 35 reactivos robustos que configuramos previamente)
+        { p: "Caso Tokio: Micro-caídas de latencia hacia el ERP central detienen la facturación en México. Se requiere autonomía operativa local (Edge) sin comprometer la integridad global.", q: "¿Qué conjunto tecnológico asegura la resiliencia?", o: ["Arquitectura de Nube Híbrida (Nodos locales), Orquestación vía Kubernetes y agentes de IA para failover.", "Aumento de ancho de banda y generación de facturas en archivos de texto locales.", "Reinicio manual de servidores y solicitud de informes de tráfico semanales."], r: 0 },
+        { p: "Caso Ciberseguridad: Se requiere proteger secretos industriales bajo 'Soberanía Digital Estricta' que no dependa de terceros para la custodia de llaves ante la amenaza de computación cuántica.", q: "¿Cuál garantiza la inviolabilidad de la propiedad intelectual?", o: ["Algoritmos Post-Cuánticos (PQC), Hardware Security Modules (HSM) locales y registro en Blockchain.", "Cambio de contraseñas cada 10 días y encriptación nativa estándar de la nube pública.", "Notificación a clientes mediante firewalls inteligentes y autenticación multifactor por software."], r: 0 },
+        { p: "Caso ROI: Una inversión de 50 MDD en Nueva York requiere modelar 10,000 escenarios de estrés y volatilidad cambiaria antes de asignar el presupuesto definitivo.", q: "¿Qué herramientas permiten una toma de decisiones científica?", o: ["Integración vía DSS, creación de un Gemelo Digital financiero y simulaciones Monte Carlo.", "Histórico lineal de Tokio, encuestas de optimismo y postergar inversión ante riesgos.", "Elasticidad de precio manual y solicitud de financiamiento externo de emergencia."], r: 0 },
+        // ... (Continuar con los otros 32 reactivos detallados anteriormente hasta completar 35)
     ];
 
     let user = {}, exam = [], userAnswers = [], current = 0, score = 0, timeLeft = 3900;
+    let questionTime = 80;
+    let questionTimer;
 
     function iniciarExamen() {
         const n = document.getElementById('nom').value;
         const m = document.getElementById('mat').value;
-        if(n.length < 5 || m.length < 3) return alert("Ingrese datos válidos.");
-        
+        if(n.length < 5 || m.length < 3) return alert("Ingrese datos de identificación.");
         user = { n, m, sid: Math.random().toString(36).substr(2,9).toUpperCase() };
-        exam = db.sort(() => Math.random() - 0.5).slice(0, 35);
-        
+        exam = db.sort(() => Math.random() - 0.5); 
         document.getElementById('p-reg').classList.add('hidden');
         document.getElementById('p-exam').classList.remove('hidden');
-        
         activarSeguridad();
         render();
-        setInterval(updateTimer, 1000);
+        setInterval(updateGlobalTimer, 1000);
     }
 
     function activarSeguridad() {
-        window.onblur = () => { document.getElementById('lock').style.display='block'; setTimeout(()=>location.reload(), 3000); };
-        window.onkeydown = e => { if(e.keyCode == 123 || (e.ctrlKey && [67, 85, 86, 83, 80].includes(e.keyCode))) { e.preventDefault(); location.reload(); } };
+        window.onblur = () => { triggerLock("Pérdida de foco detectada."); };
+        window.onkeydown = e => { if(e.keyCode == 123 || (e.ctrlKey && [67, 85, 86, 83, 80].includes(e.keyCode))) { e.preventDefault(); triggerLock("Intento de trampa por teclado."); } };
     }
 
-    function updateTimer() {
+    function triggerLock(msg) {
+        document.getElementById('lock-msg').innerText = msg + " El examen ha sido invalidado.";
+        document.getElementById('lock').style.display='block'; 
+        setTimeout(()=>location.reload(), 3000);
+    }
+
+    function resetQuestionTimer() {
+        clearInterval(questionTimer);
+        questionTime = 80;
+        document.getElementById('timer-bar').style.width = "100%";
+        document.getElementById('timer-bar').style.background = "var(--blue)";
+        
+        questionTimer = setInterval(() => {
+            questionTime--;
+            let percent = (questionTime / 80) * 100;
+            document.getElementById('timer-bar').style.width = percent + "%";
+            
+            if(questionTime <= 20) document.getElementById('timer-bar').style.background = "var(--uvm)";
+            
+            if(questionTime <= 0) {
+                clearInterval(questionTimer);
+                triggerLock("Tiempo límite por pregunta excedido (80s).");
+            }
+        }, 1000);
+    }
+
+    function updateGlobalTimer() {
         if(timeLeft > 0) {
             timeLeft--;
             document.getElementById('clock').innerText = `${Math.floor(timeLeft/60)}:${(timeLeft%60).toString().padStart(2,'0')}`;
@@ -97,11 +123,12 @@
 
     function render() {
         if(current >= exam.length) return final();
+        resetQuestionTimer();
         const d = exam[current];
         document.getElementById('content').innerHTML = `
             <div style="color:var(--blue); margin-bottom:10px; font-weight:bold;">PREGUNTA ${current+1} DE 35</div>
-            <div class="planteamiento"><b>CASO:</b> ${d.p}</div>
-            <h3>${d.q}</h3>
+            <div class="planteamiento"><strong>ESCENARIO:</strong> ${d.p}</div>
+            <h3 style="margin-top:0; border-bottom:1px solid #333; padding-bottom:10px; color:#f0f6fc;">${d.q}</h3>
             ${d.o.map((o, i) => `<div class="option" onclick="registrarRespuesta(${i})">${o}</div>`).join('')}
         `;
         window.scrollTo(0,0);
@@ -115,15 +142,17 @@
     }
 
     function final() {
+        clearInterval(questionTimer);
+        document.getElementById('timer-bar').style.display = 'none';
         window.onblur = null;
         const nota = ((score / 35) * 10).toFixed(2);
         
-        // Enviar a Google Forms
+        // ENVÍO A GOOGLE FORMS
         const fd = new FormData();
         fd.append("entry.463624217", user.n);
         fd.append("entry.1087538877", user.m);
         fd.append("entry.511747513", nota);
-        fd.append("entry.829394374", "Finalizado - Ver Revisión en Pantalla");
+        fd.append("entry.829394374", `Aciertos: ${score}/35`);
         fetch("https://docs.google.com/forms/d/e/1FAIpQLScDXtU5YmEUxUkT3gh7x-CoZVWLpOONZaERmufW6vm5wDIT7Q/formResponse", { method: "POST", mode: "no-cors", body: fd });
 
         mostrarRevision(nota);
@@ -132,12 +161,11 @@
     function mostrarRevision(nota) {
         document.getElementById('p-exam').classList.add('hidden');
         document.getElementById('p-rev').classList.remove('hidden');
-        
         document.getElementById('rev-resumen').innerHTML = `
-            <div style="text-align:center;">
-                <p>Estudiante: <b>${user.n}</b> | Matrícula: <b>${user.m}</b></p>
-                <div style="font-size:3em; color:var(--uvm); font-weight:bold;">${nota}</div>
-                <p>Aciertos: ${score} de 35</p>
+            <div style="text-align:center; background:#21262d; padding:20px; border-radius:10px;">
+                <p>Estudiante: <strong>${user.n}</strong> | Matrícula: <strong>${user.m}</strong></p>
+                <div style="font-size:4em; color:var(--uvm); font-weight:bold;">${nota}</div>
+                <p>CERTIFICACIÓN TECNOLÓGICA 2026</p>
             </div>
         `;
 
@@ -146,16 +174,12 @@
             const esCorrecta = userAnswers[i] === preg.r;
             html += `
                 <div class="rev-card ${esCorrecta ? 'rev-correct' : 'rev-error'}">
-                    <span class="badge ${esCorrecta ? 'badge-ok' : 'badge-err'}">
-                        ${esCorrecta ? 'CORRECTA' : 'ERROR'}
-                    </span>
-                    <div style="font-size:0.9em; margin-bottom:10px;"><b>Caso ${i+1}:</b> ${preg.p}</div>
+                    <span class="badge ${esCorrecta ? 'badge-ok' : 'badge-err'}">${esCorrecta ? 'Correcto' : 'Fallo'}</span>
+                    <div style="font-size:0.95em; margin-bottom:12px;"><strong>CASO ${i+1}:</strong> ${preg.p}</div>
                     <div style="font-weight:bold; margin-bottom:10px;">${preg.q}</div>
-                    <div style="font-size:0.9em;">
-                        <p style="color:${esCorrecta ? 'var(--green)' : 'var(--red)'}">
-                            Tu respuesta: ${preg.o[userAnswers[i]]}
-                        </p>
-                        ${!esCorrecta ? `<p style="color:var(--green)"><b>Respuesta correcta:</b> ${preg.o[preg.r]}</p>` : ''}
+                    <div style="background:#0d1117; padding:15px; border-radius:6px;">
+                        <p style="color:${esCorrecta ? 'var(--green)' : 'var(--red)'}; margin:0;">Tu selección: ${preg.o[userAnswers[i]]}</p>
+                        ${!esCorrecta ? `<p style="color:var(--green); margin-top:10px;">Solución esperada: ${preg.o[preg.r]}</p>` : ''}
                     </div>
                 </div>
             `;
