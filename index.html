@@ -2,34 +2,52 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>CERTIFICACIÓN TECNOLOGÍAS PARA LA GESTIÓN 2026</title>
+    <title>CERTIFICACIÓN TECNOLOGÍAS PARA LA GESTIÓN 2026 - UVM</title>
     <style>
         :root { --uvm: #c41e3a; --bg: #0d1117; --card: #161b22; --blue: #58a6ff; }
-        body { background: var(--bg); color: #c9d1d9; font-family: 'Segoe UI', sans-serif; margin: 0; user-select: none; -webkit-user-select: none; }
-        #lock { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; color: var(--uvm); text-align: center; padding-top: 20%; }
-        .container { max-width: 850px; margin: 40px auto; padding: 30px; background: var(--card); border-radius: 12px; border: 1px solid #30363d; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        #timer { position: sticky; top: 0; background: var(--uvm); color: white; padding: 15px; text-align: center; font-weight: bold; border-radius: 8px; z-index: 100; }
+        body { background: var(--bg); color: #c9d1d9; font-family: 'Segoe UI', sans-serif; margin: 0; user-select: none; -webkit-user-select: none; overflow-x: hidden; }
+        
+        /* Marca de Agua de Sesión */
+        #watermark { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; color: rgba(255,255,255,0.02); font-size: 8vw; display: flex; align-items: center; justify-content: center; transform: rotate(-30deg); white-space: nowrap; font-weight: bold; }
+        
+        /* Blindaje de Interfaz */
+        #lock { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; color: var(--uvm); text-align: center; padding-top: 20%; font-size: 1.5rem; }
+        .blur-active { filter: blur(40px) grayscale(100%); pointer-events: none; }
+
+        .container { max-width: 850px; margin: 40px auto; padding: 30px; background: var(--card); border-radius: 12px; border: 1px solid #30363d; position: relative; z-index: 10; }
+        #timer { position: sticky; top: 0; background: var(--uvm); color: white; padding: 15px; text-align: center; font-weight: bold; border-radius: 8px; z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        
         .planteamiento { background: #0d1117; padding: 20px; border-left: 5px solid var(--uvm); margin-bottom: 25px; line-height: 1.6; border-radius: 4px; font-size: 1.05em; }
         .option { display: block; background: #21262d; border: 1px solid #30363d; padding: 20px; margin: 12px 0; cursor: pointer; border-radius: 8px; transition: 0.3s; line-height: 1.4; }
         .option:hover { border-color: var(--blue); background: #2d333b; transform: translateX(10px); }
-        input { background: #0d1117; border: 1px solid #30363d; color: white; padding: 15px; width: calc(100% - 32px); margin-bottom: 20px; border-radius: 6px; }
+        
+        input { background: #0d1117; border: 1px solid #30363d; color: white; padding: 15px; width: calc(100% - 32px); margin-bottom: 20px; border-radius: 6px; font-size: 1em; }
         .btn { background: var(--uvm); color: white; border: none; padding: 20px; width: 100%; font-weight: bold; cursor: pointer; border-radius: 8px; font-size: 1.1em; }
         .hidden { display: none; }
-        .meta { color: var(--blue); font-size: 0.8em; margin-bottom: 10px; font-weight: bold; }
+        .meta { color: var(--blue); font-size: 0.8em; margin-bottom: 10px; font-weight: bold; text-transform: uppercase; }
+        table { width: 100%; border-collapse: collapse; margin-top: 25px; }
+        th, td { border: 1px solid #333; padding: 12px; text-align: left; }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
-<div id="lock"><h1>⚠️ SEGURIDAD ACTIVADA</h1><p>Pérdida de foco detectada. El examen se ha reiniciado por seguridad.</p></div>
+<div id="watermark">PROPIEDAD VILLARREAL - PROHIBIDA CAPTURA</div>
+<div id="lock">
+    <h1>⚠️ VIOLACIÓN DE PROTOCOLO DETECTADA</h1>
+    <p>Se detectó pérdida de foco o intento de captura.</p>
+    <p><strong>EL EXAMEN SE HA RESETEADO AUTOMÁTICAMENTE.</strong></p>
+</div>
 
 <div id="p-reg" class="container">
-    <h2 style="color:var(--uvm); text-align:center;">EXAMEN CERTIFICADOR: TECNOLOGÍAS PARA LA GESTIÓN</h2>
-    <p style="text-align:center;">Prof. Jesús Ulises Villarreal López | Ciclo 2026</p>
-    <hr style="border:0; border-top:1px solid #333; margin:20px 0;">
-    <input type="text" id="nom" placeholder="Nombre Completo">
+    <h1 style="color:var(--uvm); text-align:center; margin-bottom:0;">UVM TEXCOCO</h1>
+    <p style="text-align:center; margin-top:5px;">Tecnologías para la Gestión | Prof. Jesús Ulises Villarreal López</p>
+    <hr style="border:0; border-top:1px solid #333; margin:25px 0;">
+    <input type="text" id="nom" placeholder="Nombre Completo (Apellidos primero)">
     <input type="text" id="mat" placeholder="Matrícula">
-    <button class="btn" onclick="start()">INICIAR EVALUACIÓN (65 MIN)</button>
-    <div style="text-align: right; margin-top: 30px;"><span onclick="admin()" style="color:#222; cursor:pointer; font-size:0.8em;">[Admin Mode]</span></div>
+    <button class="btn" onclick="start()">INICIAR EXAMEN CERTIFICADOR (65 MIN)</button>
+    <div style="text-align: right; margin-top: 40px;">
+        <span onclick="admin()" style="color:#222; cursor:pointer; font-size: 0.8em;">[Panel Administrativo]</span>
+    </div>
 </div>
 
 <div id="p-exam" class="container hidden">
@@ -38,266 +56,195 @@
 </div>
 
 <script>
+    // BASE DE DATOS ROBUSTA: 35 REACTIVOS ESTRATÉGICOS
     const db = [
         {
-            p: "La unidad operativa en Tokio reporta micro-caídas de latencia hacia el ERP central en México. Se requiere una arquitectura que garantice autonomía local e integridad global mediante respuesta automatizada[cite: 1, 2].",
-            q: "¿Qué combinación asegura la disponibilidad del servicio?",
-            o: ["Reiniciar manualmente servidores y solicitar informes semanales al ISP.", "Implementar Nube Híbrida con nodos locales, orquestación con Kubernetes y agentes de IA para failover preventivo[cite: 1].", "Aumentar el ancho de banda sin modificar la topología del sistema."],
+            p: "La unidad operativa en Tokio reporta micro-caídas de latencia constantes hacia el ERP central en México. Se requiere autonomía local e integridad global mediante respuesta automatizada para evitar multas aduanales.",
+            q: "¿Qué combinación tecnológica asegura la disponibilidad del servicio?",
+            o: ["Reiniciar manualmente servidores y solicitar informes semanales al ISP.", "Arquitectura de Nube Híbrida (nodos locales), orquestación con Kubernetes y agentes de IA para failover preventivo.", "Aumentar el ancho de banda contratado sin modificar la topología del sistema."],
             r: 1
         },
         {
-            p: "Se requiere proteger fórmulas y bases de datos VIP bajo un esquema de 'Soberanía Digital' ante amenazas de computación cuántica[cite: 1, 2].",
+            p: "Se requiere proteger fórmulas y bases de datos VIP bajo un esquema de 'Soberanía Digital' ante la amenaza de computación cuántica, sin depender de terceros para la gestión de llaves.",
             q: "¿Cuál conjunto asegura la invulnerabilidad de la propiedad intelectual?",
-            o: ["Implementar algoritmos de encriptación post-cuántica (PQC), Hardware Security Modules (HSM) locales y registro inmutable en Blockchain[cite: 1, 3].", "Cambiar contraseñas cada 15 días y usar carpetas compartidas protegidas.", "Confiar en la encriptación estándar nativa de la nube pública."],
+            o: ["Hardware Security Modules (HSM) locales, algoritmos de encriptación post-cuántica (PQC) y registro inmutable en Blockchain.", "Cambiar contraseñas cada 15 días y usar carpetas compartidas protegidas por clave.", "Confiar en la encriptación estándar nativa de proveedores de nube pública."],
             r: 0
         },
         {
-            p: "Para una inversión de 50 MDD en Nueva York, se requiere una simulación dinámica para modelar variables de estrés antes de invertir.",
-            q: "¿Qué conjunto permite proyectar científicamente el ROI?",
-            o: ["Realizar encuestas de opinión subjetiva entre gerentes regionales.", "Basar el presupuesto exclusivamente en el histórico de Tokio.", "Crear un Gemelo Digital financiero, integrar flujos vía DSS y ejecutar simulaciones Monte Carlo[cite: 1, 3]."],
+            p: "Para una inversión estratégica de 50 MDD en Nueva York, se requiere una simulación dinámica que permita modelar variables de estrés financiero antes de asignar presupuesto.",
+            q: "¿Qué herramientas permiten una toma de decisiones científica para asegurar el ROI?",
+            o: ["Basar presupuesto en históricos de Tokio y realizar encuestas de opinión entre gerentes regionales.", "Crear un Gemelo Digital financiero, integrar flujos de datos vía DSS y ejecutar simulaciones Monte Carlo.", "Postergar la inversión hasta ver resultados reales o que el mercado se estabilice."],
+            r: 1
+        },
+        {
+            p: "El sistema actual es monolítico y colapsa en picos de tráfico durante lanzamientos globales. Se busca transición hacia agilidad y despliegue sin paros técnicos.",
+            q: "¿Qué combinación permite escalar funciones críticas de forma independiente?",
+            o: ["Arquitectura de Microservicios, implementación de APIs estandarizadas y flujos de CI/CD para despliegues en caliente.", "Adquirir un servidor físico de mayor capacidad y limitar el acceso de usuarios por turnos.", "Programar mantenimientos de 6 horas durante fines de semana de alta demanda."],
+            r: 0
+        },
+        {
+            p: "Marketing no puede cruzar datos estructurados del ERP con videos de reseñas no estructurados. Se requiere procesamiento masivo unificado.",
+            q: "¿Qué estructura permite generar analítica predictiva unificada?",
+            o: ["Transcribir videos a Excel manualmente y mantener bases separadas por departamento.", "Migrar hacia una arquitectura Data Lakehouse integrada que soporte SQL y Machine Learning.", "Eliminar datos no estructurados para simplificar el almacenamiento unificado."],
+            r: 1
+        },
+        {
+            p: "Se presentan fallos por sobrecalentamiento imprevisto en servidores de Texcoco. El sistema debe detectar calor y actuar bajando frecuencia de procesadores autónomamente.",
+            q: "¿Qué medidas garantizan la continuidad mediante monitoreo inteligente?",
+            o: ["Despliegue de cámaras térmicas IoT, algoritmos de IA prescriptiva para ajuste de carga y registro automático en el ERP.", "Ventiladores industriales de flujo permanente y rondas de inspección humana con termómetros láser.", "Apagar equipos críticos durante la noche para evitar estrés térmico."],
+            r: 0
+        },
+        {
+            p: "VIVENTU busca un 'Dark Warehouse' con nula intervención humana en surtido, coordinando robots autónomos (AMR) con inventario central.",
+            q: "¿Qué conjunto tecnológico define una operación autónoma?",
+            o: ["Supervisores humanos en pasillos y conteo manual semanal de inventario para validar exactitud.", "WMS de alta densidad, robots AMR con red privada 5G e integración nativa de movimientos con el ERP.", "Sustituir la flota por montacargas manuales operados por expertos."],
+            r: 1
+        },
+        {
+            p: "Sustitución de producto por imitaciones en trayectos internacionales. Se requiere asegurar que el empaque no ha sido vulnerado y registrar la traza inalterable.",
+            q: "¿Qué tecnologías aseguran la integridad internacional?",
+            o: ["Smart Tags con sensores de luz, registro de custodia en red Blockchain y alertas automáticas al CRM.", "Sellos de cera tradicionales con logo institucional y llamar telefónicamente al cliente.", "Fabricar cajas de madera más pesadas para dificultar manipulación física."],
+            r: 0
+        },
+        {
+            p: "El costo eléctrico en Texcoco compromete márgenes. Se requiere apagar líneas no críticas en horas pico y reportar ESG automáticamente para inversionistas.",
+            q: "¿Qué combinación permite gestión energética auditable?",
+            o: ["Solicitar a empleados apagar luces manualmente e instalar paneles solares genéricos.", "Generar reportes manuales únicamente si hay utilidades y usar luminarias LED.", "Sensores IoT de control energético, algoritmos de optimización según costo de KWh y reportes ESG vía MIS."],
             r: 2
         },
         {
-            p: "El sistema actual es monolítico y colapsa en picos de tráfico. Se busca agilidad y despliegue sin paros técnicos[cite: 1, 2].",
-            q: "¿Qué combinación permite escalar funciones críticas de forma independiente?",
-            o: ["Limitar acceso de usuarios por turnos y programar mantenimientos de 6 horas.", "Arquitectura de Microservicios, APIs estandarizadas y flujos de CI/CD para despliegues en caliente[cite: 1, 2].", "Adquirir un servidor físico de mayor capacidad."],
-            r: 1
-        },
-        {
-            p: "Marketing no puede cruzar datos estructurados con videos de reseñas no estructurados. Se requiere procesamiento masivo unificado[cite: 1, 2].",
-            q: "¿Qué estructura permite generar analítica predictiva unificada?",
-            o: ["Transcribir videos a Excel manualmente.", "Arquitectura Data Lakehouse integrada con soporte para SQL y Machine Learning.", "Bases de datos separadas por departamento."],
-            r: 1
-        },
-        {
-            p: "Se presentan fallos por sobrecalentamiento imprevisto en servidores. El sistema debe detectar calor y actuar bajando frecuencia de procesadores autónomamente.",
-            q: "¿Qué medidas garantizan la continuidad mediante monitoreo inteligente?",
-            o: ["Cámaras térmicas IoT, IA prescriptiva para ajuste térmico y registro automático en el ERP.", "Inspección humana con termómetros láser cada 4 horas.", "Ventiladores industriales de flujo permanente."],
-            r: 0
-        },
-        {
-            p: "VIVENTU busca un 'Dark Warehouse' con nula intervención humana y error de picking tendiente a cero.",
-            q: "¿Qué conjunto tecnológico define una operación autónoma?",
-            o: ["Supervisores humanos en pasillos y conteo manual semanal.", "WMS de alta densidad, robots AMR con red privada 5G e integración nativa con el ERP.", "Montacargas manuales operados por expertos."],
-            r: 1
-        },
-        {
-            p: "Sustitución de producto por imitaciones en trayectos. Se requiere asegurar que el empaque no ha sido vulnerado y registrar la traza inalterable.",
-            q: "¿Qué tecnologías aseguran la integridad internacional?",
-            o: ["Smart Tags con sensores de luz, registro en red Blockchain y alertas automáticas al CRM.", "Sellos de cera tradicionales y llamadas telefónicas al cliente.", "Cajas de madera pesadas para dificultar manipulación."],
-            r: 0
-        },
-        {
-            p: "El costo eléctrico compromete márgenes. Se requiere apagar líneas no críticas en horas pico y reportar ESG automáticamente.",
-            q: "¿Qué combinación permite gestión energética auditable?",
-            o: ["Apagado manual por empleados y paneles solares sin monitoreo.", "Sensores y actuadores IoT, algoritmos de optimización de costo KWh y reportes ESG vía MIS.", "Luminarias LED de cambio anual."],
-            r: 1
-        },
-        {
-            p: "El ojo humano falla por fatiga en control de calidad. Se requiere rechazo automático de botellas con etiquetas desalineadas en milisegundos.",
+            p: "El ojo humano falla por fatiga detectando etiquetas desalineadas en botellas premium. Se requiere rechazo automático en milisegundos sin detener la producción.",
             q: "¿Qué herramientas garantizan excelencia con productividad?",
-            o: ["Segundo equipo de inspección manual.", "Visión Artificial de alta resolución, rechazo automático integrado y análisis de defectos en BI.", "Reducir velocidad de banda transportadora."],
+            o: ["Contratar un segundo equipo de inspección manual y reducir la velocidad de banda.", "Visión Artificial de alta resolución, mecanismos de rechazo automático y análisis de recurrencia en BI.", "Ignorar desviaciones menores a 3mm por ser aceptables bajo estrés operativo."],
             r: 1
         },
         {
-            p: "Predecir intención de compra antes de que el cliente entre a la tienda física mediante su rastro digital.",
+            p: "Predecir intención de compra antes de que el cliente entre a la tienda física analizando su rastro digital para que el vendedor lo reciba proactivamente.",
             q: "¿Qué combinación otorga ventaja competitiva en el punto de venta?",
-            o: ["Deep Learning para patrones de intención, integración de redes al CRM y alertas al Smartwatch del vendedor.", "Correos masivos con descuentos genéricos.", "Telemarketing constante."],
+            o: ["Deep Learning para patrones de intención, integración web/redes al CRM y alertas al Smartwatch del vendedor.", "Envío de correos masivos genéricos y llamadas constantes de telemarketing.", "Reducciones de precios aleatorias para atraer tráfico sin perfil previo."],
             r: 0
         },
         {
-            p: "Visualización hiper-realista vinculada al inventario real para probar accesorios virtualmente sin errores de stock.",
+            p: "Visualización hiper-realista vinculada al inventario real para 'probar' accesorios virtualmente sin errores de stock.",
             q: "¿Qué conjunto asegura conversión en ventas reales?",
-            o: ["Fotos estáticas con modelos.", "Motores de renderizado AR en tiempo real, sincronización bidireccional probador-ERP y captura de metadatos.", "Aviso legal de imprecisión en tallas virtuales."],
+            o: ["Uso de fotos estáticas con modelos y suscripción mensual por uso de espejo virtual.", "Motores de renderizado AR en tiempo real, sincronización bidireccional probador-ERP y captura de metadatos.", "Publicar avisos legales de imprecisión en tallas virtuales."],
             r: 1
         },
         {
-            p: "Viralización de rumor malintencionado. Se requiere identificar si son bots y responder quirúrgicamente solo a impactados.",
+            p: "Viralización de rumor malintencionado. Se requiere identificar si son bots y responder quirúrgicamente solo a impactados basándose en datos.",
             q: "¿Qué medidas permiten defensa de marca basada en datos?",
-            o: ["Comunicado en periódico impreso y borrar comentarios negativos.", "Social Listening con grafos de influencia, identificación en CRM e IA Generativa para respuesta rápida.", "Cerrar redes sociales temporalmente."],
+            o: ["Comunicado en periódico impreso nacional y borrar sistemáticamente comentarios negativos.", "Social Listening con grafos de influencia, identificación en el CRM e IA Generativa para respuesta rápida.", "Cerrar las redes sociales temporalmente para evitar pánico de inversores."],
             r: 1
         },
         {
-            p: "Ajuste automático de iluminación y música según signos de estrés o aburrimiento detectados anónimamente.",
+            p: "La boutique busca ser un espacio sensorial ajustando iluminación y música según signos de estrés o aburrimiento detectados anónimamente.",
             q: "¿Qué herramientas permiten ajustar el entorno inteligentemente?",
-            o: ["Reconocimiento de microexpresiones anónimo, actuadores domóticos vía MIS y correlación en BI.", "Preguntar música al entrar a cada cliente.", "Lista de reproducción fija."],
+            o: ["Reconocimiento de microexpresiones faciales anónimas, actuadores domóticos vía MIS y correlación en BI.", "Preguntar a cada cliente su preferencia musical al entrar o abrir Bluetooth libre.", "Mantener lista de reproducción fija de 8 horas para evitar errores."],
             r: 0
         },
         {
-            p: "Sustitución de puntos por tokens intercambiables para acceso a preventas exclusivas.",
+            p: "Sustitución de puntos de lealtad tradicionales por tokens/NFTs intercambiables e inalterables para acceso a preventas exclusivas.",
             q: "¿Qué tecnologías garantizan la integridad del programa?",
-            o: ["Tarjetas de cartón con sellos físicos.", "Ecosistema basado en Tokens/NFTs, Blockchain privada y Billetera digital en App oficial.", "Asignación manual por gerentes."],
+            o: ["Tarjetas de cartón con sellos físicos coleccionables y cupones PDF por correo.", "Ecosistema basado en Tokens/NFTs, registro en Blockchain privada y Wallet en App oficial.", "Asignación manual de beneficios por gerentes de tienda."],
             r: 1
         },
         {
-            p: "La IA de crédito muestra sesgo de género. Se debe demostrar transparencia ante reguladores.",
+            p: "IA de análisis crediticio muestra sesgo de género. Se debe demostrar transparencia y eliminación de sesgos históricos ante reguladores.",
             q: "¿Qué conjunto asegura una gestión responsable?",
-            o: ["Argumentar secreto industrial y desactivar crédito digital.", "Protocolos de Explainable AI (XAI), pruebas de sesgo (Bias testing) y supervisión por Comité Ético.", "Responsabilizar al proveedor externo."],
+            o: ["Argumentar secreto industrial, desactivar crédito digital y responsabilizar al proveedor.", "Protocolos de Explainable AI (XAI), pruebas de sesgo (Bias testing) y supervisión por Comité Ético.", "Eliminar etiquetas de raza/género del ERP y realizar auditorías financieras anuales."],
             r: 1
         },
         {
-            p: "El personal teme al RPA. Se busca que diseñen sus propios bots como 'Analistas de Eficiencia'.",
+            p: "El personal contable teme al RPA. Se busca que ellos diseñen sus propios bots como 'Analistas de Eficiencia'.",
             q: "¿Qué acciones facilitan la transición a una fuerza aumentada?",
-            o: ["Automatización secreta y procesos manuales.", "Capacitación en Low-Code/No-Code, incentivos por bots y Centro de Excelencia RPA.", "Prohibir términos tecnológicos."],
+            o: ["Automatización secreta, prohibir términos tecnológicos y procesos manuales.", "Capacitación en Low-Code/No-Code, incentivos por bots exitosos y Centro de Excelencia RPA.", "Despedir al personal no adaptado y centralizar control en TI."],
             r: 1
         },
         {
-            p: "Análisis de competencias de personal exitoso para predecir éxito de candidatos.",
+            p: "Análisis de competencias de personal exitoso en Tokio para predecir éxito de candidatos en España basándose en perfiles ideales.",
             q: "¿Qué herramientas permiten contratación estratégica?",
-            o: ["Motor del MIS para correlación, algoritmos de Clustering y pruebas psicométricas digitales.", "Entrevistas de 10 min sin registro.", "Pasatiempos iguales al jefe."],
+            o: ["Análisis de desempeño vía MIS, algoritmos de Clustering y pruebas psicométricas digitales unificadas.", "Entrevistas rápidas sin registro y priorizar candidatos con pasatiempos del gerente.", "Publicar vacantes genéricas sin filtros en redes sociales."],
             r: 0
         },
         {
-            p: "IA aprende de reportes históricos para que nuevos empleados consulten dudas vía chat.",
-            q: "¿Qué combinación asegura accesibilidad del capital intelectual?",
-            o: ["Videos en USB y clases presenciales de jubilados.", "Base de conocimiento vía IA Generativa, indexación masiva en MIS y Chatbot interno.", "Imprimir correos históricos."],
-            r: 1
+            p: "IA aprende de reportes históricos de jubilados para que nuevos empleados consulten dudas técnicas vía chat corporativo.",
+            q: "¿Qué combinación asegura la preservación del capital intelectual?",
+            o: ["Base de conocimiento vía IA Generativa, indexación masiva en MIS y Chatbot interno técnico.", "Videos en memorias USB distribuidas y clases presenciales obligatorias de jubilados.", "Imprimir correos históricos para archivo físico y documental."],
+            r: 0
         },
         {
-            p: "Monitoreo de uso de software para sugerir pausas activas ante fatiga cognitiva, anonimizando datos.",
+            p: "Monitoreo de uso de software para sugerir pausas activas ante fatiga cognitiva, anonimizando datos para proteger privacidad.",
             q: "¿Qué conjunto equilibra productividad y salud mental?",
-            o: ["Cámaras en casas de empleados y prohibir computadoras tras las 6 PM.", "Notificaciones de bienestar vía IA, reportes anonimizados y telemetría de sobrecarga.", "Aumentar tareas para evitar cansancio."],
+            o: ["Cámaras en casas de empleados y prohibir computadoras tras las 6:00 PM.", "Notificaciones de bienestar vía IA, telemetría de uso de software y reportes anonimizados.", "Aumentar cuotas de tareas para evitar cansancio subjetivo."],
             r: 1
         },
         {
-            p: "Simular ataque real a terminales de venta para identificar vulnerabilidades.",
+            p: "Simular ataque real (Red Teaming) a terminales de venta para identificar vulnerabilidades antes que criminales.",
             q: "¿Qué acciones garantizan blindaje proactivo?",
-            o: ["Antivirus básico y formatear servidores cada lunes.", "Red Teaming / Pentesting, mapeo dinámico en MIS y plan de remediación automatizado.", "Evitar pruebas de estrés."],
+            o: ["Antivirus básico y formatear servidores cada lunes por prevención.", "Ejercicios de Red Teaming / Pentesting, mapeo dinámico en MIS y remediación automatizada.", "Evitar pruebas de estrés para no arriesgar estabilidad del sistema."],
             r: 1
         },
         {
-            p: "Controlar quién accede y qué ve de los inventarios mediante puerta segura con límites de tráfico.",
+            p: "Controlar quién accede y qué ve de inventarios mediante puerta segura con límites de tráfico para socios externos.",
             q: "¿Qué conjunto permite expansión segura con terceros?",
-            o: ["Compartir contraseña del servidor con socios de confianza.", "API Gateway con OAuth, monitoreo con Rate Limiting y documentación de microservicios.", "Enviar archivos de texto por correo."],
+            o: ["API Gateway con OAuth, monitoreo con Rate Limiting y documentación de microservicios.", "Compartir contraseña del servidor solo con socios de confianza y archivos de texto.", "Prohibir conexiones externas para eliminar el riesgo al 100%."],
+            r: 0
+        },
+        {
+            p: "Inversores exigen saber consumo de agua/energía si producción sube 25% vinculando escenarios a datos financieros ERP.",
+            q: "¿Qué combinación asegura reporte transparente y prospectivo?",
+            o: ["Gráficas optimistas sin datos y pagar por créditos de carbono.", "Sensores IoT de consumo real, vinculación ERP a métricas de carbono y simulación en DSS.", "Reporte solo si hay utilidades basadas en proyecciones optimistas."],
             r: 1
         },
         {
-            p: "Proyectar escenarios de consumo de recursos vinculados a datos financieros si la producción aumenta.",
-            q: "¿Qué combinación asegura reporte transparente?",
-            o: ["Gráficas optimistas sin datos y pagar por créditos de carbono.", "Sensores IoT de consumo real, datos ERP vinculados a métricas de carbono y simulación en DSS.", "Reporte solo si hay utilidades."],
-            r: 1
-        },
-        {
-            p: "Aislamiento de servidores infectados y activación de recuperación ante intrusión confirmada.",
+            p: "Aislamiento de servidores infectados y activación automática de recuperación en zona estanca ante intrusión confirmada.",
             q: "¿Qué acciones técnicas minimizan el daño legal/reputacional?",
-            o: ["Esperar al gerente físicamente y no reportar autoridades.", "Kill-Switch digital, activación de DRP en zona estanca y notificación automatizada GDPR.", "Intentar borrar datos filtrados de buscadores."],
+            o: ["Esperar al gerente de TI físicamente y no reportar a autoridades para evitar pánico.", "Kill-Switch digital, activación automática de DRP en zona estanca y notificación GDPR.", "Intentar borrar datos filtrados de buscadores Google únicamente."],
             r: 1
         },
         {
-            p: "Validar flujo de datos desde TPS hasta DSS y que la interoperabilidad entre sistemas es nativa.",
-            q: "¿Qué combinación otorga el Sello de Madurez?",
-            o: ["Falta de caídas en la última semana y ejecución del 100% del presupuesto.", "Auditoría integral End-to-End, certificación de interoperabilidad ERP/CRM/IA y Stress Test del DRP.", "Validar que todos tengan hardware nuevo."],
-            r: 1
-        },
-        {
-            p: "Identificar si la fuente de una crisis es una red de bots o clientes reales mediante análisis relacional[cite: 2, 3].",
-            q: "¿Qué medidas permiten defensa de marca basada en datos?",
-            o: ["Comunicado en periódico impreso.", "Social Listening con grafos de influencia, identificación en CRM e IA Generativa de respuesta[cite: 2, 3].", "Borrar comentarios negativos."],
-            r: 1
-        },
-        {
-            p: "Controlar acceso de socios externos a inventarios limitando tráfico inusual automáticamente[cite: 3].",
-            q: "¿Qué conjunto permite expansión segura con terceros?",
-            o: ["API Gateway con OAuth, Rate Limiting y documentación de microservicios[cite: 3].", "Compartir contraseña del servidor central.", "Prohibir conexiones externas."],
+            p: "Validar flujo de datos desde TPS hasta reporte estratégico DSS demostrando interoperabilidad nativa ERP/CRM/IA.",
+            q: "¿Qué combinación otorga finalmente el Sello de Madurez?",
+            o: ["Auditoría integral End-to-End de flujos, certificación de interoperabilidad y Stress Test del DRP.", "Falta de caídas en última semana y ejecución presupuestal al 100%.", "Validar hardware nuevo para todos los empleados de la organización."],
             r: 0
         },
         {
-            p: "Proyectar escenarios ambientales vinculados a datos financieros si producción sube 25%[cite: 2, 3].",
-            q: "¿Qué combinación asegura reporte transparente?",
-            o: ["Sensores IoT, vinculación ERP a métricas de carbono y simulación ambiental en DSS[cite: 2, 3].", "Gráficas optimistas sin datos.", "Pagar por créditos de carbono."],
+            p: "VIVENTU Madrid pierde clientes frente a cadena que baja precios cada hora. Se requiere monitorear rivales y sentimiento social.",
+            q: "¿Qué conjunto de medidas asegura una posición competitiva sólida?",
+            o: ["Bajar precios manualmente un 10% por debajo de cualquier competidor.", "Bots de Scraping automáticos horarrios, Social Listening con IA y alertas en tablero BI.", "Ignorar a la competencia para no contaminar la estrategia propia."],
+            r: 1
+        },
+        {
+            p: "Diferencias fiscales entre Japón y México causan errores en facturas multi-divisa, retrasando el cierre contable.",
+            q: "¿Qué acciones optimizan la precisión financiera en Back-Office?",
+            o: ["Mapeo de reglas fiscales en bot RPA, validación automática en ERP y alertas de tipo de cambio.", "Contratar más contadores para revisión factura por factura manual.", "Prohibir ventas en divisas extranjeras para simplificar contabilidad."],
             r: 0
         },
         {
-            p: "Ajuste de iluminación y música si se detecta estrés o aburrimiento anónimamente.",
+            p: "Boutique de Ibiza busca ser sensorial ajustando luz/música anónimamente si se detecta estrés o aburrimiento.",
             q: "¿Qué herramientas permiten ajustar el entorno inteligentemente?",
-            o: ["Reconocimiento microexpresiones, actuadores domóticos vía MIS y correlación en BI.", "Preguntar música al entrar.", "Lista de reproducción fija."],
+            o: ["Reconocimiento de microexpresiones faciales anónimas (IA), actuadores domóticos vía MIS y correlación en BI.", "Preguntar música al entrar a cada cliente o abrir Bluetooth libre.", "Playlist fija de 8 horas para evitar errores de programación."],
             r: 0
         },
         {
-            p: "Identificar perfiles exitosos comparando desempeño histórico entre sedes globales.",
-            q: "¿Qué herramientas permiten contratación estratégica?",
-            o: ["Motor del MIS, algoritmos de Clustering y pruebas psicométricas digitales.", "Entrevistas rápidas sin registro.", "Vacantes genéricas sin filtros."],
+            p: "Almacén México reporta mermas inexplicables. Se requiere eliminar conteo humano y rastrear piezas desde entrada a venta final.",
+            q: "¿Qué herramientas aseguran la precisión del inventario?",
+            o: ["Etiquetado RFID pasivo largo alcance, pórticos de lectura automática ERP y sincronización WMS/TPS.", "Más cámaras de seguridad, guardias y prohibir acceso a personal ajeno.", "Inventarios manuales diarios con dos supervisores distintos."],
             r: 0
         },
         {
-            p: "Resiliencia ante caídas de latencia transpacífica que colapsan facturación[cite: 1, 2].",
-            q: "¿Qué conjunto asegura la continuidad?",
-            o: ["Arquitectura Nube Híbrida, Kubernetes y monitoreo IA para failover[cite: 1, 2].", "Aumentar ancho de banda.", "Reiniciar servidores manualmente."],
+            p: "Cliente inicia compra web en Madrid y quiere terminarla en Ibiza, pero el sistema actual no reconoce su carrito iniciado.",
+            q: "¿Qué conjunto tecnológico define una estrategia de omnicanalidad exitosa?",
+            o: ["Pedir al cliente seleccionar productos nuevamente y dar cupones manuales.", "Plataforma de comercio unificado Cloud, ID global en CRM integrado y sincronización de pasarelas.", "Mantener bases de inventario separadas para web y tienda física."],
+            r: 1
+        },
+        {
+            p: "Diseñadores en Tokio necesitan procesar archivos pesados de México desde casa sin que la latencia impida el flujo.",
+            q: "¿Qué garantiza la productividad técnica y seguridad de información?",
+            o: ["Arquitectura VDI de alto rendimiento, acceso VPN con MFA y gestión centralizada en servidor espejo.", "Enviar archivos pesados mediante mensajería física (USB) y reducir calidad de imagen.", "Obligar a los diseñadores a trabajar únicamente de forma presencial."],
             r: 0
         },
         {
-            p: "Protección de propiedad intelectual ante descifrado futuro cuántico.",
-            q: "¿Cuál conjunto garantiza seguridad a largo plazo?",
-            o: ["HSM locales, encriptación PQC y auditoría Blockchain.", "Cambio de contraseñas cada 15 días.", "Uso de carpetas con clave."],
-            r: 0
-        },
-        {
-            p: "Simulación de escenarios de riesgo para inversión de 50 MDD.",
-            q: "¿Qué herramientas permiten decisión científica?",
-            o: ["Gemelo Digital, DSS y simulaciones Monte Carlo.", "Encuestas subjetivas gerenciales.", "Basarse en históricos lineales."],
-            r: 0
-        },
-        {
-            p: "Escalabilidad de App ante colapsos por lanzamientos globales[cite: 1, 2].",
-            q: "¿Qué combinación técnica asegura el Uptime?",
-            o: ["Arquitectura Microservicios, APIs y flujos CI/CD[cite: 1, 2].", "Servidor físico mayor.", "Limitar usuarios."],
-            r: 0
-        },
-        {
-            p: "Dictamen final demostrando flujo de datos ético e interoperable.",
-            q: "¿Qué combinación otorga el Sello de Madurez?",
-            o: ["Auditoría End-to-End, certificación ERP/CRM/IA y Stress Test de DRP.", "Falta de caídas reciente.", "Ejecución presupuestal."],
-            r: 0
-        }
-    ];
-
-    let user = {}, exam = [], cIdx = 0, score = 0, gTimer, qTimer, timeLeft = 3900;
-    const dec = (s) => s;
-
-    window.addEventListener('blur', () => { document.getElementById('lock').style.display='block'; setTimeout(()=>location.reload(), 2000); });
-    document.addEventListener('keydown', e => { if (e.ctrlKey && ['c','u','v','s','p'].includes(e.key) || e.key === 'F12') { e.preventDefault(); location.reload(); } });
-
-    function start() {
-        user = { n: document.getElementById('nom').value, m: document.getElementById('mat').value, sid: Math.random().toString(36).substr(2, 9).toUpperCase() };
-        if(user.n.length < 5 || user.m.length < 5) return alert("Ingrese datos válidos.");
-        document.getElementById('p-reg').classList.add('hidden');
-        document.getElementById('p-exam').classList.remove('hidden');
-        exam = db.sort(() => Math.random() - 0.5).slice(0, 35);
-        render();
-        gTimer = setInterval(() => {
-            timeLeft--;
-            document.getElementById('clock').innerText = `${Math.floor(timeLeft/60)}:${(timeLeft%60).toString().padStart(2,'0')}`;
-            if(timeLeft <= 0) end();
-        }, 1000);
-    }
-
-    function render() {
-        if(cIdx >= exam.length) return end();
-        clearTimeout(qTimer);
-        qTimer = setTimeout(() => { cIdx++; render(); }, 90000);
-        const d = exam[cIdx];
-        document.getElementById('content').innerHTML = `
-            <div class="meta">REACTIVO ${cIdx + 1} DE 35</div>
-            <div class="planteamiento">${d.p}</div>
-            <h3>${d.q}</h3>
-            ${d.o.map((opt, i) => `<div class="option" onclick="next(${i}, ${d.r})">${opt}</div>`).join('')}
-        `;
-    }
-
-    function next(sel, cor) { if(sel === cor) score++; cIdx++; render(); }
-
-    function end() {
-        clearInterval(gTimer); clearTimeout(qTimer);
-        const nota = ((score / 35) * 10).toFixed(2);
-        const cert = btoa(`${user.m}|${nota}|${user.sid}`);
-        const log = JSON.parse(localStorage.getItem('v_results')||'[]');
-        log.push({...user, nota, f: new Date().toLocaleString()});
-        localStorage.setItem('v_results', JSON.stringify(log));
-        document.getElementById('p-exam').innerHTML = `<h2>EVALUACIÓN CONCLUIDA</h2><p>Alumno: ${user.n}</p><p>Nota: ${nota}</p><div style="background:#000; padding:20px; border:1px solid #333; word-break:break-all;"><code>CÓDIGO DE VALIDACIÓN: ${cert}</code></div>`;
-    }
-
-    function admin() { if(prompt("Psw:")==="UVM2026") { document.getElementById('p-reg').classList.add('hidden'); document.getElementById('p-doc').classList.remove('hidden'); const log = JSON.parse(localStorage.getItem('v_results')||'[]'); document.getElementById('tabla-res').innerHTML = `<table><tr><th>Nombre</th><th>Nota</th><th>Fecha</th></tr>${log.map(r=>`<tr><td>${r.n}</td><td>${r.nota}</td><td>${r.f}</td></tr>`).join('')}</table>`; } }
-</script>
-<div id="p-doc" class="container hidden"><h2>REPORTE DOCENTE</h2><div id="tabla-res"></div><button class="btn" onclick="location.reload()">CERRAR</button></div>
-</body>
-</html>
+            p: "VIVENTU busca detectar cambios en gusto de lujo en Tokio antes que competencia analizando patrones visuales.",
+            q: "¿Qué conjunto de herramientas permite respuesta ágil a vanguardia?",
+            o: ["Algoritmos de Visión Computacional en RRSS, correl
