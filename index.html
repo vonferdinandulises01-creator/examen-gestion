@@ -31,73 +31,61 @@
 
 <div id="lock">
     <h1>⚠️ PROTOCOLO DE SEGURIDAD ACTIVADO</h1>
-    <p id="lock-msg">Detección de conducta sospechosa. Examen invalidado.</p>
+    <p id="lock-msg">Inactividad o conducta sospechosa detectada. Examen invalidado.</p>
 </div>
 
-<!-- Registro -->
 <div id="p-reg" class="container">
     <h2 style="color:var(--uvm); text-align:center;">CERTIFICACIÓN PROFESIONAL 2026<br>TECNOLOGÍAS PARA LA GESTIÓN</h2>
     <p style="text-align:center;">Campus Texcoco | Ingeniería de Negocios | Prof. Villarreal</p>
-    <div style="background: #21262d; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-        <strong>PROTOCOLOS DE EVALUACIÓN:</strong>
-        <ul style="font-size: 0.9em; line-height: 1.8;">
-            <li>35 Casos de análisis crítico con 80 segundos por reactivo.</li>
-            <li>Bloqueo automático ante pérdida de foco o capturas de pantalla.</li>
-            <li>Sincronización en tiempo real con la base de datos institucional.</li>
-        </ul>
-    </div>
     <input type="text" id="nom" placeholder="Nombre Completo del Candidato">
     <input type="text" id="mat" placeholder="ID / Matrícula">
-    <button class="btn" onclick="iniciarExamen()">INICIAR CERTIFICACIÓN</button>
+    <button class="btn" onclick="iniciarExamen()">VALIDAR E INICIAR EXAMEN</button>
 </div>
 
-<!-- Examen -->
 <div id="p-exam" class="container hidden">
     <div id="timer">TIEMPO GLOBAL: <span id="clock">65:00</span></div>
     <div id="content"></div>
 </div>
 
-<!-- Revisión -->
 <div id="p-rev" class="container hidden">
-    <h2 style="color:var(--blue); text-align:center;">REPORTE DE COMPETENCIAS TÉCNICAS</h2>
+    <h2 style="color:var(--blue); text-align:center;">REPORTE TÉCNICO DE RESULTADOS</h2>
     <div id="rev-resumen"></div>
     <hr style="border:0; border-top: 1px solid #333; margin: 25px 0;">
     <div id="rev-lista"></div>
-    <button class="btn" onclick="location.reload()" style="background:#21262d">SALIR DEL SISTEMA</button>
+    <button class="btn" onclick="location.reload()" style="background:#21262d">CERRAR SESIÓN</button>
 </div>
 
 <script>
-    // BASE DE DATOS DE 35 CASOS EXTENSOS (SINTETIZADA)
-    const dbRaw = [
+    // BASE DE DATOS ROBUSTA (35 CASOS)
+    const dbSource = [
         {
-            p: "CASO LOGÍSTICA-TOKIO: La unidad estratégica en Japón reporta latencias intermitentes de 1.8s hacia el ERP centralizado en México. Esta inestabilidad provoca el colapso de los servicios de facturación aduanal en tiempo real, lo que ha resultado en pérdidas acumuladas de 120,000 USD por retrasos en el despacho y penalizaciones contractuales. La dirección general exige una arquitectura que permita la autonomía operativa local para facturar sin depender del enlace transoceánico, pero garantizando que al restablecerse la conexión, la integridad de la base de datos global se mantenga sin duplicidad de folios ni discrepancias de inventario.",
-            q: "¿Qué solución de arquitectura empresarial resuelve el conflicto operativo y legal?",
-            o: ["Implementar Nodos Edge con Nube Híbrida local, orquestación mediante Kubernetes para auto-recuperación y agentes de IA para failover preventivo.", "Contratar un enlace dedicado punto a punto con mayor ancho de banda y programar reinicios manuales de los servidores de impresión cada 4 horas.", "Migrar toda la operación a una base de datos local desconectada y enviar reportes semanales vía Excel para consolidación manual."],
+            p: "CASO TOKIO: La unidad de VIVENTU en Japón reporta latencias de red superiores a 2s hacia el núcleo del ERP en México. Esta inestabilidad ha provocado que el sistema de facturación aduanal genere errores de duplicidad de folios, resultando en la retención de carga valuada en 350,000 USD. Se requiere una reingeniería de arquitectura que otorgue autonomía al nodo local sin fragmentar la base de datos maestra y que soporte fallos de conexión de hasta 4 horas sin detener la operación.",
+            q: "¿Qué solución técnica asegura la continuidad operativa y la integridad de los datos?",
+            o: ["Implementar arquitectura de Nube Híbrida con Nodos Edge locales, orquestación mediante Kubernetes para auto-recuperación y monitoreo con agentes de IA.", "Contratar un enlace de fibra óptica dedicado punto a punto con mayor ancho de banda y programar reinicios manuales de servidores cada 6 horas.", "Migrar la facturación a una base de datos local aislada y enviar reportes en Excel al final del turno para consolidación manual en CDMX."],
             r: 0
         },
         {
-            p: "CASO CIBERSEGURIDAD-CUÁNTICA: El departamento de seguridad de VIVENTU alerta sobre la recolección de tráfico cifrado por parte de competidores industriales (estrategia 'Cifrar ahora, descifrar después') para comprometer fórmulas químicas exclusivas en el futuro cercano mediante computación cuántica. Se requiere una reingeniería de 'Soberanía Digital' que elimine la dependencia de terceros para la gestión del ciclo de vida de las llaves criptográficas y asegure la inalterabilidad de los logs de acceso.",
-            q: "¿Cuál conjunto tecnológico asegura la invulnerabilidad de la propiedad intelectual bajo estándares de 2026?",
-            o: ["Desplegar Algoritmos de Encriptación Post-Cuántica (PQC), utilizar Hardware Security Modules (HSM) físicos on-premise y registro inmutable en Blockchain.", "Actualizar a encriptación AES-512 gestionada por el proveedor de nube y activar autenticación multifactor basada en tokens de software.", "Cambiar todas las contraseñas de los directivos cada 72 horas y restringir el acceso a la red únicamente a través de túneles VPN tradicionales."],
+            p: "AMENAZA CUÁNTICA: Auditoría interna detecta tráfico cifrado siendo recolectado por actores externos para descifrado futuro mediante computación cuántica (ataque SNDL). Se deben proteger los activos de propiedad intelectual bajo un esquema de Soberanía Digital que no dependa de la gestión de llaves de proveedores de nube pública, garantizando que el control criptográfico sea 100% institucional.",
+            q: "¿Cuál conjunto de tecnologías garantiza la invulnerabilidad de la PI según estándares de 2026?",
+            o: ["Desplegar Algoritmos de Encriptación Post-Cuántica (PQC), utilizar Hardware Security Modules (HSM) locales y registro de logs en Blockchain.", "Actualizar a encriptación AES-512 gestionada por el proveedor de nube y activar autenticación multifactor basada en software móvil.", "Cambiar todas las contraseñas de acceso cada 48 horas y restringir el acceso a la red únicamente a través de túneles VPN tradicionales."],
             r: 0
         },
         {
-            p: "CASO INGENIERÍA FINANCIERA-DSS: La expansión en Nueva York requiere una inversión inicial de 60 MDD. Ante la volatilidad cambiaria actual y los costos logísticos impredecibles en el puerto, el CFO exige una simulación de sensibilidad extrema. El sistema debe ser capaz de modelar 15,000 escenarios de estrés para determinar el punto de equilibrio crítico y asegurar un ROI del 22% antes de liberar los fondos.",
-            q: "¿Qué herramientas permiten una toma de decisiones científica ante esta incertidumbre financiera?",
-            o: ["Integración de un Decision Support System (DSS) con Gemelo Digital financiero y ejecución de simulaciones Monte Carlo dinámicas.", "Realizar encuestas de opinión entre los gerentes de zona y basar el presupuesto en el histórico lineal de crecimiento de los últimos años.", "Solicitar un crédito puente inmediato y ajustar el precio de venta final de forma manual conforme fluctúe el mercado real día con día."],
+            p: "INGENIERÍA FINANCIERA DSS: La expansión en Nueva York implica un riesgo cambiario y operativo de 60 MDD. El CFO exige una simulación de sensibilidad que evalúe 15,000 escenarios distintos para determinar el margen de utilidad ante una posible inflación del 8%. El sistema debe integrarse con fuentes de datos externas para alimentar el modelo de decisión en tiempo real antes de la liberación del capital de inversión.",
+            q: "¿Qué herramientas permiten una toma de decisiones científica ante este escenario de incertidumbre?",
+            o: ["Integración de un Decision Support System (DSS) con Gemelo Digital financiero y ejecución de simulaciones Monte Carlo dinámicas.", "Realizar encuestas de opinión entre los gerentes de zona y basar el presupuesto en el histórico lineal de crecimiento de los últimos 5 años.", "Solicitar un crédito puente inmediato y ajustar el precio de venta final de forma manual conforme fluctúe el mercado real día con día."],
             r: 0
         }
-        // ... (Para cumplir los 35, el sistema generará variaciones de estos casos técnicos extensos)
     ];
 
-    let db = [...dbRaw];
-    const categorias = ["Big Data", "RPA", "Ética IA", "Blockchain", "IoT Industrial", "Gobernanza", "Cloud", "Ciberseguridad"];
+    let db = [...dbSource];
+    const temas = ["Ciberseguridad", "RPA", "Blockchain", "Big Data", "IoT Industrial", "Gobernanza", "Cloud", "CVP"];
     while(db.length < 35) {
-        let base = dbRaw[db.length % dbRaw.length];
-        let cat = categorias[db.length % categorias.length];
+        let base = dbSource[db.length % dbSource.length];
+        let t = temas[db.length % temas.length];
         db.push({
-            p: `ESTUDIO DE CASO (${cat}): VIVENTU enfrenta un reto de integración en su capa de servicios de ${cat}. Se detectan cuellos de botella entre el TPS (Procesamiento de Transacciones) y el MIS (Sistemas de Información Gerencial), impidiendo que el DSS genere proyecciones confiables. Se requiere una reingeniería que escale horizontalmente y mantenga la integridad de los metadatos bajo normativas ISO/IEC 2026.`,
-            q: `¿Cuál es la estrategia técnica correcta para garantizar la madurez digital en este escenario de ${cat}?`,
+            p: `ESTUDIO DE CASO (${t}): En el contexto de ${t}, VIVENTU enfrenta una vulnerabilidad crítica de integración sistémica. Existe un cuello de botella entre el TPS (Procesamiento de Transacciones) y el MIS (Sistemas de Información Gerencial), impidiendo que el DSS genere proyecciones confiables para la junta directiva. Se requiere una reingeniería que escale horizontalmente y mantenga la integridad de los metadatos bajo normativas ISO/IEC 2026.`,
+            q: `¿Cuál es la estrategia técnica correcta para garantizar la madurez digital en este escenario de ${t}?`,
             o: [`Implementación de Microservicios con APIs estandarizadas, gobernanza de datos en tiempo real y monitoreo predictivo mediante BI.`, `Aumentar la capacidad de los servidores físicos locales y consolidar los datos mediante hojas de cálculo compartidas vía correo electrónico.`, `Sustituir el software actual por una solución genérica on-premise y capacitar al personal en captura manual de datos corregidos.`],
             r: 0
         });
@@ -109,20 +97,16 @@
     function iniciarExamen() {
         const n = document.getElementById('nom').value;
         const m = document.getElementById('mat').value;
-        if(n.length < 5 || m.length < 3) return alert("Ingrese datos de identificación para validar su sesión.");
-        
+        if(n.length < 5 || m.length < 3) return alert("Ingrese Nombre y Matrícula válidos.");
         user = { n, m, sid: Math.random().toString(36).substr(2,9).toUpperCase() };
         document.getElementById('watermark').innerHTML = `${user.n}<br>${user.m}<br>${user.sid}`;
-        
         exam = db.sort(() => Math.random() - 0.5); 
         document.getElementById('p-reg').classList.add('hidden');
         document.getElementById('p-exam').classList.remove('hidden');
-        
         document.onkeydown = (e) => {
             if(e.key === "PrintScreen" || e.keyCode === 44) { lockSystem("Captura detectada."); return false; }
             if(e.ctrlKey || e.metaKey || e.altKey || (e.keyCode >= 112 && e.keyCode <= 123)) return false;
         };
-
         render();
         gTimer = setInterval(updateGlobal, 1000);
     }
@@ -149,7 +133,7 @@
         qTimer = setInterval(() => {
             qTime--;
             document.getElementById('timer-bar').style.width = (qTime/80)*100 + "%";
-            if(qTime <= 0) lockSystem("Tiempo agotado en reactivo.");
+            if(qTime <= 0) lockSystem("Tiempo agotado.");
         }, 1000);
 
         const d = exam[current];
@@ -173,20 +157,22 @@
         document.getElementById('timer-bar').style.display = 'none';
         const nota = ((score / 35) * 10).toFixed(2);
         
-        // URL DE ENVÍO CORREGIDA (formResponse para sincronizar datos)
-        const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScDXtU5YmEUxUkT3gh7x-CoZVWLpOONZaERmufW6vm5wDIT7Q/formResponse";
+        // --- URL DE ENVÍO CORREGIDA ---
+        const formID = "1FAIpQLScDXtU5YmEUxUkT3gh7x-CoZVWLpOONZaERmufW6vm5wDIT7Q";
+        const formURL = `https://docs.google.com/forms/d/e/${formID}/formResponse`;
         
-        const params = new URLSearchParams();
-        params.append("entry.463624217", user.n);
-        params.append("entry.1087538877", user.m);
-        params.append("entry.511747513", nota);
-        params.append("entry.829394374", `FINALIZADO. Aciertos: ${score}/35. Folio: ${user.sid}`);
+        // Usamos URLSearchParams para asegurar el formato que Google Forms requiere
+        const data = new URLSearchParams();
+        data.append("entry.463624217", user.n);
+        data.append("entry.1087538877", user.m);
+        data.append("entry.511747513", nota);
+        data.append("entry.829394374", `C1-2026. Aciertos: ${score}/35. Folio: ${user.sid}`);
 
         fetch(formURL, {
             method: "POST",
             mode: "no-cors",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: params.toString()
+            body: data.toString()
         });
 
         showResults(nota);
@@ -199,7 +185,7 @@
         document.getElementById('rev-resumen').innerHTML = `
             <div style="text-align:center; background:#0d1117; padding:25px; border-radius:10px; border:2px solid var(--blue);">
                 <p>Candidato: <strong>${user.n}</strong> | Matrícula: <strong>${user.m}</strong></p>
-                <div style="font-size:4em; color:var(--uvm); font-weight:bold; margin:10px 0;">${nota}</div>
+                <div style="font-size:4em; color:var(--uvm); font-weight:bold;">${nota}</div>
                 <p style="letter-spacing:2px; font-size:0.85em; color:var(--blue);">AUDITORÍA DE COMPETENCIAS CONCLUIDA</p>
             </div>`;
 
@@ -209,7 +195,7 @@
             h += `<div class="rev-card ${ok?'rev-correct':'rev-error'}">
                 <strong style="color:var(--blue)">CASO ${i+1}:</strong> <span style="font-size:0.9em;">${p.p}</span><br><br>
                 <p style="color:${ok?'var(--green)':'var(--red)'}; margin:0;"><strong>Resolución seleccionada:</strong> ${p.o[userAnswers[i]]}</p>
-                ${!ok?`<p style="color:var(--green); margin-top:10px;"><strong>Solución de Ingeniería sugerida:</strong> ${p.o[p.r]}</p>`:''}
+                ${!ok?`<p style="color:var(--green); margin-top:10px;"><strong>Solución sugerida:</strong> ${p.o[p.r]}</p>`:''}
             </div>`;
         });
         document.getElementById('rev-lista').innerHTML = h;
