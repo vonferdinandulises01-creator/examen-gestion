@@ -6,222 +6,144 @@
     <title>CERTIFICACIÓN TECNOLOGÍAS PARA LA GESTIÓN 2026</title>
     <style>
         :root { --uvm: #c41e3a; --bg: #0d1117; --card: #161b22; --blue: #58a6ff; }
-        body { 
-            background: var(--bg); color: #c9d1d9; font-family: 'Segoe UI', sans-serif; 
-            margin: 0; user-select: none; -webkit-user-select: none; overflow-x: hidden;
-        }
-        #lock { 
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: #000; z-index: 10000; color: var(--uvm); text-align: center; padding-top: 20%; 
-        }
-        .container { 
-            max-width: 850px; margin: 40px auto; padding: 30px; background: var(--card); 
-            border-radius: 12px; border: 1px solid #30363d; box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-        }
-        #timer { 
-            position: sticky; top: 0; background: var(--uvm); color: white; 
-            padding: 15px; text-align: center; font-weight: bold; border-radius: 8px; z-index: 100; margin-bottom: 20px;
-        }
-        .planteamiento { 
-            background: #0d1117; padding: 20px; border-left: 5px solid var(--uvm); 
-            margin-bottom: 25px; line-height: 1.6; border-radius: 4px; font-style: italic;
-        }
-        .option { 
-            display: block; background: #21262d; border: 1px solid #30363d; 
-            padding: 18px; margin: 10px 0; cursor: pointer; border-radius: 8px; transition: 0.2s; 
-        }
+        body { background: var(--bg); color: #c9d1d9; font-family: 'Segoe UI', sans-serif; margin: 0; user-select: none; -webkit-user-select: none; overflow-x: hidden; }
+        #lock { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; color: var(--uvm); text-align: center; padding-top: 20%; }
+        .container { max-width: 850px; margin: 40px auto; padding: 30px; background: var(--card); border-radius: 12px; border: 1px solid #30363d; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        #timer { position: sticky; top: 0; background: var(--uvm); color: white; padding: 15px; text-align: center; font-weight: bold; border-radius: 8px; z-index: 100; margin-bottom: 20px; }
+        .planteamiento { background: #0d1117; padding: 20px; border-left: 5px solid var(--uvm); margin-bottom: 25px; line-height: 1.6; border-radius: 4px; font-style: italic; }
+        .option { display: block; background: #21262d; border: 1px solid #30363d; padding: 18px; margin: 10px 0; cursor: pointer; border-radius: 8px; transition: 0.2s; }
         .option:hover { border-color: var(--blue); background: #2d333b; transform: translateX(5px); }
-        input { 
-            background: #0d1117; border: 1px solid #30363d; color: white; 
-            padding: 15px; width: calc(100% - 35px); margin-bottom: 20px; border-radius: 6px; font-size: 16px;
-        }
-        .btn { 
-            background: var(--uvm); color: white; border: none; padding: 20px; 
-            width: 100%; font-weight: bold; cursor: pointer; border-radius: 8px; font-size: 18px;
-        }
+        input { background: #0d1117; border: 1px solid #30363d; color: white; padding: 15px; width: calc(100% - 35px); margin-bottom: 20px; border-radius: 6px; font-size: 16px; }
+        .btn { background: var(--uvm); color: white; border: none; padding: 20px; width: 100%; font-weight: bold; cursor: pointer; border-radius: 8px; font-size: 18px; }
         .hidden { display: none !important; }
-        .progress { color: var(--blue); font-size: 0.9em; margin-bottom: 10px; }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
 <div id="lock">
     <h1>⚠️ SEGURIDAD ACTIVADA</h1>
-    <p>Se detectó un intento de salir del examen o abrir herramientas de desarrollador.</p>
-    <p>El examen se ha invalidado por seguridad.</p>
+    <p>Pérdida de foco o intento de trampa detectado. El examen se ha invalidado.</p>
 </div>
 
-<!-- Pantalla de Registro -->
 <div id="p-reg" class="container">
-    <h2 style="color:var(--uvm)">EXAMEN CERTIFICADOR: TECNOLOGÍAS PARA LA GESTIÓN</h2>
-    <p>Ingeniería de Negocios | Ciclo 2026</p>
-    <div style="margin: 20px 0;">
-        <input type="text" id="nom" placeholder="Nombre Completo del Alumno" required>
-        <input type="text" id="mat" placeholder="Matrícula / ID" required>
-    </div>
-    <button class="btn" onclick="prepararExamen()">INICIAR EVALUACIÓN (35 REACTIVOS)</button>
-    <p style="font-size: 0.8em; color: #8b949e; margin-top: 15px;">
-        * Al iniciar, se activará el modo de seguridad. No cambie de pestaña ni use atajos de teclado.
-    </p>
+    <h2 style="color:var(--uvm)">CERTIFICACIÓN: TECNOLOGÍAS PARA LA GESTIÓN</h2>
+    <p>Prof. Jesús Ulises Villarreal López | Ciclo 2026</p>
+    <input type="text" id="nom" placeholder="Nombre Completo">
+    <input type="text" id="mat" placeholder="Matrícula">
+    <button class="btn" onclick="iniciarExamen()">INICIAR EVALUACIÓN</button>
 </div>
 
-<!-- Pantalla de Examen -->
 <div id="p-exam" class="container hidden">
-    <div id="timer">TIEMPO RESTANTE: <span id="clock">65:00</span></div>
-    <div class="progress" id="progreso-texto">Pregunta 1 de 35</div>
+    <div id="timer">TIEMPO: <span id="clock">65:00</span></div>
     <div id="content"></div>
 </div>
 
 <script>
-    // BASE DE DATOS DE 35 REACTIVOS
     const db = [
-        { p: "Tokio reporta latencia en el ERP central de México. Se requiere autonomía sin perder integridad.", q: "¿Qué tecnología asegura la disponibilidad?", o: ["Nube Híbrida con nodos locales y orquestación Kubernetes", "Aumentar ancho de banda e informes semanales", "Nube pública estándar sin nodos locales"], r: 0 },
-        { p: "Protección de fórmulas VIP bajo 'Soberanía Digital' contra computación cuántica.", q: "¿Cuál asegura la propiedad intelectual?", o: ["Contraseñas complejas cada 15 días", "Hardware Security Modules (HSM) y algoritmos Post-Cuánticos", "Encriptación AES-256 estándar del proveedor"], r: 1 },
-        { p: "Modelado de variables para inversión de 50 MDD en Nueva York.", q: "¿Qué permite una toma de decisiones científica?", o: ["Histórico lineal y encuestas gerenciales", "Gemelo Digital financiero y simulaciones Monte Carlo", "Proyecciones de años anteriores"], r: 1 },
-        { p: "Una empresa desea integrar todos sus procesos (Ventas, RH, Finanzas) en una sola base de datos.", q: "¿Qué sistema es el adecuado?", o: ["CRM", "ERP", "SCM"], r: 1 },
-        { p: "Se detecta un acceso no autorizado a la base de datos de clientes.", q: "¿Qué protocolo de respuesta inmediata debe activarse?", o: ["Cambiar el logo de la empresa", "Aislamiento de red y auditoría de logs", "Formatear todos los servidores"], r: 1 },
-        { p: "Para optimizar la ruta de entrega de 500 camiones en tiempo real.", q: "¿Qué tecnología es fundamental?", o: ["Inteligencia Artificial y GPS con Edge Computing", "Hojas de cálculo compartidas", "Radios de frecuencia corta"], r: 0 },
-        { p: "El CEO requiere ver el estado de la empresa en tiempo real desde su móvil.", q: "¿Qué herramienta debe usarse?", o: ["Dashboard en un sistema BI", "Un PDF enviado por correo", "Una llamada telefónica"], r: 0 },
-        { p: "Almacenamiento masivo de datos no estructurados para análisis posterior.", q: "¿Cómo se le conoce a esta infraestructura?", o: ["Data Lake", "Memoria USB", "Cinta Magnética"], r: 0 },
-        { p: "Garantizar que un contrato digital no sea modificado por ninguna de las partes.", q: "¿Qué tecnología ofrece inmutabilidad?", o: ["Blockchain", "Documento de Word protegido", "Correo electrónico"], r: 0 },
-        { p: "Un ataque inunda el servidor con tráfico falso para tirarlo.", q: "¿Cómo se llama este ataque?", o: ["Phishing", "DDoS", "Malware"], r: 1 },
-        // ... (Para brevedad se repiten patrones hasta completar la lógica de 35)
-        { p: "Análisis de sentimientos de clientes en redes sociales.", q: "¿Qué técnica se aplica?", o: ["NLP (Procesamiento de Lenguaje Natural)", "Manual de usuario", "SQL básico"], r: 0 },
-        { p: "Conexión de sensores de temperatura en una fábrica para mantenimiento preventivo.", q: "¿A qué concepto pertenece?", o: ["IoT (Internet of Things)", "Redes Sociales", "E-commerce"], r: 0 },
-        { p: "Validación de identidad mediante rasgos físicos.", q: "¿Qué sistema es?", o: ["Biometría", "Captcha", "PIN de 4 dígitos"], r: 0 },
-        { p: "Migración de servidores físicos a entornos virtuales.", q: "¿Qué ventaja principal ofrece?", o: ["Ahorro de hardware y escalabilidad", "Mayor consumo eléctrico", "Menor velocidad de red"], r: 0 },
-        { p: "Uso de avatares para capacitación técnica remota en entornos 3D.", q: "¿Qué tecnología se usa?", o: ["Realidad Virtual", "PowerPoint", "Zoom"], r: 0 },
-        { p: "Estrategia de respaldo donde los datos están en dos sitios geográficos distintos.", q: "¿Qué se busca?", o: ["Recuperación ante desastres (DRP)", "Gastar más presupuesto", "Duplicar el trabajo"], r: 0 },
-        { p: "Un software que aprende de los errores sin ser programado explícitamente.", q: "¿Cómo se define?", o: ["Machine Learning", "Algoritmo estático", "Base de datos"], r: 0 },
-        { p: "Intercambio electrónico de datos entre proveedores y fabricantes.", q: "¿Qué estándar se usa?", o: ["EDI", "WhatsApp", "Sms"], r: 0 },
-        { p: "Protección contra el secuestro de datos con rescate económico.", q: "¿A qué amenaza se refiere?", o: ["Ransomware", "Spam", "Cookies"], r: 0 },
-        { p: "Uso de la nube donde se paga solo por lo que se consume.", q: "¿Qué modelo es?", o: ["SaaS / On-demand", "Licencia perpetua", "Compra de servidor"], r: 0 },
-        { p: "Capacidad de un sistema para manejar carga creciente de trabajo.", q: "¿Cómo se denomina?", o: ["Escalabilidad", "Rigidez", "Latencia"], r: 0 },
-        { p: "Simulación de la inteligencia humana por máquinas.", q: "¿Qué es?", o: ["IA", "Hardware", "BIOS"], r: 0 },
-        { p: "Red privada para empleados de una misma organización.", q: "¿Qué es?", o: ["Intranet", "Deep Web", "Internet"], r: 0 },
-        { p: "Proceso de convertir datos en un código secreto.", q: "¿Qué es?", o: ["Cifrado", "Compresión", "Formateo"], r: 0 },
-        { p: "Filtrado de tráfico de red basado en reglas de seguridad.", q: "¿Qué dispositivo es?", o: ["Firewall", "Switch", "Hub"], r: 0 },
-        { p: "Asignación de recursos de TI a través de internet.", q: "¿Qué es?", o: ["Cloud Computing", "Local Host", "Mainframe"], r: 0 },
-        { p: "Técnica para engañar a alguien y que revele su contraseña.", q: "¿Qué es?", o: ["Phishing", "Firewall", "Back-up"], r: 0 },
-        { p: "Mantenimiento de equipos basado en la probabilidad de falla.", q: "¿Cómo se llama?", o: ["Predictivo", "Correctivo", "Reactivo"], r: 0 },
-        { p: "Representación visual de datos para la toma de decisiones.", q: "¿Qué es?", o: ["Infografía / Data Viz", "Texto plano", "Binario"], r: 0 },
-        { p: "Uso de dispositivos móviles para transacciones comerciales.", q: "¿Qué es?", o: ["m-Commerce", "Retail", "Trueque"], r: 0 },
-        { p: "Conjunto de datos tan grande que requiere herramientas especiales.", q: "¿Qué es?", o: ["Big Data", "Excel", "Bloc de notas"], r: 0 },
-        { p: "Software distribuido gratuitamente pero con limitaciones.", q: "¿Qué es?", o: ["Shareware", "Malware", "Firmware"], r: 0 },
-        { p: "Unidad mínima de información en computación.", q: "¿Qué es?", o: ["Bit", "Byte", "Pixel"], r: 0 },
-        { p: "Red de dispositivos físicos conectados a internet.", q: "¿Qué es?", o: ["IoT", "VPN", "LAN"], r: 0 },
-        { p: "Sistema que gestiona la relación con los clientes.", q: "¿Qué es?", o: ["CRM", "ERP", "SCM"], r: 0 }
+        { p: "Empresa en Tokio con latencia en ERP central de México.", q: "¿Qué tecnología asegura la disponibilidad?", o: ["Nube Híbrida con nodos locales y orquestación", "Aumentar ancho de banda", "Nube pública estándar"], r: 0 },
+        { p: "Protección contra computación cuántica y soberanía digital.", q: "¿Qué conjunto asegura la propiedad intelectual?", o: ["Passwords cada 15 días", "HSM locales y algoritmos Post-Cuánticos", "AES-256 estándar"], r: 1 },
+        { p: "Modelado de inversión de 50 MDD para reducir riesgo.", q: "¿Qué herramientas aseguran el ROI?", o: ["Histórico lineal", "Gemelo Digital y simulaciones Monte Carlo", "Proyecciones básicas"], r: 1 },
+        { p: "Integración de Ventas, RH y Finanzas en una sola base.", q: "¿Qué sistema es?", o: ["CRM", "ERP", "SCM"], r: 1 },
+        { p: "Acceso no autorizado a base de datos VIP.", q: "¿Protocolo inmediato?", o: ["Cambiar logo", "Aislamiento y auditoría de logs", "Formatear servidores"], r: 1 },
+        { p: "Optimización de rutas de 500 camiones en tiempo real.", q: "¿Tecnología clave?", o: ["IA y Edge Computing", "Hojas de cálculo", "Radiofrecuencia"], r: 0 },
+        { p: "Visualización de KPI en tiempo real para el CEO.", q: "¿Herramienta?", o: ["BI Dashboard", "PDF por correo", "Llamada"], r: 0 },
+        { p: "Almacenamiento masivo de datos no estructurados.", q: "¿Nombre?", o: ["Data Lake", "USB", "Cinta"], r: 0 },
+        { p: "Contratos digitales inmutables.", q: "¿Tecnología?", o: ["Blockchain", "Word con pass", "Email"], r: 0 },
+        { p: "Ataque que inunda servidor con tráfico falso.", q: "¿Nombre?", o: ["Phishing", "DDoS", "Malware"], r: 1 },
+        { p: "Análisis de sentimientos de clientes.", q: "¿Técnica?", o: ["NLP", "Manual", "SQL"], r: 0 },
+        { p: "Sensores industriales conectados.", q: "¿Concepto?", o: ["IoT", "RRSS", "E-commerce"], r: 0 },
+        { p: "Rasgos físicos para identidad.", q: "¿Sistema?", o: ["Biometría", "Captcha", "PIN"], r: 0 },
+        { p: "Virtualización de servidores.", q: "¿Ventaja?", o: ["Escalabilidad y ahorro", "Gasto eléctrico", "Latencia"], r: 0 },
+        { p: "Entornos 3D para capacitación remota.", q: "¿Tecnología?", o: ["Realidad Virtual", "PPT", "Zoom"], r: 0 },
+        { p: "Respaldo en dos sitios geográficos.", q: "¿Objetivo?", o: ["DRP", "Gastar más", "Duplicar"], r: 0 },
+        { p: "Software que aprende solo.", q: "¿Nombre?", o: ["Machine Learning", "Algoritmo fijo", "BIOS"], r: 0 },
+        { p: "Intercambio de datos proveedores-empresa.", q: "¿Estándar?", o: ["EDI", "WA", "SMS"], r: 0 },
+        { p: "Secuestro de datos por rescate.", q: "¿Amenaza?", o: ["Ransomware", "Spam", "Cookies"], r: 0 },
+        { p: "Nube de pago por uso.", q: "¿Modelo?", o: ["SaaS / On-demand", "Licencia fija", "On-premise"], r: 0 },
+        { p: "Manejo de carga creciente.", q: "¿Término?", o: ["Escalabilidad", "Rigidez", "Bit"], r: 0 },
+        { p: "Simulación de inteligencia humana.", q: "¿Es?", o: ["IA", "Hardware", "Router"], r: 0 },
+        { p: "Red privada organizacional.", q: "¿Es?", o: ["Intranet", "Dark Web", "LAN"], r: 0 },
+        { p: "Conversión de datos a código secreto.", q: "¿Es?", o: ["Cifrado", "Zip", "PDF"], r: 0 },
+        { p: "Filtrado de red por reglas.", q: "¿Equipo?", o: ["Firewall", "Switch", "Hub"], r: 0 },
+        { p: "Servicios TI vía Internet.", q: "¿Es?", o: ["Cloud Computing", "Local", "BIOS"], r: 0 },
+        { p: "Engaño para obtener claves.", q: "¿Es?", o: ["Phishing", "Firewall", "RAM"], r: 0 },
+        { p: "Mantenimiento proactivo por fallas.", q: "¿Tipo?", o: ["Predictivo", "Correctivo", "Manual"], r: 0 },
+        { p: "Visualización de datos complejos.", q: "¿Es?", o: ["Data Viz", "Texto", "Binario"], r: 0 },
+        { p: "Comercio vía móviles.", q: "¿Es?", o: ["m-Commerce", "Retail", "Offline"], r: 0 },
+        { p: "Volúmenes de datos masivos.", q: "¿Es?", o: ["Big Data", "Excel", "Note"], r: 0 },
+        { p: "Software gratis con limitaciones.", q: "¿Es?", o: ["Shareware", "Malware", "App"], r: 0 },
+        { p: "Mínima unidad de datos.", q: "¿Es?", o: ["Bit", "Byte", "Pixel"], r: 0 },
+        { p: "Dispositivos conectados físicamente.", q: "¿Es?", o: ["IoT", "VPN", "RAM"], r: 0 },
+        { p: "Gestión de relación con clientes.", q: "¿Es?", o: ["CRM", "ERP", "SCM"], r: 0 }
     ];
 
-    let user = {}, exam = [], current = 0, score = 0, timeLeft = 3900;
-    let guardActive = false;
+    let user = {}, exam = [], current = 0, score = 0, timeLeft = 3900, fallos = [];
 
-    // --- BLINDAJE DE SEGURIDAD ---
-    function activarSeguridad() {
-        guardActive = true;
-        // Detectar cambio de pestaña/ventana
-        window.onblur = function() {
-            if(guardActive) {
-                document.getElementById('lock').style.display = 'block';
-                setTimeout(() => { location.reload(); }, 3000);
-            }
-        };
-
-        // Bloquear F12, Ctrl+U, Ctrl+C, Ctrl+V, Ctrl+S
-        window.onkeydown = function(e) {
-            if (e.keyCode == 123 || (e.ctrlKey && [67, 85, 86, 83, 80].includes(e.keyCode))) {
-                e.preventDefault();
-                location.reload();
-                return false;
-            }
-        };
-    }
-
-    // --- LÓGICA DEL EXAMEN ---
-    function prepararExamen() {
+    function iniciarExamen() {
         const n = document.getElementById('nom').value;
         const m = document.getElementById('mat').value;
-
-        if(n.length < 5 || m.length < 3) {
-            alert("Por favor, ingrese Nombre y Matrícula válidos.");
-            return;
-        }
-
-        user = { n, m, sid: Math.random().toString(36).substr(2, 9).toUpperCase() };
+        if(n.length < 5 || m.length < 3) return alert("Datos incompletos.");
         
-        // Mezclar y seleccionar 35
+        user = { n, m, sid: Math.random().toString(36).substr(2,9).toUpperCase() };
         exam = db.sort(() => Math.random() - 0.5).slice(0, 35);
         
-        // Cambiar pantallas
         document.getElementById('p-reg').classList.add('hidden');
         document.getElementById('p-exam').classList.remove('hidden');
         
         activarSeguridad();
         render();
-        startTimer();
-    }
-
-    function startTimer() {
-        const timerInterval = setInterval(() => {
-            if(timeLeft <= 0) {
-                clearInterval(timerInterval);
-                end();
-            } else {
-                timeLeft--;
-                const m = Math.floor(timeLeft / 60);
-                const s = timeLeft % 60;
-                document.getElementById('clock').innerText = `${m}:${s < 10 ? '0'+s : s}`;
-            }
+        const t = setInterval(() => {
+            timeLeft--;
+            document.getElementById('clock').innerText = `${Math.floor(timeLeft/60)}:${(timeLeft%60).toString().padStart(2,'0')}`;
+            if(timeLeft <= 0) { clearInterval(t); final(); }
         }, 1000);
     }
 
+    function activarSeguridad() {
+        window.onblur = () => { document.getElementById('lock').style.display='block'; setTimeout(()=>location.reload(), 2500); };
+        window.onkeydown = e => { if(e.keyCode == 123 || (e.ctrlKey && [67, 85, 86, 83, 80].includes(e.keyCode))) { e.preventDefault(); location.reload(); } };
+    }
+
     function render() {
-        if(current >= exam.length) {
-            end();
-            return;
-        }
-
+        if(current >= exam.length) return final();
         const d = exam[current];
-        document.getElementById('progreso-texto').innerText = `Pregunta ${current + 1} de ${exam.length}`;
-        
-        let html = `
+        document.getElementById('content').innerHTML = `
+            <div style="color:var(--blue); margin-bottom:10px;">Reactivo ${current+1} de 35</div>
             <div class="planteamiento">${d.p}</div>
-            <h3 style="margin-bottom:20px;">${d.q}</h3>
+            <h3>${d.q}</h3>
+            ${d.o.map((o, i) => `<div class="option" onclick="validar(${i}, ${d.r})">${o}</div>`).join('')}
         `;
-
-        d.o.forEach((opt, i) => {
-            html += `<div class="option" onclick="validar(${i}, ${d.r})">${opt}</div>`;
-        });
-
-        document.getElementById('content').innerHTML = html;
-        window.scrollTo(0,0);
     }
 
-    function validar(elegida, correcta) {
-        if(elegida === correcta) score++;
-        current++;
-        render();
+    function validar(sel, cor) {
+        if(sel !== cor) fallos.push(current + 1); else score++;
+        current++; render();
     }
 
-    function end() {
-        guardActive = false;
-        const finalScore = ((score / exam.length) * 10).toFixed(2);
-        const certCode = btoa(`${user.m}|${finalScore}|${user.sid}`);
+    function final() {
+        window.onblur = null;
+        const nota = ((score / 35) * 10).toFixed(2);
+        const errStr = fallos.length > 0 ? fallos.join(', ') : 'Ninguno';
         
+        // ENVÍO A GOOGLE SHEETS
+        const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScDXtU5YmEUxUkT3gh7x-CoZVWLpOONZaERmufW6vm5wDIT7Q/formResponse";
+        const fd = new FormData();
+        fd.append("entry.463624217", user.n);
+        fd.append("entry.1087538877", user.m);
+        fd.append("entry.511747513", nota);
+        fd.append("entry.829394374", errStr);
+
+        fetch(formURL, { method: "POST", mode: "no-cors", body: fd });
+
+        const cert = btoa(`${user.m}|${nota}|Err:${errStr}|ID:${user.sid}`);
         document.getElementById('p-exam').innerHTML = `
-            <div style="text-align:center; padding: 40px 0;">
-                <h1 style="color:var(--blue)">EVALUACIÓN FINALIZADA</h1>
-                <p style="font-size:1.2em;">Alumno: <b>${user.n}</b></p>
-                <p style="font-size:1.2em;">Matrícula: <b>${user.m}</b></p>
-                <hr style="border:0; border-top:1px solid #333; margin:20px 0;">
-                <p>Resultado obtenido:</p>
-                <div style="font-size: 3em; font-weight: bold; color: var(--uvm); margin: 10px 0;">${finalScore}</div>
-                <p>Presente este código para validar su certificación:</p>
-                <div style="background:#000; padding:20px; border:1px solid var(--blue); border-radius:8px; margin-top:20px;">
-                    <code style="word-break: break-all; color: #58a6ff;">${certCode}</code>
-                </div>
-                <button class="btn" style="margin-top:30px; background:#21262d;" onclick="location.reload()">SALIR</button>
+            <h2 style="color:var(--blue)">EVALUACIÓN CONCLUIDA</h2>
+            <p>Alumno: ${user.n}</p>
+            <div style="font-size:3em; color:var(--uvm); font-weight:bold;">${nota}</div>
+            <div style="background:#000; padding:15px; border:1px solid #333; margin:20px 0; text-align:left;">
+                <p>Aciertos: ${score}/35 | Errores en: ${errStr}</p>
             </div>
+            <code>CÓDIGO: ${cert}</code>
         `;
     }
 </script>
