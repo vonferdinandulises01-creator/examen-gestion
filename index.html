@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CERTIFICACIÓN PROFESIONAL 2026 - TECNOLOGÍAS PARA LA GESTIÓN</title>
+    <title>CERTIFICACIÓN PROFESIONAL: PLAN DE NEGOCIOS INTERNACIONALES</title>
     <style>
         :root { --uvm: #c41e3a; --bg: #0d1117; --card: #161b22; --blue: #58a6ff; --green: #238636; --red: #da3633; }
         body { background: var(--bg); color: #c9d1d9; font-family: 'Segoe UI', sans-serif; margin: 0; user-select: none; -webkit-user-select: none; overflow: hidden; }
-        #lock { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 20000; color: var(--uvm); text-align: center; padding-top: 20%; }
-        #watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 3vw; opacity: 0.08; color: white; pointer-events: none; z-index: 5000; white-space: nowrap; text-align: center; line-height: 1.5; }
-        .container { max-width: 1050px; margin: 25px auto; padding: 30px; background: var(--card); border-radius: 12px; border: 1px solid #30363d; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; z-index: 10; }
+        #lock, #block-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 20000; color: var(--uvm); text-align: center; padding-top: 15%; }
+        #watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 3.5vw; opacity: 0.08; color: white; pointer-events: none; z-index: 5000; white-space: nowrap; text-align: center; }
+        .container { max-width: 1050px; margin: 20px auto; padding: 30px; background: var(--card); border-radius: 12px; border: 1px solid #30363d; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; z-index: 10; }
         #timer-bar { height: 6px; background: var(--blue); width: 100%; position: fixed; top: 0; left: 0; transition: width 1s linear; z-index: 1000; }
-        #timer { background: var(--uvm); color: white; padding: 10px; text-align: center; font-weight: bold; margin-bottom: 20px; border-radius: 4px; letter-spacing: 1px; }
-        .planteamiento { background: #0d1117; padding: 25px; border-left: 5px solid var(--uvm); margin-bottom: 20px; line-height: 1.7; font-size: 1.05em; color: #f0f6fc; text-align: justify; }
+        .planteamiento { background: #0d1117; padding: 25px; border-left: 5px solid var(--uvm); margin-bottom: 20px; line-height: 1.8; font-size: 1.05em; color: #f0f6fc; text-align: justify; }
         .option { display: block; background: #21262d; border: 1px solid #30363d; padding: 18px; margin: 10px 0; cursor: pointer; border-radius: 8px; transition: 0.2s; font-size: 0.95em; }
         .option:hover { border-color: var(--blue); background: #2d333b; transform: translateX(10px); }
         input { background: #0d1117; border: 1px solid #30363d; color: white; padding: 15px; width: calc(100% - 35px); margin-bottom: 20px; border-radius: 6px; font-size: 16px; }
         .btn { background: var(--uvm); color: white; border: none; padding: 20px; width: 100%; font-weight: bold; cursor: pointer; border-radius: 8px; font-size: 18px; text-transform: uppercase; }
         .hidden { display: none !important; }
-        #p-rev { overflow-y: auto; max-height: 85vh; padding-right: 15px; }
-        .rev-card { border: 1px solid #333; padding: 25px; margin-bottom: 25px; border-radius: 8px; background: #0d1117; border-left: 6px solid #444; }
-        .rev-correct { border-left-color: var(--green); }
-        .rev-error { border-left-color: var(--red); }
+        #p-rev { overflow-y: auto !important; max-height: 85vh; padding-right: 15px; }
+        #p-rev::-webkit-scrollbar { width: 10px; }
+        #p-rev::-webkit-scrollbar-thumb { background: var(--uvm); border-radius: 10px; }
+        .rev-card { border: 1px solid var(--red); padding: 20px; margin-bottom: 20px; border-radius: 8px; background: #1a0a0a; border-left: 6px solid var(--red); }
+        #score-display { font-size: 5em; color: var(--uvm); font-weight: bold; margin: 10px 0; }
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -29,192 +29,276 @@
 <div id="timer-bar"></div>
 <div id="watermark"></div>
 
-<div id="lock">
-    <h1>⚠️ PROTOCOLO DE SEGURIDAD ACTIVADO</h1>
-    <p id="lock-msg">Inactividad o conducta sospechosa detectada. Examen invalidado.</p>
+<div id="block-screen">
+    <h1>🚫 PROCESO CONCLUIDO</h1>
+    <p>Usted ya cuenta con un registro en este servidor. No se permiten re-intentos.</p>
 </div>
 
-<!-- Pantalla de Registro -->
 <div id="p-reg" class="container">
-    <h2 style="color:var(--uvm); text-align:center;">CERTIFICACIÓN PROFESIONAL 2026<br>TECNOLOGÍAS PARA LA GESTIÓN</h2>
-    <p style="text-align:center;">Campus Texcoco | Ingeniería de Negocios | Prof. Villarreal</p>
-    <div style="background: #21262d; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-        <strong>PROTOCOLOS DE EVALUACIÓN:</strong>
+    <h2 style="color:var(--uvm); text-align:center;">EXAMEN PARCIAL 1: C1-2026<br>PLAN DE NEGOCIOS INTERNACIONALES</h2>
+    <div style="background: #21262d; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid var(--uvm);">
+        <strong>PROTOCOLOS DE EVALUACIÓN (TEXCOCO):</strong>
         <ul style="font-size: 0.9em; line-height: 1.8;">
-            <li>35 Casos de análisis crítico con 80 segundos por reactivo.</li>
-            <li>Bloqueo automático ante pérdida de foco o capturas de pantalla.</li>
-            <li>Sincronización forzada con la base de datos institucional al finalizar.</li>
+            <li><strong>Casos Reales:</strong> 25 reactivos únicos basados en el programa oficial[cite: 2].</li>
+            <li><strong>Instrucciones:</strong> Lea con atención. No use celular ni aparatos ajenos[cite: 2].</li>
+            <li><strong>Sincronización:</strong> Los resultados viajan automáticamente a la base de datos[cite: 1].</li>
         </ul>
     </div>
     <input type="text" id="nom" placeholder="Nombre Completo del Candidato">
-    <input type="text" id="mat" placeholder="ID / Matrícula">
-    <button class="btn" onclick="iniciarExamen()">VALIDAR E INICIAR EXAMEN</button>
+    <input type="text" id="mat" placeholder="Matrícula Institucional">
+    <button class="btn" onclick="iniciarExamen()">INICIAR CERTIFICACIÓN PROFESIONAL</button>
 </div>
 
-<!-- Pantalla de Examen -->
 <div id="p-exam" class="container hidden">
-    <div id="timer">TIEMPO GLOBAL: <span id="clock">65:00</span></div>
+    <div id="timer" style="background:var(--uvm); color:white; padding:10px; text-align:center; margin-bottom:15px; border-radius:5px; font-weight:bold;">TIEMPO LÍMITE: <span id="clock">60:00</span></div>
     <div id="content"></div>
 </div>
 
-<!-- Pantalla de Revisión -->
 <div id="p-rev" class="container hidden">
-    <h2 style="color:var(--blue); text-align:center;">AUDITORÍA DE COMPETENCIAS TÉCNICAS</h2>
-    <div id="rev-resumen"></div>
+    <h2 style="color:var(--uvm); text-align:center;">INFORME DE DESEMPEÑO TÉCNICO</h2>
+    <div style="text-align:center; background:#161b22; padding:20px; border-radius:10px;">
+        <p>CALIFICACIÓN OBTENIDA:</p>
+        <div id="score-display">0.0</div>
+        <p>AUDITORÍA DE ERRORES (EXPIRA EN: <span id="rev-countdown" style="font-size:2em; font-weight:bold; color:var(--red);">20</span>s)</p>
+    </div>
     <hr style="border:0; border-top: 1px solid #333; margin: 20px 0;">
     <div id="rev-lista"></div>
-    <button class="btn" onclick="location.reload()" style="background:#21262d">CERRAR SESIÓN</button>
 </div>
 
 <script>
-    // BASE DE DATOS DE 35 CASOS EXTENSOS (SINTETIZADA DE V4, V5, V8)
-    const dbSource = [
+    if(localStorage.getItem("pni_final_audit_v11")) {
+        document.getElementById('p-reg').classList.add('hidden');
+        document.getElementById('block-screen').style.display = 'block';
+    }
+
+    // BANCO DE DATOS BASADO EN EL EXAMEN ORIGINAL[cite: 2]
+    const bancoOriginal = [
         {
-            p: "ESTUDIO DE CASO TOKIO: La unidad estratégica en Japón reporta latencias críticas de red superiores a 1.8s hacia el núcleo del ERP centralizado en México. Esta inestabilidad ha provocado que el sistema de facturación aduanal genere errores de duplicidad de folios, resultando en la retención de carga valuada en 350,000 USD y penalizaciones por incumplimiento de plazos. Se requiere una reingeniería de arquitectura que otorgue autonomía operativa al nodo local sin fragmentar la base de datos maestra global.",
-            q: "¿Qué solución técnica asegura la continuidad operativa y la integridad de los datos en este escenario transoceánico?",
-            o: ["Implementar arquitectura de Nube Híbrida con Nodos Edge locales, orquestación mediante Kubernetes para auto-recuperación y monitoreo con agentes de IA para failover preventivo.", "Contratar un enlace de fibra óptica dedicado punto a punto con mayor ancho de banda y programar reinicios manuales de servidores cada 6 horas.", "Migrar la facturación a una base de datos local aislada y enviar reportes en Excel al final del turno para consolidación manual en CDMX."],
-            r: 0
+            p: "CASO 1 (BLOQUE I): Un equipo emprendedor desea internacionalizar un modelo de negocio innovador ('Trendsetter'). Para asegurar que la idea no sea una ocurrencia, realizan un diagnóstico profundo del entorno identificando oportunidades reales en el mercado destino. \n\nConsidere las siguientes premisas: 1) El análisis PESTEL evalúa variables políticas, económicas, sociales, tecnológicas, ecológicas y legales; 2) La identificación del 'Gap de Mercado' consiste en detectar un vacío no resuelto; 3) El diagnóstico es opcional si el emprendedor conoce el país; 4) El sustento de 'Trendsetting' se basa en macrotendencias oficiales; 5) El análisis se limita solo al estudio de la competencia; 6) Las variables ecológicas son irrelevantes para servicios digitales.",
+            q: "¿Qué combinación de premisas garantiza una cimentación estratégica sólida?[cite: 2]",
+            o: ["a) 1, 2, 4", "b) 2, 3, 5", "c) 3, 5, 6"], r: 0
         },
         {
-            p: "CASO CIBERSEGURIDAD AVANZADA: Auditoría interna detecta tráfico cifrado siendo recolectado por actores externos bajo la estrategia 'Harvest Now, Decrypt Later' para descifrado futuro mediante computación cuántica. VIVENTU debe blindar sus activos de propiedad intelectual bajo un esquema de Soberanía Digital que no dependa de la gestión de llaves de proveedores de nube pública, garantizando que el control criptográfico sea 100% institucional e inalterable.",
-            q: "¿Cuál conjunto de tecnologías garantiza la invulnerabilidad de la PI según estándares de seguridad de 2026?",
-            o: ["Desplegar Algoritmos de Encriptación Post-Cuántica (PQC), utilizar Hardware Security Modules (HSM) físicos on-premise y registro de logs en Blockchain.", "Actualizar a encriptación AES-512 gestionada por el proveedor de nube y activar autenticación multifactor basada en software móvil de terceros.", "Cambiar todas las contraseñas de acceso cada 48 horas y restringir el acceso a la red únicamente a través de túneles VPN tradicionales."],
-            r: 0
+            p: "CASO 2 (RIESGO DE RELEVANCIA): Durante la auditoría de 'Cimentación Estratégica', el Consultor evalúa el 'Riesgo de Relevancia' del proyecto. Se requiere validar si el problema detectado justifica una inversión masiva en el extranjero. \n\nPremisas: 1) El Gap debe representar un problema real; 2) Datos de tendencia son válidos si provienen de opiniones generales en redes; 3) El diagnóstico debe demostrar que la solución es técnica y financieramente lógica; 4) Datos PESTEL deben ser sólidos y de fuentes reales; 5) El riesgo se elimina si el MVP tiene diseño atractivo; 6) La validación del Gap es fundamental para confirmar demanda insatisfecha.",
+            q: "¿Cuál conjunto de factores valida técnicamente la relevancia del proyecto?[cite: 2]",
+            o: ["a) 2, 3, 5", "b) 1, 4, 6", "c) 3, 4, 5"], r: 1
         },
         {
-            p: "ESTUDIO DE INGENIERÍA FINANCIERA: La expansión en el mercado de Nueva York implica un riesgo operativo valuado en 60 MDD. El CFO exige una simulación de sensibilidad extrema que evalúe 15,000 escenarios distintos para determinar el punto de equilibrio ante una volatilidad cambiaria imprevista. El sistema debe integrarse con fuentes de datos externas para alimentar el modelo de soporte a decisiones (DSS) en tiempo real antes de liberar el capital inicial.",
-            q: "¿Qué herramientas del ecosistema digital permiten una toma de decisiones científica ante este escenario de alta incertidumbre?",
-            o: ["Integración de un Decision Support System (DSS) con Gemelo Digital financiero y ejecución de simulaciones Monte Carlo dinámicas.", "Realizar encuestas de opinión entre los gerentes de zona y basar el presupuesto en el histórico lineal de crecimiento de los últimos 5 años.", "Solicitar un crédito puente inmediato y ajustar el precio de venta final de forma manual conforme fluctúe el mercado real día con día."],
-            r: 0
+            p: "CASO 3 (PROTOCOLO EMPRESARIAL): El equipo diseña su 'Protocolo Empresarial' (Fase 1) para asegurar la ejecución del plan. Se evalúa la coherencia entre el diseño organizacional y los hallazgos del diagnóstico previo. \n\nPremisas: 1) Misión y Visión genéricas para cualquier país; 2) Organigrama y perfiles clave responden directamente al diagnóstico; 3) Riesgo de Incoherencia ocurre si el diseño no atiende tendencias; 4) Área de TI innecesaria si la tendencia es digital; 5) MVP debe ser solución técnica lógica para el Gap encontrado; 6) La filosofía empresarial no influye en la capacidad de ejecución.",
+            q: "¿Qué elementos aseguran la coherencia operativa del diseño organizacional?[cite: 2]",
+            o: ["a) 1, 4, 6", "b) 2, 3, 5", "c) 4, 5, 6"], r: 1
+        },
+        {
+            p: "CASO 4 (VALIDACIÓN DE TRACCIÓN): Para validar la tracción inicial, el plan identifica a los 'Early Adopters'. El equipo define el perfil del seguidor global que validará el modelo antes de un escalamiento masivo. \n\nPremisas: 1) Perfil específico para validar tracción; 2) Target amplio para todo el mundo; 3) Seguidores iniciales sufren el problema y buscan solución; 4) Validación solo mediante encuestas post-venta; 5) Target amplio aumenta 'Riesgo de Target'; 6) Identificar seguidores globales permite reducir riesgo de fracaso inicial.",
+            q: "¿Qué características definen correctamente al segmento de validación inicial?[cite: 2]",
+            o: ["a) 1, 5, 6", "b) 2, 3, 4", "c) 3, 4, 6"], r: 0
+        },
+        {
+            p: "CASO 5 (LÍNEA BASE Y AUDITORÍA): En la Fase 0 de auditoría con Gemini, se establece la 'Línea Base'. El sistema requiere sustento en inteligencia de mercado real. \n\nPremisas: 1) Auditoría otorga Semáforo Verde por longitud de reporte; 2) Datos de Trendsetting sustentados en INEGI o Cámaras; 3) Benchmarking identifica debilidades de competencia; 4) El sistema bloquea si la información es genérica; 5) Inteligencia de Mercado válida solo si hay Semáforo Verde previo; 6) Diagnóstico es estático y no requiere actualizaciones.",
+            q: "¿Qué requisitos otorgan validez técnica a la Fase 0?[cite: 2]",
+            o: ["a) 1, 3, 6", "b) 2, 4, 5", "c) 3, 5, 6"], r: 1
+        },
+        {
+            p: "CASO 6 (COMUNICACIÓN): El equipo desarrolla el 'Plan de Comunicación y Promoción' (1.4). Se busca evitar publicidad genérica que no conecte culturalmente. \n\nPremisas: 1) Branding idéntico al nacional para ahorrar costos; 2) Mensaje adaptado culturalmente al Trendsetting; 3) Comunicación busca solo informar precio; 4) Plan coherente mitiga riesgo de rechazo; 5) Redes sociales internacionales sustituyen adaptación de mensaje; 6) Auditoría verifica que el branding no sea genérico.",
+            q: "¿Cuáles son los pilares de una comunicación internacional efectiva?[cite: 2]",
+            o: ["a) 1, 2, 5", "b) 2, 4, 5", "c) 2, 4, 6"], r: 2
+        },
+        {
+            p: "CASO 7 (CANALES): Se audita la 'Selección de Canales y Gestión' (1.5) para determinar la vía eficiente hacia el consumidor meta. \n\nPremisas: 1) Selección (B2B, B2C, E-com) eficiente para el target; 2) Operatividad depende de logística y puntos de contacto; 3) Canales siempre directos para control de margen; 4) E-com única opción en 2026; 5) Gestión de canales es independiente de aranceles; 6) Auditoría confirma si la estrategia responde al diseño organizacional.",
+            q: "¿Qué factores determinan el éxito de la estrategia de distribución?[cite: 2]",
+            o: ["a) 1, 2, 6", "b) 3, 4, 5", "c) 2, 5, 6"], r: 0
+        },
+        {
+            p: "CASO 8 (SOCIOS CLAVE): Para mitigar 'Riesgo de Entrada', el plan contempla una 'Red de Socios Clave' (1.6) en el ecosistema de valor local. \n\nPremisas: 1) Incluye solo proveedores nacionales; 2) Aliados en destino mitigan riesgos operativos; 3) Alianzas fundamentales para construir ecosistema de valor; 4) Socio necesario solo si no hay capital; 5) Auditoría revisa socios para operar legalmente; 6) Acuerdos alineados con objetivos de internacionalización.",
+            q: "¿Qué roles desempeñan los socios estratégicos en el plan?[cite: 2]",
+            o: ["a) 1, 3, 4", "b) 1, 3, 6", "c) 2, 3, 5, 6"], r: 2
+        },
+        {
+            p: "CASO 9 (VEHÍCULOS JURÍDICOS): El equipo analiza los vehículos para la entrada (2.4) buscando menor riesgo e inversión inicial. \n\nPremisas: 1) Licencias y franquicias son baja inversión; 2) Joint Ventures requieren que la nacional asuma 100% riesgo; 3) Contratos de fabricación permiten subcontratar producción local; 4) Consorcios permiten compartir gastos logísticos; 5) Inversión directa recomendada para PyMEs; 6) Regalías son el único ingreso de Joint Venture.",
+            q: "¿Qué vehículos minimizan el impacto financiero de entrada?[cite: 2]",
+            o: ["a) 1, 3, 4", "b) 2, 4, 5", "c) 3, 5, 6"], r: 0
+        },
+        {
+            p: "CASO 10 (PROTOCOLOS DE BLOQUEO): Se activa el 'Protocolo de Bloqueo Secuencial Nivel 5'. El Auditor Maestro exige validar la 'Oferta Exportable'. \n\nPremisas: 1) Salta a negociación si ya hay producto; 2) Prompt 00 establece línea base de segmentación; 3) Se acepta procesamiento de una fase por mensaje; 4) Bloqueo si hay carga masiva de prompts; 5) Auditoría aprobada antes de simular cliente real; 6) Seguro permite tres fases simultáneas.",
+            q: "¿Cuáles son las reglas de seguridad del sistema de auditoría?[cite: 2]",
+            o: ["a) 1, 4, 5", "b) 2, 3, 4, 5", "c) 4, 5, 6"], r: 1
+        },
+        {
+            p: "CASO 11 (ARQUITECTURA DE VALOR): El producto debe mantener su competitividad técnica y logística en el país destino. \n\nPremisas: 1) Ingeniería considera normas y etiquetado destino; 2) Empaque solo estética; 3) Logística incluye gestión de Incoterms; 4) Precio considera aranceles y fletes; 5) Arquitectura independiente de distribución; 6) Certificados origen opcionales.",
+            q: "¿Qué componentes integran la arquitectura de valor global?[cite: 2]",
+            o: ["a) 1, 3, 4", "b) 2, 3, 6", "c) 3, 5, 6"], r: 0
+        },
+        {
+            p: "CASO 12 (RESILIENCIA LOGÍSTICA): Simulación de quiebre en cadena por huelga en puerto destino. \n\nPremisas: 1) Esperar resolución sola; 2) Seguro cubre pérdida por retraso huelga; 3) Rutas alternas (aire/tierra) vitales; 4) Inventarios de seguridad en destino mitigan riesgos; 5) Gestión identifica puntos críticos México-Destino; 6) Resiliencia mide capacidad de flujo ante imprevistos.",
+            q: "¿Cómo se garantiza la continuidad de la cadena de suministro?[cite: 2]",
+            o: ["a) 1, 2, 4", "b) 2, 4, 5", "c) 3, 4, 5, 6"], r: 2
+        },
+        {
+            p: "CASO 13 (NEGOCIACIÓN): Negociación con socio agresivo en la Fase 8. \n\nPremisas: 1) Estilo adaptado a protocolos culturales; 2) Ceder todo asegura relación; 3) Cierre busca Ganar-Ganar sin comprometer margen; 4) Prescinde de contratos si hay confianza; 5) BATNA clave para negociar; 6) Responder violento a agresivo.",
+            q: "¿Qué tácticas aseguran un acuerdo internacional exitoso?[cite: 2]",
+            o: ["a) 1, 3, 5", "b) 3, 4, 6", "c) 2, 4, 5"], r: 0
+        },
+        {
+            p: "CASO 14 (VALOR SOCIAL): Auditor de Integridad verifica que acciones sociales no sean solo marketing. \n\nPremisas: 1) Integra comunidad local en modelo; 2) Ética obligatoria solo si ley exige; 3) Integridad medida por coherencia social-operación; 4) Marketing solo donar dinero; 5) Sostenibilidad disruptiva y medible; 6) Auditoría externa valida transparencia.",
+            q: "¿Cómo se fundamenta el compromiso ético internacional?[cite: 2]",
+            o: ["a) 2, 4, 5", "b) 1, 3, 5, 6", "c) 4, 5, 6"], r: 1
+        },
+        {
+            p: "CASO 15 (VERDICTO FINAL): Evaluación de aptitud para inversión global tras Drill-down. \n\nPremisas: 1) Ignora fallas iniciales si negociación exitosa; 2) Viabilidad si hay coherencia integral; 3) Plan profesional y responde a riesgos; 4) Semáforo Verde indica apto para inversión; 5) Drill-down es resumen estético; 6) Auditoría confirma aprobación de todas las fases.",
+            q: "¿Qué criterios definen el éxito final de la consultoría?[cite: 2]",
+            o: ["a) 2, 3, 4, 6", "b) 1, 3, 6", "c) 2, 4, 5"], r: 0
+        },
+        {
+            p: "CASO 16 (CONTROL ESTRATÉGICO): Mecanismo de monitoreo para cumplimiento de objetivos en extranjero. \n\nPremisas: 1) Sistemas miden KPIs en tiempo real; 2) Auditorías aseguran estándares de marca; 3) Centralizado 100% en México; 4) Gestión de proyectos facilita seguimiento; 5) Cumplimiento responsabilidad solo socio; 6) Cultura alinea talento con misión.",
+            q: "¿Qué herramientas garantizan la gobernanza internacional?[cite: 2]",
+            o: ["a) 1, 2, 4, 6", "b) 3, 5, 6", "c) 2, 4, 5"], r: 0
+        },
+        {
+            p: "CASO 17 (CENTRALIZACIÓN VS DESCENTRALIZACIÓN): Decisión técnica para oficinas en Tokio. \n\nPremisas: 1) Centralización garantiza aprovechamiento local; 2) Descentralización permite decisiones rápidas; 3) Equilibrio eficiencia global - agilidad local; 4) Matriz no interviene en finanzas; 5) Cultura mantiene cohesión; 6) Auditoría asegura no violar leyes locales.",
+            q: "¿Cuál es la mejor estructura organizacional global?[cite: 2]",
+            o: ["a) 1, 2, 4", "b) 2, 4, 5", "c) 2, 3, 5, 6"], r: 2
+        },
+        {
+            p: "CASO 18 (TRENDSETTING): Justificar innovación en sector salud en Europa. \n\nPremisas: 1) Sustentado en macrotendencias y reportes; 2) Copiar modelo líder actual; 3) Resuelve problema no solucionado; 4) Gap tecnológico base de innovación; 5) Independiente de diagnóstico legal; 6) Escalable y disruptivo globalmente.",
+            q: "¿Qué factores definen a una empresa como Trendsetter?[cite: 2]",
+            o: ["a) 1, 3, 4, 6", "b) 1, 2, 5", "c) 3, 5, 6"], r: 0
+        },
+        {
+            p: "CASO 19 (TRACCIÓN): Demostrar aceptación lógica del MVP ante socios. \n\nPremisas: 1) Interés real de Early Adopters; 2) Datos mercado confirman negocio viable; 3) Concepto teórico sin datos; 4) Tracción reduce riesgo percibido; 5) Éxito depende solo de estética; 6) Datos fuentes primarias y secundarias.",
+            q: "¿Cómo se valida científicamente la tracción del modelo?[cite: 2]",
+            o: ["a) 1, 2, 4, 6", "b) 2, 4, 6", "c) 3, 5, 6"], r: 0
+        },
+        {
+            p: "CASO 20 (CERTIFICADO GEMINI): Acreditación de solidez del proyecto. \n\nPremisas: 1) Automático al cargar archivos; 2) Semáforo Verde requisito entrega docente; 3) Evalúa coherencia integral y viabilidad; 4) Límite 8 faltas ciclo escolar; 5) 9 faltas invalidan resultados; 6) Sustituye reporte diagnóstico.",
+            q: "¿Qué condiciones aseguran la certificación del proyecto?[cite: 2]",
+            o: ["a) 1, 4, 6", "b) 1, 2, 3", "c) 2, 3, 4, 5"], r: 2
+        },
+        {
+            p: "CASO 21 (NEGOCIACIÓN DE CAPITAL): Asegurar alianza de capital duradera mitigando conflicto cultural. \n\nPremisas: 1) Estilo adaptado previene malentendidos; 2) Transparencia total en activos; 3) Agresiva para asegurar control; 4) Priorizar cierre sobre ética; 5) Protocolos etiqueta facilitan confianza; 6) Ganar-Ganar asegura estabilidad.",
+            q: "¿Qué pilares sostienen una alianza de capital internacional?[cite: 2]",
+            o: ["a) 1, 2, 5, 6", "b) 2, 4, 5", "c) 3, 5, 6"], r: 0
+        },
+        {
+            p: "CASO 22 (RIESGO EJECUCIÓN): MVP ejecutable vs diagnóstico entorno. \n\nPremisas: 1) Respuesta lógica y técnica al Gap; 2) Depende de presupuesto marketing; 3) Organigrama funcional con responsables; 4) Perfiles con competencias globales; 5) Jerárquica aumenta riesgo; 6) Pruebas concepto con target real.",
+            q: "¿Qué factores eliminan el riesgo de ejecución operativa?[cite: 2]",
+            o: ["a) 1, 3, 6", "b) 2, 4, 5", "c) 1, 3, 4, 6"], r: 2
+        },
+        {
+            p: "CASO 23 (LEGITIMIDAD): Valor social en comunidad local del socio. \n\nPremisas: 1) Mejora reputación y aceptación; 2) RS es gasto que reduce utilidad; 3) Beneficios tangibles (empleo/capa); 4) Traducción manuales ética; 5) Auditoría confirma no daño ambiental; 6) Resiliente ante conflictos políticos.",
+            q: "¿Cómo impacta el valor social en la legitimidad externa?[cite: 2]",
+            o: ["a) 1, 3, 5, 6", "b) 3, 4, 6", "c) 2, 5, 6"], r: 0
+        },
+        {
+            p: "CASO 24 (RUTA ESTRATÉGICA): Orden lógico de ingeniería de negocios. \n\nPremisas: 1) Inicia con idea creativa; 2) Diagnóstico PESTEL/Gap es cimiento; 3) Validación target/trendsetting asegura mercado; 4) Diseño estructura previo a entrada; 5) Marketing primer paso; 6) Etapas reducen incertidumbre.",
+            q: "¿Cuál es la secuencia correcta de la ruta de internacionalización?[cite: 2]",
+            o: ["a) 1, 4, 6", "b) 1, 3, 4", "c) 2, 3, 4, 6"], r: 2
+        },
+        {
+            p: "CASO 25 (INTEGRIDAD ACADÉMICA): Patrones de automatización masiva. \n\nPremisas: 1) Suspende si hay copia masiva prompts; 2) Requiere análisis secuencial; 3) Carga masiva garantiza coherencia; 4) Bloqueo protege integridad; 5) Gemini opcional si hay reporte; 6) Etapa por etapa valida variables.",
+            q: "¿Qué normas rigen la interacción con el sistema de auditoría?[cite: 2]",
+            o: ["a) 1, 2, 4, 6", "b) 2, 3, 4", "c) 2, 4, 5"], r: 0
         }
     ];
 
-    // Autogeneración técnica para completar los 35 reactivos de alta complejidad
-    let db = [...dbSource];
-    const temas = ["Big Data", "Logística 4.0", "Ética en IA", "RPA", "Blockchain Industrial", "Ecosistemas Lakehouse", "CVP y Madurez"];
-    while(db.length < 35) {
-        let base = dbSource[db.length % dbSource.length];
-        let t = temas[db.length % temas.length];
-        db.push({
-            p: `ESCENARIO DE CONSULTORÍA (${t}): VIVENTU enfrenta un reto de integración en su capa de servicios de ${t}. Se detectan cuellos de botella masivos entre el TPS (Procesamiento de Transacciones) y el MIS (Sistemas de Información Gerencial), lo que impide que el DSS genere proyecciones financieras confiables para los inversores. Se requiere una reingeniería que escale horizontalmente y cumpla con normativas de gobernanza de datos ISO 2026.`,
-            q: `¿Cuál es la estrategia técnica correcta para garantizar la madurez digital y el ROI en este escenario de ${t}?`,
-            o: [`Implementación de Microservicios con APIs estandarizadas, gobernanza de datos en tiempo real y monitoreo predictivo mediante tableros de BI integrados.`, `Aumentar la capacidad de almacenamiento de los servidores físicos locales y consolidar los datos mediante hojas de cálculo enviadas por correo electrónico.`, `Sustituir el ecosistema actual por una solución genérica on-premise y capacitar al personal en la corrección manual de errores de integración.`],
-            r: 0
-        });
-    }
+    let examData = [], current = 0, score = 0, timeLeft = 3600, userAnswers = [];
+    let qTimer, qTime = 80;
 
-    let user = {}, exam = [], userAnswers = [], current = 0, score = 0, timeLeft = 3900, qTime = 80;
-    let qTimer, gTimer;
+    function shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
 
     function iniciarExamen() {
         const n = document.getElementById('nom').value;
         const m = document.getElementById('mat').value;
-        if(n.length < 5 || m.length < 3) return alert("Ingrese datos de identificación para validar su sesión.");
-        
-        user = { n, m, sid: Math.random().toString(36).substr(2,9).toUpperCase() };
-        document.getElementById('watermark').innerHTML = `${user.n}<br>${user.m}<br>${user.sid}`;
-        
-        exam = db.sort(() => Math.random() - 0.5); 
+        if(n.length < 5 || m.length < 3) return alert("Identificación requerida para validar sesión[cite: 2].");
+
+        examData = shuffle([...bancoOriginal]).map(item => {
+            let opts = item.o.map((text, index) => ({ text, isCorrect: index === item.r }));
+            opts = shuffle(opts);
+            return { p: item.p, q: item.q, options: opts };
+        });
+
         document.getElementById('p-reg').classList.add('hidden');
         document.getElementById('p-exam').classList.remove('hidden');
-        
-        document.onkeydown = (e) => {
-            if(e.key === "PrintScreen" || e.keyCode === 44) { lockSystem("Captura de pantalla detectada."); return false; }
-            if(e.ctrlKey || e.metaKey || e.altKey || (e.keyCode >= 112 && e.keyCode <= 123)) return false;
-        };
-
+        document.getElementById('watermark').innerHTML = `${n}<br>${m}`;
         render();
-        gTimer = setInterval(updateGlobal, 1000);
-    }
-
-    function lockSystem(msg) {
-        clearInterval(qTimer); clearInterval(gTimer);
-        document.getElementById('lock-msg').innerText = msg;
-        document.getElementById('lock').style.display = 'block';
-        setTimeout(() => location.reload(), 3000);
-    }
-
-    window.onblur = () => { if(current < 35) lockSystem("Pérdida de foco detectada."); };
-
-    function updateGlobal() {
-        if(timeLeft > 0) {
-            timeLeft--;
-            document.getElementById('clock').innerText = `${Math.floor(timeLeft/60)}:${(timeLeft%60).toString().padStart(2,'0')}`;
-        } else { finish(); }
+        setInterval(() => { if(timeLeft > 0) { timeLeft--; document.getElementById('clock').innerText = Math.floor(timeLeft/60) + ":" + (timeLeft%60).toString().padStart(2,'0'); } }, 1000);
+        window.onblur = () => { if(current < 25) location.reload(); };
     }
 
     function render() {
-        if(current >= 35) return finish();
-        clearInterval(qTimer);
-        qTime = 80;
+        if(current >= 25) return finish();
+        clearInterval(qTimer); qTime = 80;
         qTimer = setInterval(() => {
             qTime--;
             document.getElementById('timer-bar').style.width = (qTime/80)*100 + "%";
-            if(qTime <= 0) lockSystem("Tiempo agotado en el reactivo.");
+            if(qTime <= 0) location.reload();
         }, 1000);
-
-        const d = exam[current];
+        const d = examData[current];
         document.getElementById('content').innerHTML = `
-            <div style="color:var(--blue); font-weight:bold; margin-bottom:10px;">REPORTE DE CONSULTORÍA ${current+1} DE 35</div>
             <div class="planteamiento">${d.p}</div>
-            <h3 style="color:#fff; margin-bottom:20px;">${d.q}</h3>
-            ${d.o.map((o, i) => `<div class="option" onclick="saveAns(${i})">${o}</div>`).join('')}
+            <h3 style="color:#fff;">${d.q}</h3>
+            ${d.options.map(opt => `<div class="option" onclick="saveAns(${opt.isCorrect})">${opt.text}</div>`).join('')}
         `;
     }
 
-    function saveAns(idx) {
-        userAnswers.push(idx);
-        if(idx === exam[current].r) score++;
-        current++;
-        render();
+    function saveAns(isCorrect) {
+        userAnswers.push(isCorrect);
+        if(isCorrect) score++;
+        current++; render();
     }
 
     function finish() {
-        clearInterval(qTimer); clearInterval(gTimer);
-        document.getElementById('timer-bar').style.display = 'none';
-        const nota = ((score / 35) * 10).toFixed(2);
-        
-        // --- CONEXIÓN DE BASE DE DATOS DEFINITIVA ---
-        const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScDXtU5YmEUxUkT3gh7x-CoZVWLpOONZaERmufW6vm5wDIT7Q/formResponse";
-        
-        const params = new URLSearchParams();
-        params.append("entry.463624217", user.n);
-        params.append("entry.1087538877", user.m);
-        params.append("entry.511747513", nota);
-        params.append("entry.829394374", `FINALIZADO C1-2026. Aciertos: ${score}/35. Folio: ${user.sid}`);
+        clearInterval(qTimer);
+        localStorage.setItem("pni_final_audit_v11", "true");
+        const nota = ((score / 25) * 10).toFixed(2);
 
-        fetch(formURL, {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: params.toString()
-        });
+        // MOTOR DE ENVÍO DIRECTO[cite: 1]
+        const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdFBOwuPUjxnZdqSy-4YItdhe8lt5naeYaSoROCsZaMPhgkUw/formResponse";
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = formURL;
+        form.target = "hidden_iframe";
 
-        showResults(nota);
+        const data = {
+            "entry.2005620554": document.getElementById('nom').value,
+            "entry.1045792443": document.getElementById('mat').value,
+            "entry.1065046570": nota,
+            "entry.1166974658": `Folio Texcoco. Aciertos: ${score}/25`
+        };
+
+        for (let key in data) {
+            let input = document.createElement("input");
+            input.type = "hidden";
+            input.name = key;
+            input.value = data[key];
+            form.appendChild(input);
+        }
+
+        const iframe = document.createElement("iframe");
+        iframe.name = "hidden_iframe";
+        iframe.style.display = "none";
+        document.body.appendChild(iframe);
+        document.body.appendChild(form);
+        form.submit();
+
+        document.getElementById('score-display').innerText = nota;
+        showReview();
     }
 
-    function showResults(nota) {
+    function showReview() {
         document.getElementById('p-exam').classList.add('hidden');
         document.getElementById('p-rev').classList.remove('hidden');
         document.body.style.overflow = "auto"; 
-        document.getElementById('rev-resumen').innerHTML = `
-            <div style="text-align:center; background:#0d1117; padding:25px; border-radius:10px; border:2px solid var(--blue);">
-                <p>Candidato: <strong>${user.n}</strong> | Matrícula: <strong>${user.m}</strong></p>
-                <div style="font-size:4em; color:var(--uvm); font-weight:bold; margin:10px 0;">${nota}</div>
-                <p style="letter-spacing:2px; font-size:0.85em; color:var(--blue);">AUDITORÍA DE RESULTADOS PROFESIONALES</p>
-            </div>`;
-
         let h = "";
-        exam.forEach((p, i) => {
-            const ok = userAnswers[i] === p.r;
-            h += `<div class="rev-card ${ok?'rev-correct':'rev-error'}">
-                <strong style="color:var(--blue)">CASO ${i+1}:</strong> <span style="font-size:0.9em;">${p.p}</span><br><br>
-                <p style="color:${ok?'var(--green)':'var(--red)'}; margin:0;"><strong>Resolución seleccionada:</strong> ${p.o[userAnswers[i]]}</p>
-                ${!ok?`<p style="color:var(--green); margin-top:10px;"><strong>Solución de Ingeniería sugerida:</strong> ${p.o[p.r]}</p>`:''}
-            </div>`;
-        });
-        document.getElementById('rev-lista').innerHTML = h;
-        window.scrollTo(0,0);
+        examData.forEach((p, i) => { if(!userAnswers[i]) h += `<div class="rev-card"><strong>FALLO DETECTADO EN EL CASO ${i+1}:</strong><br><p>${p.p}</p></div>`; });
+        document.getElementById('rev-lista').innerHTML = h || "<h3>CERTIFICACIÓN APROBADA SIN ERRORES</h3>";
+        let revT = 20;
+        const rInt = setInterval(() => { revT--; document.getElementById('rev-countdown').innerText = revT; if(revT <= 0) { clearInterval(rInt); location.reload(); } }, 1000);
     }
 </script>
 </body>
