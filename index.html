@@ -39,9 +39,9 @@
     <div style="background: #21262d; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid var(--uvm);">
         <strong>PROTOCOLOS DE EVALUACIÓN (TEXCOCO):</strong>
         <ul style="font-size: 0.9em; line-height: 1.8;">
-            <li><strong>Casos Reales:</strong> 25 reactivos únicos basados en el programa oficial[cite: 2].</li>
-            <li><strong>Instrucciones:</strong> Lea con atención. No use celular ni aparatos ajenos[cite: 2].</li>
-            <li><strong>Sincronización:</strong> Los resultados viajan automáticamente a la base de datos[cite: 1].</li>
+            <li><strong>Casos de Ingeniería:</strong> 25 reactivos únicos sin repeticiones[cite: 2].</li>
+            <li><strong>Instrucciones:</strong> Lea con atención todo el examen antes de resolverlo[cite: 2].</li>
+            <li><strong>Sincronización:</strong> Envío automático a base de datos institucional[cite: 1].</li>
         </ul>
     </div>
     <input type="text" id="nom" placeholder="Nombre Completo del Candidato">
@@ -66,136 +66,136 @@
 </div>
 
 <script>
-    if(localStorage.getItem("pni_final_audit_v11")) {
+    if(localStorage.getItem("pni_parcial_final_v12")) {
         document.getElementById('p-reg').classList.add('hidden');
         document.getElementById('block-screen').style.display = 'block';
     }
 
-    // BANCO DE DATOS BASADO EN EL EXAMEN ORIGINAL[cite: 2]
-    const bancoOriginal = [
+    // BANCO DE DATOS FINAL (25 REACTIVOS ÚNICOS)[cite: 2]
+    const bancoDefinitivo = [
         {
-            p: "CASO 1 (BLOQUE I): Un equipo emprendedor desea internacionalizar un modelo de negocio innovador ('Trendsetter'). Para asegurar que la idea no sea una ocurrencia, realizan un diagnóstico profundo del entorno identificando oportunidades reales en el mercado destino. \n\nConsidere las siguientes premisas: 1) El análisis PESTEL evalúa variables políticas, económicas, sociales, tecnológicas, ecológicas y legales; 2) La identificación del 'Gap de Mercado' consiste en detectar un vacío no resuelto; 3) El diagnóstico es opcional si el emprendedor conoce el país; 4) El sustento de 'Trendsetting' se basa en macrotendencias oficiales; 5) El análisis se limita solo al estudio de la competencia; 6) Las variables ecológicas son irrelevantes para servicios digitales.",
-            q: "¿Qué combinación de premisas garantiza una cimentación estratégica sólida?[cite: 2]",
+            p: "CASO 1: Un equipo emprendedor desea internacionalizar un modelo de negocio innovador ('Trendsetter'). Para asegurar que la idea no sea una ocurrencia, realizan un diagnóstico profundo del entorno identificando oportunidades reales en el mercado destino. \n\nPremisas: 1) El análisis PESTEL evalúa variables políticas, económicas, sociales, tecnológicas, ecológicas y legales; 2) La identificación del 'Gap de Mercado' detecta un vacío no resuelto; 3) El diagnóstico es opcional; 4) El sustento de 'Trendsetting' se basa en macrotendencias oficiales; 5) El análisis se limita al estudio de competencia directa; 6) Variables ecológicas son irrelevantes para servicios digitales.",
+            q: "¿Qué premisas garantizan una cimentación estratégica sólida?[cite: 2]",
             o: ["a) 1, 2, 4", "b) 2, 3, 5", "c) 3, 5, 6"], r: 0
         },
         {
-            p: "CASO 2 (RIESGO DE RELEVANCIA): Durante la auditoría de 'Cimentación Estratégica', el Consultor evalúa el 'Riesgo de Relevancia' del proyecto. Se requiere validar si el problema detectado justifica una inversión masiva en el extranjero. \n\nPremisas: 1) El Gap debe representar un problema real; 2) Datos de tendencia son válidos si provienen de opiniones generales en redes; 3) El diagnóstico debe demostrar que la solución es técnica y financieramente lógica; 4) Datos PESTEL deben ser sólidos y de fuentes reales; 5) El riesgo se elimina si el MVP tiene diseño atractivo; 6) La validación del Gap es fundamental para confirmar demanda insatisfecha.",
-            q: "¿Cuál conjunto de factores valida técnicamente la relevancia del proyecto?[cite: 2]",
+            p: "CASO 2: Durante la auditoría de 'Cimentación Estratégica', el Consultor evalúa el 'Riesgo de Relevancia' del proyecto para validar si el problema justifica inversión masiva. \n\nFactores: 1) El Gap debe representar un problema real; 2) Datos de tendencia son válidos de opiniones en redes sociales; 3) El diagnóstico debe demostrar lógica técnica y financiera; 4) Datos PESTEL sólidos de fuentes reales; 5) Riesgo se elimina si el MVP es atractivo; 6) Validación del Gap confirma demanda insatisfecha.",
+            q: "¿Qué conjunto de factores valida la relevancia técnica?[cite: 2]",
             o: ["a) 2, 3, 5", "b) 1, 4, 6", "c) 3, 4, 5"], r: 1
         },
         {
-            p: "CASO 3 (PROTOCOLO EMPRESARIAL): El equipo diseña su 'Protocolo Empresarial' (Fase 1) para asegurar la ejecución del plan. Se evalúa la coherencia entre el diseño organizacional y los hallazgos del diagnóstico previo. \n\nPremisas: 1) Misión y Visión genéricas para cualquier país; 2) Organigrama y perfiles clave responden directamente al diagnóstico; 3) Riesgo de Incoherencia ocurre si el diseño no atiende tendencias; 4) Área de TI innecesaria si la tendencia es digital; 5) MVP debe ser solución técnica lógica para el Gap encontrado; 6) La filosofía empresarial no influye en la capacidad de ejecución.",
-            q: "¿Qué elementos aseguran la coherencia operativa del diseño organizacional?[cite: 2]",
+            p: "CASO 3: Se evalúa la coherencia entre el diseño organizacional y los hallazgos del diagnóstico previo en el Protocolo Empresarial (Fase 1). \n\nPremisas: 1) Misión y Visión genéricas para adaptación fácil; 2) Organigrama responde directamente al diagnóstico; 3) Riesgo de Incoherencia ocurre si el diseño no atiende tendencias; 4) Área de TI innecesaria en modelos digitales; 5) MVP es solución técnica lógica para el Gap; 6) Filosofía empresarial no influye en ejecución.",
+            q: "¿Qué elementos aseguran la coherencia operativa?[cite: 2]",
             o: ["a) 1, 4, 6", "b) 2, 3, 5", "c) 4, 5, 6"], r: 1
         },
         {
-            p: "CASO 4 (VALIDACIÓN DE TRACCIÓN): Para validar la tracción inicial, el plan identifica a los 'Early Adopters'. El equipo define el perfil del seguidor global que validará el modelo antes de un escalamiento masivo. \n\nPremisas: 1) Perfil específico para validar tracción; 2) Target amplio para todo el mundo; 3) Seguidores iniciales sufren el problema y buscan solución; 4) Validación solo mediante encuestas post-venta; 5) Target amplio aumenta 'Riesgo de Target'; 6) Identificar seguidores globales permite reducir riesgo de fracaso inicial.",
-            q: "¿Qué características definen correctamente al segmento de validación inicial?[cite: 2]",
+            p: "CASO 4: Para validar la tracción inicial, el plan identifica a los 'Early Adopters' globales antes de un escalamiento masivo. \n\nPremisas: 1) Perfil específico para validar tracción; 2) Target amplio para maximizar ventas; 3) Seguidores iniciales sufren el problema y buscan solución; 4) Validación solo mediante encuestas post-venta; 5) Target amplio aumenta 'Riesgo de Target'; 6) Identificar seguidores globales permite reducir riesgo de fracaso.",
+            q: "¿Qué características definen al segmento de validación?[cite: 2]",
             o: ["a) 1, 5, 6", "b) 2, 3, 4", "c) 3, 4, 6"], r: 0
         },
         {
-            p: "CASO 5 (LÍNEA BASE Y AUDITORÍA): En la Fase 0 de auditoría con Gemini, se establece la 'Línea Base'. El sistema requiere sustento en inteligencia de mercado real. \n\nPremisas: 1) Auditoría otorga Semáforo Verde por longitud de reporte; 2) Datos de Trendsetting sustentados en INEGI o Cámaras; 3) Benchmarking identifica debilidades de competencia; 4) El sistema bloquea si la información es genérica; 5) Inteligencia de Mercado válida solo si hay Semáforo Verde previo; 6) Diagnóstico es estático y no requiere actualizaciones.",
+            p: "CASO 5: En la Fase 0 con Gemini, se establece la 'Línea Base' exigiendo sustento en inteligencia de mercado real. \n\nPremisas: 1) Auditoría otorga Semáforo Verde por longitud de reporte; 2) Trendsetting sustentado en INEGI o Cámaras; 3) Benchmarking identifica debilidades de competencia; 4) Sistema bloquea si la información es genérica; 5) Inteligencia válida si hay Semáforo Verde previo; 6) Diagnóstico es estático y no requiere actualizaciones.",
             q: "¿Qué requisitos otorgan validez técnica a la Fase 0?[cite: 2]",
             o: ["a) 1, 3, 6", "b) 2, 4, 5", "c) 3, 5, 6"], r: 1
         },
         {
-            p: "CASO 6 (COMUNICACIÓN): El equipo desarrolla el 'Plan de Comunicación y Promoción' (1.4). Se busca evitar publicidad genérica que no conecte culturalmente. \n\nPremisas: 1) Branding idéntico al nacional para ahorrar costos; 2) Mensaje adaptado culturalmente al Trendsetting; 3) Comunicación busca solo informar precio; 4) Plan coherente mitiga riesgo de rechazo; 5) Redes sociales internacionales sustituyen adaptación de mensaje; 6) Auditoría verifica que el branding no sea genérico.",
-            q: "¿Cuáles son los pilares de una comunicación internacional efectiva?[cite: 2]",
+            p: "CASO 6: El Plan de Comunicación (1.4) busca evitar publicidad genérica que no conecte con la cultura local. \n\nFactores: 1) Branding idéntico al nacional; 2) Mensaje adaptado culturalmente al Trendsetting; 3) Comunicación busca solo informar precio; 4) Plan coherente mitiga riesgo de rechazo; 5) Redes internacionales sustituyen adaptación; 6) Auditoría verifica que el branding no sea genérico.",
+            q: "¿Cuáles son los pilares de la comunicación efectiva?[cite: 2]",
             o: ["a) 1, 2, 5", "b) 2, 4, 5", "c) 2, 4, 6"], r: 2
         },
         {
-            p: "CASO 7 (CANALES): Se audita la 'Selección de Canales y Gestión' (1.5) para determinar la vía eficiente hacia el consumidor meta. \n\nPremisas: 1) Selección (B2B, B2C, E-com) eficiente para el target; 2) Operatividad depende de logística y puntos de contacto; 3) Canales siempre directos para control de margen; 4) E-com única opción en 2026; 5) Gestión de canales es independiente de aranceles; 6) Auditoría confirma si la estrategia responde al diseño organizacional.",
-            q: "¿Qué factores determinan el éxito de la estrategia de distribución?[cite: 2]",
+            p: "CASO 7: Se audita la 'Selección de Canales y Gestión' (1.5) para determinar la vía eficiente al consumidor meta. \n\nFactores: 1) Selección (B2B, B2C, E-com) eficiente para el target; 2) Operatividad depende de logística y puntos de contacto; 3) Canales siempre directos; 4) E-com única opción en 2026; 5) Gestión independiente de aranceles; 6) Auditoría confirma si la estrategia responde al diseño organizacional.",
+            q: "¿Qué factores determinan el éxito de la distribución?[cite: 2]",
             o: ["a) 1, 2, 6", "b) 3, 4, 5", "c) 2, 5, 6"], r: 0
         },
         {
-            p: "CASO 8 (SOCIOS CLAVE): Para mitigar 'Riesgo de Entrada', el plan contempla una 'Red de Socios Clave' (1.6) en el ecosistema de valor local. \n\nPremisas: 1) Incluye solo proveedores nacionales; 2) Aliados en destino mitigan riesgos operativos; 3) Alianzas fundamentales para construir ecosistema de valor; 4) Socio necesario solo si no hay capital; 5) Auditoría revisa socios para operar legalmente; 6) Acuerdos alineados con objetivos de internacionalización.",
-            q: "¿Qué roles desempeñan los socios estratégicos en el plan?[cite: 2]",
+            p: "CASO 8: Se contempla una 'Red de Socios Clave' (1.6) para mitigar el 'Riesgo de Entrada' en el ecosistema local. \n\nFactores: 1) Incluye solo proveedores nacionales; 2) Aliados en destino mitigan riesgos operativos; 3) Alianzas fundamentales para construir valor; 4) Socio necesario solo si no hay capital; 5) Auditoría revisa socios para operar legalmente; 6) Acuerdos alineados con objetivos internacionales.",
+            q: "¿Qué roles desempeñan los socios estratégicos?[cite: 2]",
             o: ["a) 1, 3, 4", "b) 1, 3, 6", "c) 2, 3, 5, 6"], r: 2
         },
         {
-            p: "CASO 9 (VEHÍCULOS JURÍDICOS): El equipo analiza los vehículos para la entrada (2.4) buscando menor riesgo e inversión inicial. \n\nPremisas: 1) Licencias y franquicias son baja inversión; 2) Joint Ventures requieren que la nacional asuma 100% riesgo; 3) Contratos de fabricación permiten subcontratar producción local; 4) Consorcios permiten compartir gastos logísticos; 5) Inversión directa recomendada para PyMEs; 6) Regalías son el único ingreso de Joint Venture.",
-            q: "¿Qué vehículos minimizan el impacto financiero de entrada?[cite: 2]",
+            p: "CASO 9: Se analizan 'Vehículos Jurídicos' (2.4) buscando menor riesgo y menor inversión inicial para probar aceptación. \n\nFactores: 1) Licencias y franquicias son baja inversión; 2) Joint Ventures requieren que la nacional asuma 100% riesgo; 3) Contratos fabricación permiten subcontratar producción local; 4) Consorcios permiten compartir gastos logísticos; 5) Inversión directa recomendada para PyMEs; 6) Regalías son el único ingreso de JV.",
+            q: "¿Qué vehículos minimizan el impacto financiero?[cite: 2]",
             o: ["a) 1, 3, 4", "b) 2, 4, 5", "c) 3, 5, 6"], r: 0
         },
         {
-            p: "CASO 10 (PROTOCOLOS DE BLOQUEO): Se activa el 'Protocolo de Bloqueo Secuencial Nivel 5'. El Auditor Maestro exige validar la 'Oferta Exportable'. \n\nPremisas: 1) Salta a negociación si ya hay producto; 2) Prompt 00 establece línea base de segmentación; 3) Se acepta procesamiento de una fase por mensaje; 4) Bloqueo si hay carga masiva de prompts; 5) Auditoría aprobada antes de simular cliente real; 6) Seguro permite tres fases simultáneas.",
-            q: "¿Cuáles son las reglas de seguridad del sistema de auditoría?[cite: 2]",
+            p: "CASO 10: Se activa el 'Protocolo de Bloqueo Secuencial Nivel 5'. El Auditor exige validar la 'Oferta Exportable'. \n\nReglas: 1) Salta a negociación si ya hay producto; 2) Prompt 00 establece línea base segmentación; 3) Procesamiento de una fase por mensaje; 4) Bloqueo si hay carga masiva prompts; 5) Auditoría aprobada antes de simular cliente; 6) Seguro permite fases simultáneas.",
+            q: "¿Cuáles son las reglas de seguridad de auditoría?[cite: 2]",
             o: ["a) 1, 4, 5", "b) 2, 3, 4, 5", "c) 4, 5, 6"], r: 1
         },
         {
-            p: "CASO 11 (ARQUITECTURA DE VALOR): El producto debe mantener su competitividad técnica y logística en el país destino. \n\nPremisas: 1) Ingeniería considera normas y etiquetado destino; 2) Empaque solo estética; 3) Logística incluye gestión de Incoterms; 4) Precio considera aranceles y fletes; 5) Arquitectura independiente de distribución; 6) Certificados origen opcionales.",
-            q: "¿Qué componentes integran la arquitectura de valor global?[cite: 2]",
+            p: "CASO 11: En la Fase 6 de Arquitectura de Valor, se debe asegurar competitividad técnica y logística. \n\nPremisas: 1) Ingeniería considera normas y etiquetado destino; 2) Empaque solo estética; 3) Logística incluye gestión Incoterms; 4) Precio considera aranceles y fletes; 5) Arquitectura independiente de distribución; 6) Certificados origen opcionales.",
+            q: "¿Qué componentes integran la arquitectura de valor?[cite: 2]",
             o: ["a) 1, 3, 4", "b) 2, 3, 6", "c) 3, 5, 6"], r: 0
         },
         {
-            p: "CASO 12 (RESILIENCIA LOGÍSTICA): Simulación de quiebre en cadena por huelga en puerto destino. \n\nPremisas: 1) Esperar resolución sola; 2) Seguro cubre pérdida por retraso huelga; 3) Rutas alternas (aire/tierra) vitales; 4) Inventarios de seguridad en destino mitigan riesgos; 5) Gestión identifica puntos críticos México-Destino; 6) Resiliencia mide capacidad de flujo ante imprevistos.",
-            q: "¿Cómo se garantiza la continuidad de la cadena de suministro?[cite: 2]",
+            p: "CASO 12: Simulación de 'Quiebre de Suministro' (Fase 7) por huelga portuaria en destino para medir resiliencia. \n\nPremisas: 1) Esperar resolución sola; 2) Seguro cubre pérdida retraso; 3) Rutas alternas (aire/tierra) vitales; 4) Inventarios de seguridad en destino mitigan riesgo; 5) Gestión identifica puntos críticos; 6) Resiliencia mide capacidad de flujo ante imprevistos.",
+            q: "¿Cómo se garantiza la continuidad de la cadena?[cite: 2]",
             o: ["a) 1, 2, 4", "b) 2, 4, 5", "c) 3, 4, 5, 6"], r: 2
         },
         {
-            p: "CASO 13 (NEGOCIACIÓN): Negociación con socio agresivo en la Fase 8. \n\nPremisas: 1) Estilo adaptado a protocolos culturales; 2) Ceder todo asegura relación; 3) Cierre busca Ganar-Ganar sin comprometer margen; 4) Prescinde de contratos si hay confianza; 5) BATNA clave para negociar; 6) Responder violento a agresivo.",
-            q: "¿Qué tácticas aseguran un acuerdo internacional exitoso?[cite: 2]",
+            p: "CASO 13: Negociación internacional (Fase 8) con socio agresivo para validar adaptabilidad bicultural. \n\nPremisas: 1) Estilo adaptado a protocolos culturales; 2) Ceder todo asegura relación; 3) Cierre busca Ganar-Ganar sin comprometer margen; 4) Prescinde de contratos si hay confianza; 5) BATNA clave para negociar; 6) Responder violento.",
+            q: "¿Qué tácticas aseguran un acuerdo exitoso?[cite: 2]",
             o: ["a) 1, 3, 5", "b) 3, 4, 6", "c) 2, 4, 5"], r: 0
         },
         {
-            p: "CASO 14 (VALOR SOCIAL): Auditor de Integridad verifica que acciones sociales no sean solo marketing. \n\nPremisas: 1) Integra comunidad local en modelo; 2) Ética obligatoria solo si ley exige; 3) Integridad medida por coherencia social-operación; 4) Marketing solo donar dinero; 5) Sostenibilidad disruptiva y medible; 6) Auditoría externa valida transparencia.",
-            q: "¿Cómo se fundamenta el compromiso ético internacional?[cite: 2]",
+            p: "CASO 14: Modelo de 'Sostenibilidad y Valor Social' (Fase 9). El Auditor verifica acciones reales vs marketing. \n\nPremisas: 1) Integra comunidad local en modelo; 2) Ética solo si ley exige; 3) Integridad medida por coherencia social-operación; 4) Marketing solo donar dinero; 5) Sostenibilidad disruptiva y medible; 6) Auditoría externa valida transparencia.",
+            q: "¿Cómo se fundamenta el compromiso ético?[cite: 2]",
             o: ["a) 2, 4, 5", "b) 1, 3, 5, 6", "c) 4, 5, 6"], r: 1
         },
         {
-            p: "CASO 15 (VERDICTO FINAL): Evaluación de aptitud para inversión global tras Drill-down. \n\nPremisas: 1) Ignora fallas iniciales si negociación exitosa; 2) Viabilidad si hay coherencia integral; 3) Plan profesional y responde a riesgos; 4) Semáforo Verde indica apto para inversión; 5) Drill-down es resumen estético; 6) Auditoría confirma aprobación de todas las fases.",
-            q: "¿Qué criterios definen el éxito final de la consultoría?[cite: 2]",
+            p: "CASO 15: Evaluación 'Drill-down' final (Fase 10) para recibir inversión global. \n\nPremisas: 1) Ignora fallas iniciales si negociación exitosa; 2) Viabilidad si hay coherencia integral; 3) Plan profesional y responde a riesgos; 4) Semáforo Verde indica aptitud inversión; 5) Drill-down es resumen estético; 6) Auditoría confirma aprobación de fases.",
+            q: "¿Qué criterios definen el éxito de la consultoría?[cite: 2]",
             o: ["a) 2, 3, 4, 6", "b) 1, 3, 6", "c) 2, 4, 5"], r: 0
         },
         {
-            p: "CASO 16 (CONTROL ESTRATÉGICO): Mecanismo de monitoreo para cumplimiento de objetivos en extranjero. \n\nPremisas: 1) Sistemas miden KPIs en tiempo real; 2) Auditorías aseguran estándares de marca; 3) Centralizado 100% en México; 4) Gestión de proyectos facilita seguimiento; 5) Cumplimiento responsabilidad solo socio; 6) Cultura alinea talento con misión.",
-            q: "¿Qué herramientas garantizan la gobernanza internacional?[cite: 2]",
+            p: "CASO 16: 'Estrategias de Control Organizacional' (2.6) para cumplimiento de objetivos en extranjero. \n\nPremisas: 1) Sistemas miden KPIs tiempo real; 2) Auditorías aseguran estándares marca; 3) Centralizado 100% México; 4) Gestión proyectos facilita seguimiento; 5) Cumplimiento responsabilidad solo socio; 6) Cultura alinea talento con misión.",
+            q: "¿Qué herramientas garantizan la gobernanza global?[cite: 2]",
             o: ["a) 1, 2, 4, 6", "b) 3, 5, 6", "c) 2, 4, 5"], r: 0
         },
         {
-            p: "CASO 17 (CENTRALIZACIÓN VS DESCENTRALIZACIÓN): Decisión técnica para oficinas en Tokio. \n\nPremisas: 1) Centralización garantiza aprovechamiento local; 2) Descentralización permite decisiones rápidas; 3) Equilibrio eficiencia global - agilidad local; 4) Matriz no interviene en finanzas; 5) Cultura mantiene cohesión; 6) Auditoría asegura no violar leyes locales.",
-            q: "¿Cuál es la mejor estructura organizacional global?[cite: 2]",
+            p: "CASO 17: Análisis técnico 'Centralización vs Descentralización' para oficinas en Tokio. \n\nPremisas: 1) Centralización garantiza aprovechamiento local; 2) Descentralización permite decisiones rápidas; 3) Equilibrio eficiencia global - agilidad local; 4) Matriz no interviene en finanzas; 5) Cultura mantiene cohesión; 6) Auditoría asegura no violar leyes locales.",
+            q: "¿Cuál es la estructura organizacional óptima?[cite: 2]",
             o: ["a) 1, 2, 4", "b) 2, 4, 5", "c) 2, 3, 5, 6"], r: 2
         },
         {
-            p: "CASO 18 (TRENDSETTING): Justificar innovación en sector salud en Europa. \n\nPremisas: 1) Sustentado en macrotendencias y reportes; 2) Copiar modelo líder actual; 3) Resuelve problema no solucionado; 4) Gap tecnológico base de innovación; 5) Independiente de diagnóstico legal; 6) Escalable y disruptivo globalmente.",
-            q: "¿Qué factores definen a una empresa como Trendsetter?[cite: 2]",
+            p: "CASO 18: Justificar tendencia ('Trendsetting') en el sector salud en mercado europeo. \n\nPremisas: 1) Sustentado en macrotendencias y reportes; 2) Copiar modelo líder actual; 3) Resuelve problema no solucionado; 4) Gap tecnológico base innovación; 5) Independiente de diagnóstico legal; 6) Escalable y disruptivo globalmente.",
+            q: "¿Qué factores definen a un Trendsetter?[cite: 2]",
             o: ["a) 1, 3, 4, 6", "b) 1, 2, 5", "c) 3, 5, 6"], r: 0
         },
         {
-            p: "CASO 19 (TRACCIÓN): Demostrar aceptación lógica del MVP ante socios. \n\nPremisas: 1) Interés real de Early Adopters; 2) Datos mercado confirman negocio viable; 3) Concepto teórico sin datos; 4) Tracción reduce riesgo percibido; 5) Éxito depende solo de estética; 6) Datos fuentes primarias y secundarias.",
-            q: "¿Cómo se valida científicamente la tracción del modelo?[cite: 2]",
+            p: "CASO 19: Evaluación de 'Tracción' mediante datos reales (1.3) antes de buscar socios. \n\nPremisas: 1) Interés real de Early Adopters; 2) Datos mercado confirman negocio viable; 3) Concepto teórico sin datos; 4) Tracción reduce riesgo percibido; 5) Éxito depende solo de estética; 6) Datos fuentes primarias y secundarias.",
+            q: "¿Cómo se valida científicamente la tracción?[cite: 2]",
             o: ["a) 1, 2, 4, 6", "b) 2, 4, 6", "c) 3, 5, 6"], r: 0
         },
         {
-            p: "CASO 20 (CERTIFICADO GEMINI): Acreditación de solidez del proyecto. \n\nPremisas: 1) Automático al cargar archivos; 2) Semáforo Verde requisito entrega docente; 3) Evalúa coherencia integral y viabilidad; 4) Límite 8 faltas ciclo escolar; 5) 9 faltas invalidan resultados; 6) Sustituye reporte diagnóstico.",
-            q: "¿Qué condiciones aseguran la certificación del proyecto?[cite: 2]",
+            p: "CASO 20: El 'Certificado de Auditoría Gemini' acredita la solidez del diagnóstico y diseño. \n\nPremisas: 1) Automático al cargar archivos; 2) Semáforo Verde requisito entrega docente; 3) Evalúa coherencia integral y viabilidad; 4) Límite 8 faltas ciclo; 5) 9 faltas invalidan resultados; 6) Sustituye reporte diagnóstico.",
+            q: "¿Qué condiciones aseguran la acreditación?[cite: 2]",
             o: ["a) 1, 4, 6", "b) 1, 2, 3", "c) 2, 3, 4, 5"], r: 2
         },
         {
-            p: "CASO 21 (NEGOCIACIÓN DE CAPITAL): Asegurar alianza de capital duradera mitigando conflicto cultural. \n\nPremisas: 1) Estilo adaptado previene malentendidos; 2) Transparencia total en activos; 3) Agresiva para asegurar control; 4) Priorizar cierre sobre ética; 5) Protocolos etiqueta facilitan confianza; 6) Ganar-Ganar asegura estabilidad.",
-            q: "¿Qué pilares sostienen una alianza de capital internacional?[cite: 2]",
+            p: "CASO 21: Tácticas en negociación internacional (2.4) para asegurar alianza de capital duradera. \n\nPremisas: 1) Estilo adaptado previene malentendidos; 2) Transparencia total en activos; 3) Agresiva asegura control; 4) Priorizar cierre sobre ética; 5) Protocolos etiqueta facilitan confianza; 6) Ganar-Ganar asegura estabilidad.",
+            q: "¿Qué pilares sostienen la alianza de capital?[cite: 2]",
             o: ["a) 1, 2, 5, 6", "b) 2, 4, 5", "c) 3, 5, 6"], r: 0
         },
         {
-            p: "CASO 22 (RIESGO EJECUCIÓN): MVP ejecutable vs diagnóstico entorno. \n\nPremisas: 1) Respuesta lógica y técnica al Gap; 2) Depende de presupuesto marketing; 3) Organigrama funcional con responsables; 4) Perfiles con competencias globales; 5) Jerárquica aumenta riesgo; 6) Pruebas concepto con target real.",
-            q: "¿Qué factores eliminan el riesgo de ejecución operativa?[cite: 2]",
+            p: "CASO 22: 'Riesgo de Ejecución' (1.2) del MVP frente al diagnóstico del entorno. \n\nPremisas: 1) Respuesta lógica y técnica al Gap; 2) Depende de presupuesto marketing; 3) Organigrama funcional con responsables; 4) Perfiles con competencias globales; 5) Jerárquica aumenta riesgo; 6) Pruebas concepto con target real.",
+            q: "¿Qué factores eliminan el riesgo de ejecución?[cite: 2]",
             o: ["a) 1, 3, 6", "b) 2, 4, 5", "c) 1, 3, 4, 6"], r: 2
         },
         {
-            p: "CASO 23 (LEGITIMIDAD): Valor social en comunidad local del socio. \n\nPremisas: 1) Mejora reputación y aceptación; 2) RS es gasto que reduce utilidad; 3) Beneficios tangibles (empleo/capa); 4) Traducción manuales ética; 5) Auditoría confirma no daño ambiental; 6) Resiliente ante conflictos políticos.",
-            q: "¿Cómo impacta el valor social en la legitimidad externa?[cite: 2]",
+            p: "CASO 23: Integración de 'Valor Social' para obtener legitimidad internacional. \n\nPremisas: 1) Mejora reputación y aceptación; 2) RS es gasto reduce utilidad; 3) Beneficios tangibles (empleo/capa); 4) Traducción manuales ética; 5) Auditoría confirma no daño ambiental; 6) Resiliente ante conflictos políticos.",
+            q: "¿Cómo impacta el valor social en la legitimidad?[cite: 2]",
             o: ["a) 1, 3, 5, 6", "b) 3, 4, 6", "c) 2, 5, 6"], r: 0
         },
         {
-            p: "CASO 24 (RUTA ESTRATÉGICA): Orden lógico de ingeniería de negocios. \n\nPremisas: 1) Inicia con idea creativa; 2) Diagnóstico PESTEL/Gap es cimiento; 3) Validación target/trendsetting asegura mercado; 4) Diseño estructura previo a entrada; 5) Marketing primer paso; 6) Etapas reducen incertidumbre.",
-            q: "¿Cuál es la secuencia correcta de la ruta de internacionalización?[cite: 2]",
+            p: "CASO 24: 'Ruta para la Internacionalización' siguiendo orden lógico de ingeniería. \n\nPremisas: 1) Inicia con idea creativa; 2) Diagnóstico PESTEL/Gap es cimiento; 3) Validación target asegura mercado; 4) Diseño estructura previo entrada; 5) Marketing primer paso; 6) Etapas reducen incertidumbre.",
+            q: "¿Cuál es la secuencia de la ruta de éxito?[cite: 2]",
             o: ["a) 1, 4, 6", "b) 1, 3, 4", "c) 2, 3, 4, 6"], r: 2
         },
         {
-            p: "CASO 25 (INTEGRIDAD ACADÉMICA): Patrones de automatización masiva. \n\nPremisas: 1) Suspende si hay copia masiva prompts; 2) Requiere análisis secuencial; 3) Carga masiva garantiza coherencia; 4) Bloqueo protege integridad; 5) Gemini opcional si hay reporte; 6) Etapa por etapa valida variables.",
-            q: "¿Qué normas rigen la interacción con el sistema de auditoría?[cite: 2]",
+            p: "CASO 25: Auditoría de procesos ante 'Patrones de Automatización Masiva'. \n\nPremisas: 1) Suspende si hay copia masiva prompts; 2) Requiere análisis secuencial; 3) Carga masiva garantiza coherencia; 4) Bloqueo protege integridad; 5) Gemini opcional si hay reporte; 6) Etapa por etapa valida variables.",
+            q: "¿Qué normas rigen la interacción con la auditoría?[cite: 2]",
             o: ["a) 1, 2, 4, 6", "b) 2, 3, 4", "c) 2, 4, 5"], r: 0
         }
     ];
@@ -216,7 +216,7 @@
         const m = document.getElementById('mat').value;
         if(n.length < 5 || m.length < 3) return alert("Identificación requerida para validar sesión[cite: 2].");
 
-        examData = shuffle([...bancoOriginal]).map(item => {
+        examData = shuffle([...bancoDefinitivo]).map(item => {
             let opts = item.o.map((text, index) => ({ text, isCorrect: index === item.r }));
             opts = shuffle(opts);
             return { p: item.p, q: item.q, options: opts };
@@ -254,7 +254,7 @@
 
     function finish() {
         clearInterval(qTimer);
-        localStorage.setItem("pni_final_audit_v11", "true");
+        localStorage.setItem("pni_parcial_final_v12", "true");
         const nota = ((score / 25) * 10).toFixed(2);
 
         // MOTOR DE ENVÍO DIRECTO[cite: 1]
@@ -268,7 +268,7 @@
             "entry.2005620554": document.getElementById('nom').value,
             "entry.1045792443": document.getElementById('mat').value,
             "entry.1065046570": nota,
-            "entry.1166974658": `Folio Texcoco. Aciertos: ${score}/25`
+            "entry.1166974658": `Texcoco. Aciertos: ${score}/25`
         };
 
         for (let key in data) {
