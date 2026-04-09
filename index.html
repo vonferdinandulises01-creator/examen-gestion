@@ -1,5 +1,5 @@
-<script>
-    // BANCO DE DATOS LINEAL (Orden Fijo del 1 al 25)
+ <script>
+    // BANCO DE DATOS LINEAL: Sin mezclas, sin repeticiones.
     const bancoDefinitivo = [
         { p: "CASO 1: Diagnóstico profundo PESTEL y Gap de Mercado...", q: "¿Qué premisas garantizan una cimentación estratégica sólida?", o: ["a) 1, 2, 4", "b) 2, 3, 5", "c) 3, 5, 6"], r: 0 },
         { p: "CASO 2: Auditoría de Riesgo de Relevancia...", q: "¿Qué conjunto de factores valida la relevancia técnica?", o: ["a) 2, 3, 5", "b) 1, 4, 6", "c) 3, 4, 5"], r: 1 },
@@ -12,7 +12,7 @@
         { p: "CASO 9: Vehículos Jurídicos (Licencias, Franquicias, Consorcios)...", q: "¿Qué vehículos minimizan el impacto financiero?", o: ["a) 1, 3, 4", "b) 2, 4, 5", "c) 3, 5, 6"], r: 0 },
         { p: "CASO 10: Protocolo de Bloqueo Secuencial Nivel 5...", q: "¿Cuáles son las reglas de seguridad de auditoría?", o: ["a) 1, 4, 5", "b) 2, 3, 4, 5", "c) 4, 5, 6"], r: 1 },
         { p: "CASO 11: Fase 6: Arquitectura de Valor y Logística...", q: "¿Qué componentes integran la arquitectura de valor?", o: ["a) 1, 3, 4", "b) 2, 3, 6", "c) 3, 5, 6"], r: 0 },
-        { p: "CASO 12: Simulación de Quiebre de Suministro...", q: "¿Cómo se garantiza la continuidad de la cadena?", o: ["a) 1, 2, 4", "b) 2, 4, 5", "c) 3, 4, 5, 6"], r: 2 },
+        { p: "CASO 12: Simulación de Quiebre de Suministro (Huelga)...", q: "¿Cómo se garantiza la continuidad de la cadena?", o: ["a) 1, 2, 4", "b) 2, 4, 5", "c) 3, 4, 5, 6"], r: 2 },
         { p: "CASO 13: Negociación internacional y estilo bicultural...", q: "¿Qué tácticas aseguran un acuerdo exitoso?", o: ["a) 1, 3, 5", "b) 3, 4, 6", "c) 2, 4, 5"], r: 0 },
         { p: "CASO 14: Modelo de Sostenibilidad y Valor Social...", q: "¿Cómo se fundamenta el compromiso ético?", o: ["a) 2, 4, 5", "b) 1, 3, 5, 6", "c) 4, 5, 6"], r: 1 },
         { p: "CASO 15: Evaluación Drill-down final para inversión...", q: "¿Qué criterios definen el éxito de la consultoría?", o: ["a) 2, 3, 4, 6", "b) 1, 3, 6", "c) 2, 4, 5"], r: 0 },
@@ -24,8 +24,8 @@
         { p: "CASO 21: Tácticas para alianza de capital duradera...", q: "¿Qué pilares sostienen la alianza de capital?", o: ["a) 1, 2, 5, 6", "b) 2, 4, 5", "c) 3, 5, 6"], r: 0 },
         { p: "CASO 22: Riesgo de Ejecución del MVP...", q: "¿Qué factores eliminan el riesgo de ejecución?", o: ["a) 1, 3, 6", "b) 2, 4, 5", "c) 1, 3, 4, 6"], r: 2 },
         { p: "CASO 23: Integración de Valor Social y Legitimidad...", q: "¿Cómo impacta el valor social en la legitimidad?", o: ["a) 1, 3, 5, 6", "b) 3, 4, 6", "c) 2, 5, 6"], r: 0 },
-        { p: "CASO 24: Ruta para la Internacionalización...", q: "¿Cuál es la secuencia de la ruta de éxito?", o: ["a) 1, 4, 6", "b) 1, 3, 4", "c) 2, 3, 4, 6"], r: 2 },
-        { p: "CASO 25: Auditoría de patrones de automatización...", q: "¿Qué normas rigen la interacción con la auditoría?", o: ["a) 1, 2, 4, 6", "b) 2, 3, 4", "c) 2, 4, 5"], r: 0 }
+        { p: "CASO 24: Ruta para la Internacionalización (Secuencia lógica)...", q: "¿Cuál es la secuencia de la ruta de éxito?", o: ["a) 1, 4, 6", "b) 1, 3, 4", "c) 2, 3, 4, 6"], r: 2 },
+        { p: "CASO 25: Auditoría de procesos ante automatización masiva...", q: "¿Qué normas rigen la interacción con la auditoría?", o: ["a) 1, 2, 4, 6", "b) 2, 3, 4", "c) 2, 4, 5"], r: 0 }
     ];
 
     let current = 0, score = 0, timeLeft = 3600, userAnswers = [];
@@ -34,16 +34,14 @@
     function iniciarExamen() {
         const n = document.getElementById('nom').value;
         const m = document.getElementById('mat').value;
-        if(n.length < 5 || m.length < 3) return alert("Identificación requerida para validar sesión.");
+        if(n.length < 5 || m.length < 3) return alert("Identificación requerida.");
 
         document.getElementById('p-reg').classList.add('hidden');
         document.getElementById('p-exam').classList.remove('hidden');
         document.getElementById('watermark').innerHTML = `${n}<br>${m}`;
         
-        // Iniciamos directamente con el primer reactivo del banco
-        render();
+        render(); // Empieza en la posición 0 (Caso 1)
 
-        // Timer General
         setInterval(() => {
             if(timeLeft > 0) {
                 timeLeft--;
@@ -53,12 +51,11 @@
             }
         }, 1000);
         
-        // Deshabilitar recarga accidental por pérdida de foco
-        window.onblur = null; 
+        window.onblur = null; // Desactiva recargas por perder foco
     }
 
     function render() {
-        if(current >= 25) return finish();
+        if(current >= bancoDefinitivo.length) return finish();
         
         clearInterval(qTimer); 
         qTime = 80;
@@ -67,68 +64,29 @@
         qTimer = setInterval(() => {
             qTime--;
             document.getElementById('timer-bar').style.width = (qTime/80)*100 + "%";
-            if(qTime <= 0) saveAns(-1); // Salta por tiempo
+            if(qTime <= 0) saveAns(-1); 
         }, 1000);
 
-        const d = bancoDefinitivo[current]; // Acceso directo por índice
+        const d = bancoDefinitivo[current]; 
         document.getElementById('content').innerHTML = `
-            <div class="planteamiento">${d.p}</div>
-            <h3 style="color:#fff;">${d.q}</h3>
+            <div class="planteamiento" style="border-left: 5px solid #c41e3a; padding: 15px; background: #0d1117;">
+                <strong>REACTIVO ${current + 1}:</strong><br>${d.p}
+            </div>
+            <h3 style="color:#fff; margin-top: 15px;">${d.q}</h3>
             <div class="option" onclick="saveAns(0)">${d.o[0]}</div>
             <div class="option" onclick="saveAns(1)">${d.o[1]}</div>
             <div class="option" onclick="saveAns(2)">${d.o[2]}</div>
         `;
     }
 
-    function saveAns(selectedIndex) {
-        // Bloqueamos clics múltiples rápidos
-        const correctIndex = bancoDefinitivo[current].r;
-        const isCorrect = (selectedIndex === correctIndex);
-        
+    function saveAns(idx) {
+        if (current >= bancoDefinitivo.length) return;
+
+        const isCorrect = (idx === bancoDefinitivo[current].r);
         userAnswers.push(isCorrect);
         if(isCorrect) score++;
         
-        current++; 
+        current++; // Incremento estrictamente lineal
         render();
-    }
-
-    function finish() {
-        clearInterval(qTimer);
-        localStorage.setItem("pni_parcial_final_v12", "true");
-        const nota = ((score / 25) * 10).toFixed(2);
-
-        // Envío a Google Forms
-        const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdFBOwuPUjxnZdqSy-4YItdhe8lt5naeYaSoROCsZaMPhgkUw/formResponse";
-        const formData = new FormData();
-        formData.append("entry.2005620554", document.getElementById('nom').value);
-        formData.append("entry.1045792443", document.getElementById('mat').value);
-        formData.append("entry.1065046570", nota);
-        formData.append("entry.1166974658", `Texcoco. Aciertos: ${score}/25`);
-
-        fetch(formURL, { method: "POST", body: formData, mode: "no-cors" });
-
-        document.getElementById('score-display').innerText = nota;
-        showReview();
-    }
-
-    function showReview() {
-        document.getElementById('p-exam').classList.add('hidden');
-        document.getElementById('p-rev').classList.remove('hidden');
-        document.body.style.overflow = "auto"; 
-        
-        let h = "";
-        bancoDefinitivo.forEach((p, i) => {
-            if(!userAnswers[i]) {
-                h += `<div class="rev-card"><strong>FALLO EN CASO ${i+1}:</strong><br><p>${p.p}</p></div>`;
-            }
-        });
-        document.getElementById('rev-lista').innerHTML = h || "<h3>CERTIFICACIÓN APROBADA SIN ERRORES</h3>";
-        
-        let revT = 20;
-        const rInt = setInterval(() => { 
-            revT--; 
-            document.getElementById('rev-countdown').innerText = revT; 
-            if(revT <= 0) { clearInterval(rInt); location.reload(); } 
-        }, 1000);
     }
 </script>
